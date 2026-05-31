@@ -1,0 +1,955 @@
+==========================================================
+REPORTE DE CÓDIGO INTERNO - MATLAB FUNCTIONS
+Modelo: FOpid_control_V4
+Fecha: 31-May-2026 11:16:14
+==========================================================
+
+----------------------------------------------------------
+BLOQUE [1]: FOpid_control_V4/MATLAB Function
+----------------------------------------------------------
+function [stringOut, lengthOut] = stringToROS()
+    
+    % Define la palabra exacta (fíjate que sea el mismo nombre que en el .world)
+    miTexto = 'ekranoplano';
+    
+    % Crea el vector de 128 posiciones
+    stringOut = zeros(128, 1, 'uint8');
+    stringOut(1:length(miTexto)) = uint8(miTexto);
+    
+    % Calcula la longitud para ROS (en tipo uint32)
+    lengthOut = uint32(length(miTexto));
+    
+end
+
+
+----------------------------------------------------------
+BLOQUE [2]: FOpid_control_V4/MATLAB Function - fopid_altura
+----------------------------------------------------------
+function u = fopid_altura(e, kp, ki, kd)
+%#codegen
+% FOPI^lambda D — Lazo ALTURA (h -> theta_ref)
+% kp, ki, kd entran como puertos externos (bloques Constant)
+mu     = 0.5;
+lambda = 0.7;
+Ts     = 0.01;
+wc     = 1.5;
+u_min  = -0.10;
+u_max  =  0.15;
+
+alpha = wc / tan(wc * Ts / 2);
+KP = kp;
+KD = kd * (alpha^mu);
+KI = ki * (alpha^(-lambda));
+
+lm = 1 - lambda;
+f0= 1; f1=-2*mu;    f2=2*mu^2;
+f3=(-4*mu^3)/3  -(2*mu)/3;
+f4=(2*mu^4)/3   +(4*mu^2)/3;
+f5=(-4*mu^5)/15 -(4*mu^3)/3-(2*mu)/5;
+
+g0=1; g1=-2*lm;    g2=2*lm^2;
+g3=(-4*lm^3)/3  -(2*lm)/3;
+g4=(2*lm^4)/3   +(4*lm^2)/3;
+g5=(-4*lm^5)/15 -(4*lm^3)/3-(2*lm)/5;
+
+persistent e1 e2 e3 e4 e5 y1 y2 y3 y4 y5 u1 u2
+if isempty(e1)
+    e1=0;e2=0;e3=0;e4=0;e5=0;
+    y1=0;y2=0;y3=0;y4=0;y5=0;
+    u1=0;u2=0;
+end
+
+Y = f0*e +f1*e1+f2*e2+f3*e3+f4*e4+f5*e5 ...
+    -f1*y1-f2*y2-f3*y3-f4*y4-f5*y5;
+Z = g0*e +g1*e1+g2*e2+g3*e3+g4*e4+g5*e5 ...
+    -g1*y1-g2*y2-g3*y3-g4*y4-g5*y5;
+
+u_raw = KP*e + KD*Y + KI*Z;
+u = max(min(u_raw, u_max), u_min);
+
+e5=e4;e4=e3;e3=e2;e2=e1;e1=e;
+y5=y4;y4=y3;y3=y2;y2=y1;y1=u;
+u2=u1;u1=u;
+end
+
+% function u = fopid_altura(e)
+% %#codegen
+% % FOPI^lambda D — Lazo ALTURA (h -> theta_ref)
+% kp =  1.50;  
+% ki =  0.002;  
+% kd =  0.0;
+% mu     = 0.5;
+% lambda = 0.5;
+% Ts     = 0.01;
+% wc     = 1.5;
+% u_min  = -0.20;
+% u_max  =  0.20;
+% 
+% alpha = wc / tan(wc * Ts / 2);
+% KP = kp;
+% KD = kd * (alpha^mu);
+% KI = ki * (alpha^(-lambda));
+% 
+% lm = 1 - lambda;
+% f0= 1; f1=-2*mu; f2=2*mu^2;
+% f3=(-4*mu^3)/3-(2*mu)/3;
+% f4=(2*mu^4)/3+(4*mu^2)/3;
+% f5=(-4*mu^5)/15-(4*mu^3)/3-(2*mu)/5;
+% 
+% g0=1; g1=-2*lm; g2=2*lm^2;
+% g3=(-4*lm^3)/3-(2*lm)/3;
+% g4=(2*lm^4)/3+(4*lm^2)/3;
+% g5=(-4*lm^5)/15-(4*lm^3)/3-(2*lm)/5;
+% 
+% persistent e1 e2 e3 e4 e5 y1 y2 y3 y4 y5 u1 u2
+% if isempty(e1)
+%     e1=0;e2=0;e3=0;e4=0;e5=0;
+%     y1=0;y2=0;y3=0;y4=0;y5=0;
+%     u1=0;u2=0;
+% end
+% 
+% Y = f0*e +f1*e1+f2*e2+f3*e3+f4*e4+f5*e5 ...
+%    -f1*y1-f2*y2-f3*y3-f4*y4-f5*y5;
+% Z = g0*e +g1*e1+g2*e2+g3*e3+g4*e4+g5*e5 ...
+%    -g1*y1-g2*y2-g3*y3-g4*y4-g5*y5;
+% 
+% u_raw = KP*e + KD*Y + KI*Z;
+% u = max(min(u_raw, u_max), u_min);
+% 
+% e5=e4;e4=e3;e3=e2;e2=e1;e1=e;
+% y5=y4;y4=y3;y3=y2;y2=y1;y1=u;
+% u2=u1;u1=u;
+% end
+
+----------------------------------------------------------
+BLOQUE [3]: FOpid_control_V4/MATLAB Function - fopid_pitch
+----------------------------------------------------------
+function u = fopid_pitch(e, kp, ki, kd)
+%#codegen
+% FOPI^lambda D — Lazo PITCH (theta -> u2 elevador)
+% kp, ki, kd entran como puertos externos (bloques Constant)
+% FIX: anti wind-up activo (u1 interno, no confundir con puerto)
+mu     = 0.5;
+lambda = 0.8;
+Ts     = 0.01;
+wc     = 2.0;
+u_min  = -0.1;
+u_max  =  0.1;
+
+alpha = wc / tan(wc * Ts / 2);
+KP = kp;
+KD = kd * (alpha^mu);
+KI = ki * (alpha^(-lambda));
+
+lm = 1 - lambda;
+f0= 1; f1=-2*mu;    f2=2*mu^2;
+f3=(-4*mu^3)/3  -(2*mu)/3;
+f4=(2*mu^4)/3   +(4*mu^2)/3;
+f5=(-4*mu^5)/15 -(4*mu^3)/3-(2*mu)/5;
+
+g0=1; g1=-2*lm;    g2=2*lm^2;
+g3=(-4*lm^3)/3  -(2*lm)/3;
+g4=(2*lm^4)/3   +(4*lm^2)/3;
+g5=(-4*lm^5)/15 -(4*lm^3)/3-(2*lm)/5;
+
+persistent e1 e2 e3 e4 e5 y1 y2 y3 y4 y5 u_prev u_prev2
+if isempty(e1)
+    e1=0;e2=0;e3=0;e4=0;e5=0;
+    y1=0;y2=0;y3=0;y4=0;y5=0;
+    u_prev=0;u_prev2=0;
+end
+
+Y = f0*e +f1*e1+f2*e2+f3*e3+f4*e4+f5*e5 ...
+    -f1*y1-f2*y2-f3*y3-f4*y4-f5*y5;
+Z = g0*e +g1*e1+g2*e2+g3*e3+g4*e4+g5*e5 ...
+    -g1*y1-g2*y2-g3*y3-g4*y4-g5*y5;
+
+% Anti wind-up: congela integral si la salida anterior estaba saturada
+if abs(u_prev) >= u_max * 0.99
+    u_raw = KP*e + KD*Y;          % sin integral
+else
+    u_raw = KP*e + KD*Y + KI*Z;   % normal
+end
+
+u = max(min(u_raw, u_max), u_min);
+
+e5=e4;e4=e3;e3=e2;e2=e1;e1=e;
+y5=y4;y4=y3;y3=y2;y2=y1;y1=u;
+u_prev2=u_prev;u_prev=u;
+end
+% function u = fopid_pitch(e)
+% %#codegen
+% % FOPI^lambda D — Lazo PITCH (theta -> u2 elevador)
+% % Logica basada en FOPID_MEJORADO_DRON.ino (twin rotor)
+% % Adaptada para Ekranoplano Airfish 8 — Ts=0.01s
+% kp = -0.85;  
+% ki = -0.0005;  
+% kd = -0.001;
+% mu     = 0.5;
+% lambda = 0.5;
+% Ts     = 0.01;
+% wc     = 2.0;
+% u_min  = -20*pi/180;
+% u_max  =  20*pi/180;
+% 
+% alpha = wc / tan(wc * Ts / 2);
+% KP = kp;
+% KD = kd * (alpha^mu);
+% KI = ki * (alpha^(-lambda));
+% 
+% lm = 1 - lambda;
+% f0= 1; f1=-2*mu; f2=2*mu^2;
+% f3=(-4*mu^3)/3-(2*mu)/3;
+% f4=(2*mu^4)/3+(4*mu^2)/3;
+% f5=(-4*mu^5)/15-(4*mu^3)/3-(2*mu)/5;
+% 
+% g0=1; g1=-2*lm; g2=2*lm^2;
+% g3=(-4*lm^3)/3-(2*lm)/3;
+% g4=(2*lm^4)/3+(4*lm^2)/3;
+% g5=(-4*lm^5)/15-(4*lm^3)/3-(2*lm)/5;
+% 
+% persistent e1 e2 e3 e4 e5 y1 y2 y3 y4 y5 u1 u2
+% if isempty(e1)
+%     e1=0;e2=0;e3=0;e4=0;e5=0;
+%     y1=0;y2=0;y3=0;y4=0;y5=0;
+%     u1=0;u2=0;
+% end
+% 
+% Y = f0*e +f1*e1+f2*e2+f3*e3+f4*e4+f5*e5 ...
+%    -f1*y1-f2*y2-f3*y3-f4*y4-f5*y5;
+% Z = g0*e +g1*e1+g2*e2+g3*e3+g4*e4+g5*e5 ...
+%    -g1*y1-g2*y2-g3*y3-g4*y4-g5*y5;
+% 
+% persistent integral_frozen
+% if isempty(integral_frozen), integral_frozen = false; end
+% 
+% if abs(u1) >= u_max * 0.99
+%     integral_frozen = true;
+% else
+%     integral_frozen = false;
+% end
+% 
+% % Ley de control — congela Z si saturado
+% if integral_frozen
+%     u_raw = KP*e + KD*Y;
+% else
+%     u_raw = KP*e + KD*Y + KI*Z;
+% end
+% 
+% u_raw = KP*e + KD*Y + KI*Z;
+% u = max(min(u_raw, u_max), u_min);
+% 
+% e5=e4;e4=e3;e3=e2;e2=e1;e1=e;
+% y5=y4;y4=y3;y3=y2;y2=y1;y1=u;
+% u2=u1;u1=u;
+% end
+
+----------------------------------------------------------
+BLOQUE [4]: FOpid_control_V4/MATLAB Function - fopid_roll
+----------------------------------------------------------
+function u = fopid_roll(e, kp, ki, kd)
+%#codegen
+% FOPI^lambda D — Lazo ROLL (phi -> u1 aileron)
+% kp, ki, kd entran como puertos externos (bloques Constant)
+mu     = 0.5;
+lambda = 0.5;
+Ts     = 0.01;
+wc     = 2.0;
+u_min  = -20*pi/180;
+u_max  =  20*pi/180;
+
+alpha = wc / tan(wc * Ts / 2);
+KP = kp;
+KD = kd * (alpha^mu);
+KI = ki * (alpha^(-lambda));
+
+lm = 1 - lambda;
+f0= 1; f1=-2*mu; f2=2*mu^2;
+f3=(-4*mu^3)/3-(2*mu)/3;
+f4=(2*mu^4)/3+(4*mu^2)/3;
+f5=(-4*mu^5)/15-(4*mu^3)/3-(2*mu)/5;
+
+g0=1; g1=-2*lm; g2=2*lm^2;
+g3=(-4*lm^3)/3-(2*lm)/3;
+g4=(2*lm^4)/3+(4*lm^2)/3;
+g5=(-4*lm^5)/15-(4*lm^3)/3-(2*lm)/5;
+
+persistent e1 e2 e3 e4 e5 y1 y2 y3 y4 y5 u1 u2
+if isempty(e1)
+    e1=0;e2=0;e3=0;e4=0;e5=0;
+    y1=0;y2=0;y3=0;y4=0;y5=0;
+    u1=0;u2=0;
+end
+
+Y = f0*e +f1*e1+f2*e2+f3*e3+f4*e4+f5*e5 ...
+    -f1*y1-f2*y2-f3*y3-f4*y4-f5*y5;
+Z = g0*e +g1*e1+g2*e2+g3*e3+g4*e4+g5*e5 ...
+    -g1*y1-g2*y2-g3*y3-g4*y4-g5*y5;
+
+u_raw = KP*e + KD*Y + KI*Z;
+u = max(min(u_raw, u_max), u_min);
+
+e5=e4;e4=e3;e3=e2;e2=e1;e1=e;
+y5=y4;y4=y3;y3=y2;y2=y1;y1=u;
+u2=u1;u1=u;
+end
+% function u = fopid_roll(e)
+% %#codegen
+% % FOPI^lambda D — Lazo ROLL (phi -> u1 aileron)
+% kp = -0.44;  
+% ki = -0.10;  
+% kd = -0.30;
+% mu     = 0.5;
+% lambda = 0.5;
+% Ts     = 0.01;
+% wc     = 2.0;
+% u_min  = -20*pi/180;
+% u_max  =  20*pi/180;
+% 
+% alpha = wc / tan(wc * Ts / 2);
+% KP = kp;
+% KD = kd * (alpha^mu);
+% KI = ki * (alpha^(-lambda));
+% 
+% lm = 1 - lambda;
+% f0= 1; f1=-2*mu; f2=2*mu^2;
+% f3=(-4*mu^3)/3-(2*mu)/3;
+% f4=(2*mu^4)/3+(4*mu^2)/3;
+% f5=(-4*mu^5)/15-(4*mu^3)/3-(2*mu)/5;
+% 
+% g0=1; g1=-2*lm; g2=2*lm^2;
+% g3=(-4*lm^3)/3-(2*lm)/3;
+% g4=(2*lm^4)/3+(4*lm^2)/3;
+% g5=(-4*lm^5)/15-(4*lm^3)/3-(2*lm)/5;
+% 
+% persistent e1 e2 e3 e4 e5 y1 y2 y3 y4 y5 u1 u2
+% if isempty(e1)
+%     e1=0;e2=0;e3=0;e4=0;e5=0;
+%     y1=0;y2=0;y3=0;y4=0;y5=0;
+%     u1=0;u2=0;
+% end
+% 
+% Y = f0*e +f1*e1+f2*e2+f3*e3+f4*e4+f5*e5 ...
+%    -f1*y1-f2*y2-f3*y3-f4*y4-f5*y5;
+% Z = g0*e +g1*e1+g2*e2+g3*e3+g4*e4+g5*e5 ...
+%    -g1*y1-g2*y2-g3*y3-g4*y4-g5*y5;
+% 
+% u_raw = KP*e + KD*Y + KI*Z;
+% u = max(min(u_raw, u_max), u_min);
+% 
+% e5=e4;e4=e3;e3=e2;e2=e1;e1=e;
+% y5=y4;y4=y3;y3=y2;y2=y1;y1=u;
+% u2=u1;u1=u;
+% end
+
+
+----------------------------------------------------------
+BLOQUE [5]: FOpid_control_V4/MATLAB Function - fopid_velocidad
+----------------------------------------------------------
+function u = fopid_velocidad(e, kp, ki, kd)
+%#codegen
+% FOPI^lambda D — Lazo VELOCIDAD (Va -> throttle u4/u5)
+% kp, ki, kd entran como puertos externos (bloques Constant)
+mu     = 0.5;
+lambda = 0.8;
+Ts     = 0.01;
+wc     = 1.0;
+u_min  = 0.40;   % minimo 40% — nunca cortar sustentacion
+u_max  = 0.80;
+
+alpha = wc / tan(wc * Ts / 2);
+KP = kp;
+KD = kd * (alpha^mu);
+KI = ki * (alpha^(-lambda));
+
+lm = 1 - lambda;
+f0= 1; f1=-2*mu;    f2=2*mu^2;
+f3=(-4*mu^3)/3  -(2*mu)/3;
+f4=(2*mu^4)/3   +(4*mu^2)/3;
+f5=(-4*mu^5)/15 -(4*mu^3)/3-(2*mu)/5;
+
+g0=1; g1=-2*lm;    g2=2*lm^2;
+g3=(-4*lm^3)/3  -(2*lm)/3;
+g4=(2*lm^4)/3   +(4*lm^2)/3;
+g5=(-4*lm^5)/15 -(4*lm^3)/3-(2*lm)/5;
+
+persistent e1 e2 e3 e4 e5 y1 y2 y3 y4 y5 u1 u2
+if isempty(e1)
+    e1=0;e2=0;e3=0;e4=0;e5=0;
+    y1=0;y2=0;y3=0;y4=0;y5=0;
+    u1=0;u2=0;
+end
+
+Y = f0*e +f1*e1+f2*e2+f3*e3+f4*e4+f5*e5 ...
+    -f1*y1-f2*y2-f3*y3-f4*y4-f5*y5;
+Z = g0*e +g1*e1+g2*e2+g3*e3+g4*e4+g5*e5 ...
+    -g1*y1-g2*y2-g3*y3-g4*y4-g5*y5;
+
+u_raw = KP*e + KD*Y + KI*Z;
+u = max(min(u_raw, u_max), u_min);
+
+e5=e4;e4=e3;e3=e2;e2=e1;e1=e;
+y5=y4;y4=y3;y3=y2;y2=y1;y1=u;
+u2=u1;u1=u;
+end
+% function u = fopid_velocidad(e)
+% %#codegen
+% % FOPI^lambda D — Lazo VELOCIDAD (Va -> throttle u4/u5)
+% kp =  0.15;  
+% ki =  1.50;  
+% kd =  0.0;
+% mu     = 0.5;
+% lambda = 0.5;
+% Ts     = 0.01;
+% wc     = 1.0;
+% u_min  = 0.0;
+% u_max  = 1.0;
+% 
+% alpha = wc / tan(wc * Ts / 2);
+% KP = kp;
+% KD = kd * (alpha^mu);
+% KI = ki * (alpha^(-lambda));
+% 
+% lm = 1 - lambda;
+% f0= 1; f1=-2*mu; f2=2*mu^2;
+% f3=(-4*mu^3)/3-(2*mu)/3;
+% f4=(2*mu^4)/3+(4*mu^2)/3;
+% f5=(-4*mu^5)/15-(4*mu^3)/3-(2*mu)/5;
+% 
+% g0=1; g1=-2*lm; g2=2*lm^2;
+% g3=(-4*lm^3)/3-(2*lm)/3;
+% g4=(2*lm^4)/3+(4*lm^2)/3;
+% g5=(-4*lm^5)/15-(4*lm^3)/3-(2*lm)/5;
+% 
+% persistent e1 e2 e3 e4 e5 y1 y2 y3 y4 y5 u1 u2
+% if isempty(e1)
+%     e1=0;e2=0;e3=0;e4=0;e5=0;
+%     y1=0;y2=0;y3=0;y4=0;y5=0;
+%     u1=0;u2=0;
+% end
+% 
+% Y = f0*e +f1*e1+f2*e2+f3*e3+f4*e4+f5*e5 ...
+%    -f1*y1-f2*y2-f3*y3-f4*y4-f5*y5;
+% Z = g0*e +g1*e1+g2*e2+g3*e3+g4*e4+g5*e5 ...
+%    -g1*y1-g2*y2-g3*y3-g4*y4-g5*y5;
+% 
+% u_raw = KP*e + KD*Y + KI*Z;
+% u = max(min(u_raw, u_max), u_min);
+% 
+% e5=e4;e4=e3;e3=e2;e2=e1;e1=e;
+% y5=y4;y4=y3;y3=y2;y2=y1;y1=u;
+% u2=u1;u1=u;
+% end
+
+----------------------------------------------------------
+BLOQUE [6]: FOpid_control_V4/MATLAB Function - fopid_yaw
+----------------------------------------------------------
+function u = fopid_yaw(e, kp, ki, kd)
+%#codegen
+% FOPI^lambda D — Lazo YAW (psi -> u3 timon)
+% kp, ki, kd entran como puertos externos (bloques Constant)
+mu     = 0.5;
+lambda = 0.5;
+Ts     = 0.01;
+wc     = 2.0;
+u_min  = -15*pi/180;
+u_max  =  15*pi/180;
+
+alpha = wc / tan(wc * Ts / 2);
+KP = kp;
+KD = kd * (alpha^mu);
+KI = ki * (alpha^(-lambda));
+
+lm = 1 - lambda;
+f0= 1; f1=-2*mu;    f2=2*mu^2;
+f3=(-4*mu^3)/3  -(2*mu)/3;
+f4=(2*mu^4)/3   +(4*mu^2)/3;
+f5=(-4*mu^5)/15 -(4*mu^3)/3-(2*mu)/5;
+
+g0=1; g1=-2*lm;    g2=2*lm^2;
+g3=(-4*lm^3)/3  -(2*lm)/3;
+g4=(2*lm^4)/3   +(4*lm^2)/3;
+g5=(-4*lm^5)/15 -(4*lm^3)/3-(2*lm)/5;
+
+persistent e1 e2 e3 e4 e5 y1 y2 y3 y4 y5 u1 u2
+if isempty(e1)
+    e1=0;e2=0;e3=0;e4=0;e5=0;
+    y1=0;y2=0;y3=0;y4=0;y5=0;
+    u1=0;u2=0;
+end
+
+Y = f0*e +f1*e1+f2*e2+f3*e3+f4*e4+f5*e5 ...
+   -f1*y1-f2*y2-f3*y3-f4*y4-f5*y5;
+Z = g0*e +g1*e1+g2*e2+g3*e3+g4*e4+g5*e5 ...
+   -g1*y1-g2*y2-g3*y3-g4*y4-g5*y5;
+
+u_raw = KP*e + KD*Y + KI*Z;
+u = max(min(u_raw, u_max), u_min);
+
+e5=e4;e4=e3;e3=e2;e2=e1;e1=e;
+y5=y4;y4=y3;y3=y2;y2=y1;y1=u;
+u2=u1;u1=u;
+end
+% function u = fopid_yaw(e)
+% %#codegen
+% % FOPI^lambda D — Lazo YAW (psi -> u3 timon)
+% kp = -1.32;  ki = -0.080;  kd = -2.60;
+% mu     = 0.5;
+% lambda = 0.5;
+% Ts     = 0.01;
+% wc     = 2.0;
+% u_min  = -15*pi/180;
+% u_max  =  15*pi/180;
+% 
+% alpha = wc / tan(wc * Ts / 2);
+% KP = kp;
+% KD = kd * (alpha^mu);
+% KI = ki * (alpha^(-lambda));
+% 
+% lm = 1 - lambda;
+% f0= 1; f1=-2*mu; f2=2*mu^2;
+% f3=(-4*mu^3)/3-(2*mu)/3;
+% f4=(2*mu^4)/3+(4*mu^2)/3;
+% f5=(-4*mu^5)/15-(4*mu^3)/3-(2*mu)/5;
+% 
+% g0=1; g1=-2*lm; g2=2*lm^2;
+% g3=(-4*lm^3)/3-(2*lm)/3;
+% g4=(2*lm^4)/3+(4*lm^2)/3;
+% g5=(-4*lm^5)/15-(4*lm^3)/3-(2*lm)/5;
+% 
+% persistent e1 e2 e3 e4 e5 y1 y2 y3 y4 y5 u1 u2
+% if isempty(e1)
+%     e1=0;e2=0;e3=0;e4=0;e5=0;
+%     y1=0;y2=0;y3=0;y4=0;y5=0;
+%     u1=0;u2=0;
+% end
+% 
+% Y = f0*e +f1*e1+f2*e2+f3*e3+f4*e4+f5*e5 ...
+%    -f1*y1-f2*y2-f3*y3-f4*y4-f5*y5;
+% Z = g0*e +g1*e1+g2*e2+g3*e3+g4*e4+g5*e5 ...
+%    -g1*y1-g2*y2-g3*y3-g4*y4-g5*y5;
+% 
+% u_raw = KP*e + KD*Y + KI*Z;
+% u = max(min(u_raw, u_max), u_min);
+% 
+% e5=e4;e4=e3;e3=e2;e2=e1;e1=e;
+% y5=y4;y4=y3;y3=y2;y2=y1;y1=u;
+% u2=u1;u1=u;
+% end
+
+
+----------------------------------------------------------
+BLOQUE [7]: FOpid_control_V4/MATLAB Function-IMU2
+----------------------------------------------------------
+function [stringOut, lengthOut] = stringToROS()
+    
+    % Define la palabra exacta (fíjate que sea el mismo nombre que en el .world)
+    miTexto = 'ekranoplano-imu';
+    
+    % Crea el vector de 128 posiciones
+    stringOut = zeros(128, 1, 'uint8');
+    stringOut(1:length(miTexto)) = uint8(miTexto);
+    
+    % Calcula la longitud para ROS (en tipo uint32)
+    lengthOut = uint32(length(miTexto));
+    
+end
+
+
+----------------------------------------------------------
+BLOQUE [8]: FOpid_control_V4/MATLAB Function-MODELO
+----------------------------------------------------------
+function [stringOut, lengthOut] = frameToROS()
+
+    % Define el marco de referencia
+    miTexto = 'world';
+    
+    % Crea el vector columna de 128 ceros tipo uint8
+    stringOut = zeros(128, 1, 'uint8');
+    
+    % Copia las letras de 'world' al inicio
+    stringOut(1:length(miTexto)) = uint8(miTexto);
+    
+    % Calcula la longitud exacta para ROS 2
+    lengthOut = uint32(length(miTexto));
+
+end
+
+
+----------------------------------------------------------
+BLOQUE [9]: FOpid_control_V4/MATLAB Function-Odometry
+----------------------------------------------------------
+function [str_out, currentLen, receivedLen] = childFrameID()
+
+    miTexto = 'world';   % frame del vehículo
+
+    str_out = zeros(128, 1, 'uint8');
+    str_out(1:length(miTexto)) = uint8(miTexto);
+
+    currentLen  = uint32(length(miTexto));
+    receivedLen = uint32(length(miTexto));
+end
+
+----------------------------------------------------------
+BLOQUE [10]: FOpid_control_V4/MATLAB Function-Odometry1
+----------------------------------------------------------
+function [str_out, currentLen, receivedLen] = childFrameID()
+    
+    miTexto = 'ekranoplano';   % frame del vehículo
+
+    str_out = zeros(128, 1, 'uint8');
+    str_out(1:length(miTexto)) = uint8(miTexto);
+
+    currentLen  = uint32(length(miTexto));
+    receivedLen = uint32(length(miTexto));
+end
+
+----------------------------------------------------------
+BLOQUE [11]: FOpid_control_V4/MATLAB Function-clocl
+----------------------------------------------------------
+function [sec, nsec] = getStamp(t)
+    sec  = int32(floor(t));
+    nsec = uint32((t - floor(t)) * 1e9);
+end
+
+----------------------------------------------------------
+BLOQUE [12]: FOpid_control_V4/MATLAB Function-ned_to_PoseStaamped
+----------------------------------------------------------
+function [px_out, py_out, pz_out, x_out, y_out, z_out, w_out] = ...
+         ned_to_PoseStaamped(w_in, x_in, y_in, z_in, px_ned, py_ned, pz_ned)
+
+% Posición NED→ENU — intercambiados para desplazar en Y (verde)
+px_out =  double(px_ned);   % ← cambiado
+py_out =  double(py_ned);   % ← cambiado
+pz_out = -double(pz_ned);
+
+% Quaternion NED→ENU + 90° yaw invertido
+cz =  0.7071; sz = -0.7071;   % ← sz negativo
+w1 = cz*w_in - sz*z_in;
+x1 = cz*x_in - sz*y_in;
+y1 = cz*y_in + sz*x_in;
+z1 = cz*z_in + sz*w_in;
+
+w_out =  double(w1);
+x_out =  double(y1);
+y_out =  double(x1);
+z_out = -double(z1);
+end
+
+----------------------------------------------------------
+BLOQUE [13]: FOpid_control_V4/MATLAB Function-ned_to_PoseStamped
+----------------------------------------------------------
+function [stringOut, lengthOut] = stringToROS()
+    
+    % Define la palabra exacta (fíjate que sea el mismo nombre que en el .world)
+    miTexto = 'world';
+    
+    % Crea el vector de 128 posiciones
+    stringOut = zeros(128, 1, 'uint8');
+    stringOut(1:length(miTexto)) = uint8(miTexto);
+    
+    % Calcula la longitud para ROS (en tipo uint32)
+    lengthOut = uint32(length(miTexto));
+    
+end
+
+
+----------------------------------------------------------
+BLOQUE [14]: FOpid_control_V4/MATLAB Function-ned_to_TwistStamped
+----------------------------------------------------------
+function [stringOut, lengthOut] = stringToROS()
+    
+    % Define la palabra exacta (fíjate que sea el mismo nombre que en el .world)
+    miTexto = 'world';
+    
+    % Crea el vector de 128 posiciones
+    stringOut = zeros(128, 1, 'uint8');
+    stringOut(1:length(miTexto)) = uint8(miTexto);
+    
+    % Calcula la longitud para ROS (en tipo uint32)
+    lengthOut = uint32(length(miTexto));
+    
+end
+
+
+----------------------------------------------------------
+BLOQUE [15]: FOpid_control_V4/MATLAB Function-ned_to_gazebo
+----------------------------------------------------------
+function [w_out, x_out, y_out, z_out, px_out, py_out, pz_out] = ...
+         ned_to_gazebo(w_in, x_in, y_in, z_in, px_ned, py_ned, pz_ned)
+
+% --- Posicion NED -> Gazebo ENU ---
+px_out = -px_ned;   % derecha NED  → +X Gazebo
+py_out = py_ned;   % adelante NED → +Y Gazebo (morro apunta verde)
+pz_out = pz_ned;   % abajo NED    → +Z Gazebo (arriba)
+
+% --- Cuaternión: rotación en Z ---
+cz = 0.0;  sz = 1.0;
+w_out = cz*w_in - sz*z_in;
+x_out = cz*x_in - sz*y_in;
+y_out = cz*y_in + sz*x_in;
+z_out = cz*z_in + sz*w_in;
+
+----------------------------------------------------------
+BLOQUE [16]: FOpid_control_V4/MATLAB Function-ned_to_imu
+----------------------------------------------------------
+function [x_out, y_out, z_out, w_out] = ...
+         ned_to_imu(w_in, x_in, y_in, z_in)
+
+% Mismo cuaternión que ned_to_odometry (Gazebo correcto)
+cz = 0.0;  sz = 1.0;
+w1 = cz*w_in - sz*z_in;
+x1 = cz*x_in - sz*y_in;
+y1 = cz*y_in + sz*x_in;
+z1 = cz*z_in + sz*w_in;
+
+% Corrección de ejes NED→ENU para RViz
+w_out =  z1;
+x_out = -y1;
+y_out =  x1;
+z_out =  -w1;
+
+----------------------------------------------------------
+BLOQUE [17]: FOpid_control_V4/MATLAB Function-ned_to_odometry
+----------------------------------------------------------
+function [px_out, py_out, pz_out, x_out, y_out, z_out, w_out ] = ...
+         ned_to_odometry(w_in, x_in, y_in, z_in, px_ned, py_ned, pz_ned)
+
+px_out =  -px_ned;
+py_out = py_ned;
+pz_out = -pz_ned;
+
+cz = 0.0;  sz = 1.0;
+w1 = cz*w_in - sz*z_in;
+x1 = cz*x_in - sz*y_in;
+y1 = cz*y_in + sz*x_in;
+z1 = cz*z_in + sz*w_in;
+
+w_out =  z1;
+x_out = -y1;
+y_out =  x1;
+z_out =  w1;
+
+wz =  0.7071; zz = +0.7071;
+w2 = wz*w_out - zz*z_out;
+x2 = wz*x_out + zz*y_out;
+y2 = wz*y_out - zz*x_out;
+z2 = wz*z_out + zz*w_out;
+
+w_out = w2; x_out = x2; y_out = y2; z_out = z2;
+
+----------------------------------------------------------
+BLOQUE [18]: FOpid_control_V4/MATLAB Function2
+----------------------------------------------------------
+function [vx_enu, vy_enu, vz_enu] = twist_stamped(vx_ned, vy_ned, vz_ned)
+    vx_enu =  double(vy_ned);   % Out2 del SUBSYSTEM_MODEL → v (lateral)
+    vy_enu =  double(vx_ned);   % Out1 del SUBSYSTEM_MODEL → u (longitudinal)
+    vz_enu = -double(vz_ned);   % Out3 del SUBSYSTEM_MODEL → w (vertical, invertido)
+end
+
+----------------------------------------------------------
+BLOQUE [19]: FOpid_control_V4/SUBSYSTEM_MODEL/MATLAB Function - MODEL
+----------------------------------------------------------
+function [XDOT, Va_out, CL_total, h_out, mu_Lw_out, mu_Dw_out] = Model(X, U, U_wind, W_wind)
+% Modelo Dinámico del Ekranoplano AirFish 8 (Sincronizado)
+% ESCALA: 1:21.5 | Soporte Coder y Viento
+% CORRECCIONES v2: D_prop 3.5"→5", alpha_0h, iw, CD_0
+% CORRECCIONES v3: Desacoplamiento Ixz (feedforward interno roll-yaw)
+% CORRECCIONES v4: N_dec simétrico, C_D_e unidades, signo motor Fz
+%#codegen
+coder.varsize('XDOT',      [40, 1], [0, 0]);
+coder.varsize('Va_out',    [1,  1], [0, 0]);
+coder.varsize('CL_total',  [1,  1], [0, 0]);
+coder.varsize('h_out',     [1,  1], [0, 0]);
+coder.varsize('mu_Lw_out', [1,  1], [0, 0]);
+coder.varsize('mu_Dw_out', [1,  1], [0, 0]);
+
+%-----------STATE AND CONTROL VECTORS-----------------------------
+x1=X(1); x2=X(2); x3=X(3); x4=X(4); x5=X(5); x6=X(6);
+x7=X(7); x8=X(8); x9=X(9); x10=X(10); x11=X(11); x12=X(12);
+u1=U(1); u2=U(2); u3=U(3); u4=U(4); u5=U(5);
+
+%-----------SYSTEM PARAMETERS (ESCALA 1:21.5)---------------------
+m = 1.200; bw = 0.6977; bh = 0.3808; cbar = 0.0930; lt = 0.5600;
+Sw = 0.0649; Sh = 0.02164; ARw = 7.5; ARh = 6.7; TRw = 0.4; TRh = 0.5;
+Xcg = 0; Ycg = 0; Zcg = 0; Xac = 0.0135; Yac = 0; Zac = -0.0083;
+Xapt1 = -0.0721; Yapt1 =  0.0834; Zapt1 = 0.0396;
+Xapt2 = -0.0721; Yapt2 = -0.0834; Zapt2 = 0.0396;
+rho = 1.225; g = 9.81; e0w = 0.9; e0h = 0.9;
+alpha_0w = -3.75*pi/180;
+alpha_0h = -2.50*pi/180;
+iw = 1.5*pi/180;
+ih = 0.5*pi/180;
+zw = 0.0505; zh = 0.3475;
+CD_0 = 0.0420;
+
+%-----------SATURACIÓN DE CONTROLES-------------------------------
+u1 = max(min(u1,  20*pi/180), -20*pi/180);
+u2 = max(min(u2,  20*pi/180), -20*pi/180);
+u3 = max(min(u3,  15*pi/180), -15*pi/180);
+u4 = max(min(u4, 1.0), 0.0);
+u5 = max(min(u5, 1.0), 0.0);
+
+%-----------VIENTO Y VELOCIDAD RELATIVA---------------------------
+u_wg = U_wind(1); v_wg = U_wind(2); w_wg = U_wind(3);
+p_wg = W_wind(1); q_wg = W_wind(2); r_wg = W_wind(3);
+
+u_r = x1 + u_wg;
+v_r = x2 + v_wg;
+w_r = x3 + w_wg;
+
+Va = sqrt(u_r^2 + v_r^2 + w_r^2);
+if Va < 0.5
+    Va    = 0.5;
+    alpha = 0.0;
+    beta  = 0.0;
+else
+    alpha = atan2(w_r, u_r);
+    beta  = asin(max(-1.0, min(1.0, v_r / Va)));
+end
+Va_out = Va;
+
+p_aero = x4 + p_wg;
+q_aero = x5 + q_wg;
+r_aero = x6 + r_wg;
+
+h  = -x12;
+hw = max(0.001, h - zw);
+hh = max(0.001, h + zh);
+Q     = 0.5*rho*Va^2;
+wbe_b = [x4; x5; x6];
+V_b   = [x1; x2; x3];
+
+%-----------EFECTO SUELO------------------------------------------
+mu_Lw = 1 + (1 - 2.25*(TRw^0.00273 - 0.997)*((ARw^0.717)+13.6)) * ...
+        (288*abs(hw/bw)^0.787*exp(-9.14*(abs(hw/bw)^0.327))) / (ARw^0.882);
+mu_Lh = 1 + (1 - 2.25*(TRh^0.00273 - 0.997)*((ARh^0.717)+13.6)) * ...
+        (288*abs(hh/bh)^0.787*exp(-9.14*(abs(hh/bh)^0.327))) / (ARh^0.882);
+
+mu_Dw = 1 - (1 - 0.157*max(0,(TRw^0.757-0.373))*max(0,(ARw^0.417-1.27))) * ...
+        exp(-4.74*max(0,abs(hw/bw)^0.814)) - abs(hw/bw)^2*exp(-3.88*max(0,abs(hw/bw)^0.758));
+mu_Dh = 1 - (1 - 0.157*max(0,(TRh^0.757-0.373))*max(0,(ARh^0.417-1.27))) * ...
+        exp(-4.74*max(0,abs(hh/bh)^0.814)) - abs(hh/bh)^2*exp(-3.88*max(0,abs(hh/bh)^0.758));
+
+%-----------AERODINÁMICA------------------------------------------
+deps_dalpha = 0.35;
+eps = deps_dalpha*(alpha - alpha_0w) + deps_dalpha*(lt/Va)*q_aero;
+
+CL_w_OGE = 2*pi*(ARw/(ARw+2))*(alpha - alpha_0w + iw);
+CL_h_OGE = 2*pi*(ARh/(ARh+2))*(alpha - alpha_0h + ih - eps);
+CL_w_IGE  = CL_w_OGE * mu_Lw;
+CL_h_IGE  = CL_h_OGE * mu_Lh;
+
+CD_iw_IGE = (CL_w_IGE^2)/(pi*ARw*e0w) * mu_Dw;
+CD_ih_IGE = (CL_h_IGE^2)/(pi*ARh*e0h) * mu_Dh;
+
+% v4: u2 a grados para la polar de arrastre del elevador
+u2_deg = u2 * 180/pi;
+C_D_e  = -0.0000108*u2_deg^2 + 0.000715*u2_deg;           % <<< CORREGIDO v4
+
+Dtot = Q*(CD_0*Sw + CD_iw_IGE*Sw + CD_ih_IGE*Sh + C_D_e*Sh);
+Ltot = Q*(CL_w_IGE*Sw + CL_h_IGE*Sh);
+CQ   = -0.019*beta*180/pi;
+
+FA_s = [-Dtot; CQ*Q*Sw; -Ltot];
+C_bs = [cos(alpha) 0 -sin(alpha); 0 1 0; sin(alpha) 0 cos(alpha)];
+FA_b = C_bs * FA_s;
+
+%-----------MOMENTOS AERODINÁMICOS-------------------------------
+Cm_alpha = -1.14; Cm_q = -5.0; Cm_de = -3.0; Cm_h = 0.05;
+Delta_Cm_IGE = -Cm_h * exp(-4.0*abs(hw/bw));
+Cl_da = -0.5; Cn_dr = -0.3; Cl_p = -2.0; Cn_r = -1.5;
+Cn_da = -0.05;
+
+Cl_beta = -0.12;
+Cl = Cl_beta*beta + Cl_p*(p_aero*bw/(2*Va)) + Cl_da*u1;
+Cm = Cm_alpha*alpha + Delta_Cm_IGE + Cm_q*(q_aero*cbar/(2*Va)) + Cm_de*u2;
+Cn = -0.1146*beta   + Cn_r*(r_aero*bw/(2*Va))   + Cn_dr*u3  + Cn_da*u1;
+MAcg_b = [Cl; Cm; Cn] .* [bw*Q*Sw; cbar*Q*Sw; bw*Q*Sw];
+
+%-----------MOTOR BRUSHLESS (CORREGIDO)---------------------------
+km_motor = 25.0;
+Cp_motor = 0.57;
+D_prop   = 0.1270;
+Sp_prop  = pi*(D_prop^2/4);
+
+Vd1 = Va + u4*(km_motor - Va);
+Vd2 = Va + u5*(km_motor - Va);
+Tp1 = 0.5*rho*Sp_prop*Cp_motor*Vd1*(Vd1 - Va);
+Tp2 = 0.5*rho*Sp_prop*Cp_motor*Vd2*(Vd2 - Va);
+
+% v4: componente Fz negativa (hacia arriba en body frame) para inclinación nose-up
+FE1_b = [Tp1*cos(5*pi/180); 0; -Tp1*sin(5*pi/180)];       % <<< CORREGIDO v4
+FE2_b = [Tp2*cos(5*pi/180); 0; -Tp2*sin(5*pi/180)];       % <<< CORREGIDO v4
+FE_b  = FE1_b + FE2_b;
+
+MEcg1_b = cross([Xcg-Xapt1; Yapt1-Ycg; Zcg-Zapt1], FE1_b);
+MEcg2_b = cross([Xcg-Xapt2; Yapt2-Ycg; Zcg-Zapt2], FE2_b);
+MEcg_b  = MEcg1_b + MEcg2_b;
+
+%-----------DINÁMICA---------------------------------------------
+g_b  = [-g*sin(x8); g*cos(x8)*sin(x7); g*cos(x8)*cos(x7)];
+Fg_b = m*g_b;
+F_b  = Fg_b + FE_b + FA_b;
+x1to3dot = (1/m)*F_b - cross(wbe_b, V_b);
+Mcg_b = MAcg_b + MEcg_b;
+
+Ixx = 0.008217; Iyy = 0.017695; Izz = 0.023669; Ixz = 0.001856;
+Gamma = Ixx*Izz - Ixz^2;
+p = wbe_b(1); q = wbe_b(2); r = wbe_b(3);
+L = Mcg_b(1); M = Mcg_b(2); N = Mcg_b(3);
+
+% --- DESACOPLAMIENTO Ixz SIMÉTRICO (v4) --------------------------
+L_dec = L - (Ixz / Izz) * N;                               % <<< CORREGIDO v4
+N_dec = N - (Ixz / Ixx) * L;                               % <<< NUEVO v4
+% -----------------------------------------------------------------
+
+p_dot = (Izz*L_dec + Ixz*N_dec - (Ixz*(Iyy-Ixx-Izz)*p + (Ixz^2+Izz*(Izz-Iyy))*r)*q) / Gamma;
+q_dot = (M - (Ixx-Izz)*p*r - Ixz*(p^2-r^2)) / Iyy;
+r_dot = (Ixz*L_dec + Ixx*N_dec + (Ixz*(Iyy-Ixx-Izz)*r + (Ixz^2+Ixx*(Ixx-Iyy))*p)*q) / Gamma;
+
+x4to6dot = [p_dot; q_dot; r_dot];
+
+H_phi = [1 sin(x7)*tan(x8) cos(x7)*tan(x8);
+         0 cos(x7)         -sin(x7);
+         0 sin(x7)/cos(x8)  cos(x7)/cos(x8)];
+x7to9dot = H_phi * wbe_b;
+
+x10to12dot = rot_body_to_ned(X(1:9));
+
+%-----------SALIDAS----------------------------------------------
+LD_ratio = Ltot / max(Dtot, 0.001);
+XDOT = [x1to3dot; x4to6dot; x7to9dot; x10to12dot; ...
+        LD_ratio; F_b; Mcg_b; CQ; Cl; Cm; Cn; alpha; beta; ...
+        CL_w_OGE; CL_h_OGE; CL_w_IGE; CL_h_IGE; ...
+        CD_iw_IGE; CD_ih_IGE; Fg_b; FE_b; FA_b];
+
+CL_total   = (CL_w_IGE*Sw + CL_h_IGE*Sh) / (Sw + Sh);
+h_out      = -x12;
+mu_Lw_out  = mu_Lw;
+mu_Dw_out  = mu_Dw;
+end
+
+%------------------------- LOCAL FUNCTION -------------------------
+function [V_NED] = rot_body_to_ned(X)
+%#codegen
+V_body = [X(1); X(2); X(3)];
+c_phi = cos(X(7)); s_phi = sin(X(7));
+c_the = cos(X(8)); s_the = sin(X(8));
+c_psi = cos(X(9)); s_psi = sin(X(9));
+R = [c_the*c_psi,  s_phi*s_the*c_psi - c_phi*s_psi,  c_phi*s_the*c_psi + s_phi*s_psi;
+     c_the*s_psi,  s_phi*s_the*s_psi + c_phi*c_psi,  c_phi*s_the*s_psi - s_phi*c_psi;
+     -s_the,       s_phi*c_the,                       c_phi*c_the];
+V_NED = [R(1,:)*V_body; R(2,:)*V_body; R(3,:)*V_body];
+end
+
+----------------------------------------------------------
+BLOQUE [20]: FOpid_control_V4/SUBSYSTEM_MODEL/MATLAB Function-reset
+----------------------------------------------------------
+function x_reset = fcn(x)
+    x_reset = x;
+    x_reset(3) = 0.0;   % congela w (velocidad vertical)
+    x_reset(12) = 0.0;   % fija z_NED = 0 (superficie del agua)
+end
+
+

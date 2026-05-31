@@ -10,7 +10,7 @@ km_motor = 25.0;
 Cp = Cp_motor;   % alias para el bloque Simulink
 D  = D_prop;     % alias para el bloque Simulink 
 Sp = pi*(D^2/4);
-km = km_motor;  
+km = km_motor;
 max_thrust_force_per_motor = 0.5*rho*Sp_prop*Cp_motor*km_motor^2;
 fprintf('Thrust max por motor: %.3f N\n', max_thrust_force_per_motor);
 fprintf('Thrust max total:     %.3f N\n', 2*max_thrust_force_per_motor);
@@ -40,25 +40,36 @@ lambda = 0.5;   mu = 0.5;   % Órdenes fraccionarios (fijos)
 
 % 1. Lazo de Velocidad
 u_sp    = 20.2;
-Kp_u    =  0.0220;   
-Ki_u    =  0.0300;   
-Kd_u    =  0.0100;
+Kp_u    =  0.50;   
+Ki_u    =  5.60;   
+Kd_u    =  0.0;
 
 % 2. Lazo de Altura
 h_sp    =  1.0;
-Kp_h    =  0.3300;   Ki_h    =  0.0800;   Kd_h    =  0.5000;
-theta_max =  0.20;   theta_min = -0.20;
+
+Kp_h    =  0.5;   
+Ki_h    =  2.06;   
+Kd_h    =  0.0;
+
+theta_max =  0.10;   
+theta_min = -0.10;
 
 % 3. Lazo Interno de Elevador (Pitch)
-Kp_pitch = -0.5500;  Ki_pitch = -0.0300;  Kd_pitch = -0.6000;
+Kp_pitch = -1.10;  
+Ki_pitch = -0.1;  
+Kd_pitch = -0.0;
 
 % 4. Lazo de Timón (Yaw)
 psi_sp   = 0*(pi/180);
-Kp_yaw   = -1.3200;  Ki_yaw   = -0.0800;  Kd_yaw   = -2.6000;
+Kp_yaw   = -1.3200;  
+Ki_yaw   = -0.0800;  
+Kd_yaw   = -2.6000;
 
 % 5. Lazo de Alerones (Roll)
 phi_sp   = 0.0;
-Kp_roll  = -0.4400;  Ki_roll  = -0.1000;  Kd_roll  = -0.3000;
+Kp_roll  = -0.4400;  
+Ki_roll  = -0.1000;  
+Kd_roll  = -0.3000;
 
 %% Simulation
 sim = sim('FOpid_control_V4.slx');
