@@ -1,7 +1,7 @@
 ==========================================================
 REPORTE DE CÓDIGO INTERNO - MATLAB FUNCTIONS
 Modelo: FOpid_control_V4
-Fecha: 31-May-2026 11:16:14
+Fecha: 04-Jun-2026 13:57:30
 ==========================================================
 
 ----------------------------------------------------------
@@ -32,9 +32,9 @@ function u = fopid_altura(e, kp, ki, kd)
 mu     = 0.5;
 lambda = 0.7;
 Ts     = 0.01;
-wc     = 1.5;
-u_min  = -0.10;
-u_max  =  0.15;
+wc     = 5.0;
+u_min  = -0.2;
+u_max  =  0.2;
 
 alpha = wc / tan(wc * Ts / 2);
 KP = kp;
@@ -130,11 +130,11 @@ function u = fopid_pitch(e, kp, ki, kd)
 % kp, ki, kd entran como puertos externos (bloques Constant)
 % FIX: anti wind-up activo (u1 interno, no confundir con puerto)
 mu     = 0.5;
-lambda = 0.8;
+lambda = 0.9;
 Ts     = 0.01;
-wc     = 2.0;
-u_min  = -0.1;
-u_max  =  0.1;
+wc     = 5.0;
+u_min  = -0.2;
+u_max  =  0.2;
 
 alpha = wc / tan(wc * Ts / 2);
 KP = kp;
@@ -353,7 +353,7 @@ function u = fopid_velocidad(e, kp, ki, kd)
 mu     = 0.5;
 lambda = 0.8;
 Ts     = 0.01;
-wc     = 1.0;
+wc     = 3.0;
 u_min  = 0.40;   % minimo 40% — nunca cortar sustentacion
 u_max  = 0.80;
 

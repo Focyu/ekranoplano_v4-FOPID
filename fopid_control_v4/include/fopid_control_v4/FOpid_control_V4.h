@@ -6,9 +6,9 @@
  *
  * Code generation for model "FOpid_control_V4".
  *
- * Model version              : 13.15
+ * Model version              : 13.23
  * Simulink Coder version : 26.1 (R2026a) 20-Nov-2025
- * C++ source code generated on : Sun May 31 11:11:45 2026
+ * C++ source code generated on : Thu Jun  4 13:38:35 2026
  *
  * Target selection: ert.tlc
  * Note: GRT includes extra infrastructure and instrumentation for prototyping
@@ -559,7 +559,7 @@ struct ConstP_FOpid_control_V4_T {
    *   '<S30>/IC'
    *   '<S30>/Memory2'
    */
-  real_T pooled11[12];
+  real_T pooled10[12];
 
   /* Expression: h_vec
    * Referenced by: '<S60>/PreLook-Up Index Search  (altitude)'

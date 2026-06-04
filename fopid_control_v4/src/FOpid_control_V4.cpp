@@ -6,9 +6,9 @@
  *
  * Code generation for model "FOpid_control_V4".
  *
- * Model version              : 13.15
+ * Model version              : 13.23
  * Simulink Coder version : 26.1 (R2026a) 20-Nov-2025
- * C++ source code generated on : Sun May 31 11:11:45 2026
+ * C++ source code generated on : Thu Jun  4 13:38:35 2026
  *
  * Target selection: ert.tlc
  * Note: GRT includes extra infrastructure and instrumentation for prototyping
@@ -881,7 +881,7 @@ void FOpid_control_V4::step()
       FOpid_control_V4_DW.IC_FirstOutputTime = false;
 
       /* InitialCondition: '<S30>/IC' */
-      memcpy(&FOpid_control_V4_B.IC[0], &FOpid_control_V4_ConstP.pooled11[0],
+      memcpy(&FOpid_control_V4_B.IC[0], &FOpid_control_V4_ConstP.pooled10[0],
              12U * sizeof(real_T));
     }
 
@@ -1248,7 +1248,6 @@ void FOpid_control_V4::step()
     FOpid_control_V4_B.GainZ;
   if (tmp_0) {
     /* MATLAB Function: '<Root>/MATLAB Function - fopid_altura' incorporates:
-     *  Constant: '<Root>/Constant3'
      *  Constant: '<Root>/Constant4'
      *  Constant: '<Root>/Constant5'
      */
@@ -1257,8 +1256,8 @@ void FOpid_control_V4::step()
       FOpid_control_V4_DW.e3_c) + 0.375 * FOpid_control_V4_DW.e4_p) + -0.375 *
       FOpid_control_V4_DW.e5_b) - (-FOpid_control_V4_DW.y1_h)) - 0.5 *
       FOpid_control_V4_DW.y2_a) - -0.5 * FOpid_control_V4_DW.y3_h) - 0.375 *
-      FOpid_control_V4_DW.y4_p) - -0.375 * FOpid_control_V4_DW.y5_f) * 0.0 + 0.5
-      * FOpid_control_V4_B.Sum2) + ((((((((((-0.6000000000000001 *
+      FOpid_control_V4_DW.y4_p) - -0.375 * FOpid_control_V4_DW.y5_f) * 0.0 +
+      FOpid_control_V4_B.Sum2) + ((((((((((-0.6000000000000001 *
       FOpid_control_V4_DW.e1_j + FOpid_control_V4_B.Sum2) + 0.18000000000000005 *
       FOpid_control_V4_DW.e2_i) + -0.23600000000000004 *
       FOpid_control_V4_DW.e3_c) + 0.12540000000000004 * FOpid_control_V4_DW.e4_p)
@@ -1266,13 +1265,13 @@ void FOpid_control_V4::step()
       FOpid_control_V4_DW.y1_h) - 0.18000000000000005 * FOpid_control_V4_DW.y2_a)
       - -0.23600000000000004 * FOpid_control_V4_DW.y3_h) - 0.12540000000000004 *
       FOpid_control_V4_DW.y4_p) - -0.15664800000000004 *
-      FOpid_control_V4_DW.y5_f) * 0.05048378675481699;
-    if (!(FOpid_control_V4_B.u_dy <= 0.15)) {
-      FOpid_control_V4_B.u_dy = 0.15;
+      FOpid_control_V4_DW.y5_f) * 0.061274863936741676;
+    if (!(FOpid_control_V4_B.u_dy <= 0.2)) {
+      FOpid_control_V4_B.u_dy = 0.2;
     }
 
-    if (!(FOpid_control_V4_B.u_dy >= -0.1)) {
-      FOpid_control_V4_B.u_dy = -0.1;
+    if (!(FOpid_control_V4_B.u_dy >= -0.2)) {
+      FOpid_control_V4_B.u_dy = -0.2;
     }
 
     FOpid_control_V4_DW.e5_b = FOpid_control_V4_DW.e4_p;
@@ -1460,41 +1459,41 @@ void FOpid_control_V4::step()
      *  Constant: '<Root>/Constant6'
      *  Constant: '<Root>/Constant7'
      */
-    if (fabs(FOpid_control_V4_DW.u_prev) >= 0.099) {
+    if (fabs(FOpid_control_V4_DW.u_prev) >= 0.198) {
       FOpid_control_V4_B.u_o = ((((((((((FOpid_control_V4_B.Sum1 -
         FOpid_control_V4_DW.e1_g) + 0.5 * FOpid_control_V4_DW.e2_o) + -0.5 *
         FOpid_control_V4_DW.e3_m) + 0.375 * FOpid_control_V4_DW.e4_e) + -0.375 *
         FOpid_control_V4_DW.e5_o) - (-FOpid_control_V4_DW.y1_m)) - 0.5 *
         FOpid_control_V4_DW.y2_l) - -0.5 * FOpid_control_V4_DW.y3_m) - 0.375 *
         FOpid_control_V4_DW.y4_fl) - -0.375 * FOpid_control_V4_DW.y5_cv) * -0.0
-        + -1.1 * FOpid_control_V4_B.Sum1;
+        + -0.8 * FOpid_control_V4_B.Sum1;
     } else {
-      FOpid_control_V4_B.u_o = ((((((((((-0.3999999999999999 *
+      FOpid_control_V4_B.u_o = ((((((((((-0.19999999999999996 *
         FOpid_control_V4_DW.e1_g + FOpid_control_V4_B.Sum1) +
-        0.07999999999999996 * FOpid_control_V4_DW.e2_o) + -0.14399999999999996 *
-        FOpid_control_V4_DW.e3_m) + 0.054399999999999976 *
-        FOpid_control_V4_DW.e4_e) + -0.09075199999999999 *
-        FOpid_control_V4_DW.e5_o) - -0.3999999999999999 *
-        FOpid_control_V4_DW.y1_m) - 0.07999999999999996 *
-        FOpid_control_V4_DW.y2_l) - -0.14399999999999996 *
-        FOpid_control_V4_DW.y3_m) - 0.054399999999999976 *
-        FOpid_control_V4_DW.y4_fl) - -0.09075199999999999 *
-        FOpid_control_V4_DW.y5_cv) * -0.001442738379315398 +
+        0.01999999999999999 * FOpid_control_V4_DW.e2_o) + -0.06799999999999999 *
+        FOpid_control_V4_DW.e3_m) + 0.013399999999999994 *
+        FOpid_control_V4_DW.e4_e) + -0.04133599999999999 *
+        FOpid_control_V4_DW.e5_o) - -0.19999999999999996 *
+        FOpid_control_V4_DW.y1_m) - 0.01999999999999999 *
+        FOpid_control_V4_DW.y2_l) - -0.06799999999999999 *
+        FOpid_control_V4_DW.y3_m) - 0.013399999999999994 *
+        FOpid_control_V4_DW.y4_fl) - -0.04133599999999999 *
+        FOpid_control_V4_DW.y5_cv) * -0.008494825185857462 +
         (((((((((((FOpid_control_V4_B.Sum1 - FOpid_control_V4_DW.e1_g) + 0.5 *
                   FOpid_control_V4_DW.e2_o) + -0.5 * FOpid_control_V4_DW.e3_m) +
                 0.375 * FOpid_control_V4_DW.e4_e) + -0.375 *
                FOpid_control_V4_DW.e5_o) - (-FOpid_control_V4_DW.y1_m)) - 0.5 *
              FOpid_control_V4_DW.y2_l) - -0.5 * FOpid_control_V4_DW.y3_m) -
            0.375 * FOpid_control_V4_DW.y4_fl) - -0.375 *
-          FOpid_control_V4_DW.y5_cv) * -0.0 + -1.1 * FOpid_control_V4_B.Sum1);
+          FOpid_control_V4_DW.y5_cv) * -0.0 + -0.8 * FOpid_control_V4_B.Sum1);
     }
 
-    if (!(FOpid_control_V4_B.u_o <= 0.1)) {
-      FOpid_control_V4_B.u_o = 0.1;
+    if (!(FOpid_control_V4_B.u_o <= 0.2)) {
+      FOpid_control_V4_B.u_o = 0.2;
     }
 
-    if (!(FOpid_control_V4_B.u_o >= -0.1)) {
-      FOpid_control_V4_B.u_o = -0.1;
+    if (!(FOpid_control_V4_B.u_o >= -0.2)) {
+      FOpid_control_V4_B.u_o = -0.2;
     }
 
     FOpid_control_V4_DW.e5_o = FOpid_control_V4_DW.e4_e;
@@ -1564,7 +1563,7 @@ void FOpid_control_V4::step()
       - 0.07999999999999996 * FOpid_control_V4_DW.y2_n) - -0.14399999999999996 *
       FOpid_control_V4_DW.y3_p) - 0.054399999999999976 *
       FOpid_control_V4_DW.y4_b) - -0.09075199999999999 *
-      FOpid_control_V4_DW.y5_k) * 0.0807917333437061;
+      FOpid_control_V4_DW.y5_k) * 0.008656718850261265;
     if (!(FOpid_control_V4_B.u_b <= 0.8)) {
       FOpid_control_V4_B.u_b = 0.8;
     }
@@ -3486,7 +3485,7 @@ void FOpid_control_V4::initialize()
     static const char_T b_zeroDelimTopic[18] = "/ekranoplano/odom";
 
     /* Start for InitialCondition: '<S30>/IC' */
-    memcpy(&FOpid_control_V4_B.IC[0], &FOpid_control_V4_ConstP.pooled11[0], 12U *
+    memcpy(&FOpid_control_V4_B.IC[0], &FOpid_control_V4_ConstP.pooled10[0], 12U *
            sizeof(real_T));
 
     /* Start for InitialCondition: '<S30>/IC' */
@@ -3655,13 +3654,13 @@ void FOpid_control_V4::initialize()
 
   /* InitializeConditions for Memory: '<S30>/Memory2' */
   memcpy(&FOpid_control_V4_DW.Memory2_PreviousInput[0],
-         &FOpid_control_V4_ConstP.pooled11[0], 12U * sizeof(real_T));
+         &FOpid_control_V4_ConstP.pooled10[0], 12U * sizeof(real_T));
 
   /* InitializeConditions for Integrator: '<S30>/Integrator' */
   if (rtmIsFirstInitCond((&FOpid_control_V4_M))) {
-    FOpid_control_V4_X.Integrator_CSTATE[0] = 0.1;
+    FOpid_control_V4_X.Integrator_CSTATE[0] = 20.0;
     memset(&FOpid_control_V4_X.Integrator_CSTATE[1], 0, 10U * sizeof(real_T));
-    FOpid_control_V4_X.Integrator_CSTATE[11] = -0.5;
+    FOpid_control_V4_X.Integrator_CSTATE[11] = -1.0;
   }
 
   FOpid_control_V4_DW.Integrator_DWORK1 = true;

@@ -20,13 +20,13 @@ tsim = 1;
 step = 0.01;
 x_nom = zeros(12,1);
 % Velocidad y ángulo de trimado calculado
-x_nom(1)  = 0.1;           % u [m/s] — velocidad crucero
+x_nom(1)  = 20.0;           % u [m/s] — velocidad crucero
 x_nom(3)  = 0;              % w [m/s]
 % x_nom(8)  = 1.5*(pi/180);   % theta trimado (~1.5° con iw=1.5°)
 x_nom(8)  = 0;   % theta trimado (~1.5° con iw=1.5°)
 x_nom(10) = 0;              % x_NED
 x_nom(11) = 0;              % y_NED
-x_nom(12) = -0.50;         % z_NED (altura = 0.55 m)
+x_nom(12) = -1.0;         % z_NED (altura = 0.55 m)
 
 % Throttle inicial: calculado para equilibrar drag
 u_nom = zeros(5,1);
@@ -36,27 +36,27 @@ u_nom(4:5) = 0.52;  % CORREGIDO: era 0.80 (sobreempujaba), ahora equilibrado
 x0 = zeros(12,1);   % todos los estados en cero al inicio
 
 %% PARAMETROS DE CONTROL PID (Para modelo de 1.2 kg)
-lambda = 0.5;   mu = 0.5;   % Órdenes fraccionarios (fijos)
+% lambda = 0.5;   mu = 0.5;   % Órdenes fraccionarios (fijos)
 
 % 1. Lazo de Velocidad
 u_sp    = 20.2;
 Kp_u    =  0.50;   
-Ki_u    =  5.60;   
+Ki_u    =  0.60;   
 Kd_u    =  0.0;
 
 % 2. Lazo de Altura
 h_sp    =  1.0;
 
-Kp_h    =  0.5;   
-Ki_h    =  2.06;   
+Kp_h    =  1.0;   
+Ki_h    =  2.5;   
 Kd_h    =  0.0;
 
 theta_max =  0.10;   
 theta_min = -0.10;
 
 % 3. Lazo Interno de Elevador (Pitch)
-Kp_pitch = -1.10;  
-Ki_pitch = -0.1;  
+Kp_pitch = -0.80;  
+Ki_pitch = -1.0;
 Kd_pitch = -0.0;
 
 % 4. Lazo de Timón (Yaw)

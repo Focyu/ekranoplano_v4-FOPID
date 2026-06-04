@@ -170,6 +170,7 @@ FOpid_control_V4/Mux4
 FOpid_control_V4/Mux5
 FOpid_control_V4/Mux6
 FOpid_control_V4/Mux8
+FOpid_control_V4/PID Controller
 FOpid_control_V4/Publish
 FOpid_control_V4/Publish1
 FOpid_control_V4/Publish2

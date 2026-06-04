@@ -4,9 +4,9 @@
 //
 // Code generated for Simulink model 'FOpid_control_V4'.
 //
-// Model version                  : 13.15
+// Model version                  : 13.23
 // Simulink Coder version         : 26.1 (R2026a) 20-Nov-2025
-// C/C++ source code generated on : Sun May 31 11:12:01 2026
+// C/C++ source code generated on : Thu Jun 04 13:38:48 2026
 //
 #ifdef _MSC_VER
 #pragma warning(push)
