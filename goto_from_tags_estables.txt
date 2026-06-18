@@ -27,6 +27,7 @@
 [GOTO] FOpid_control_V4/Goto32  ->  Tag: s
 [GOTO] FOpid_control_V4/Goto33  ->  Tag: ns
 [GOTO] FOpid_control_V4/Goto34  ->  Tag: VEL_SET
+[GOTO] FOpid_control_V4/Goto35  ->  Tag: theta_sp
 [GOTO] FOpid_control_V4/Goto4  ->  Tag: orientationX
 [GOTO] FOpid_control_V4/Goto5  ->  Tag: orientationW
 [GOTO] FOpid_control_V4/Goto6  ->  Tag: positionY
@@ -128,6 +129,7 @@
 [FROM] FOpid_control_V4/From70  <-  Tag: pz
 [FROM] FOpid_control_V4/From71  <-  Tag: x_in
 [FROM] FOpid_control_V4/From72  <-  Tag: positionX
+[FROM] FOpid_control_V4/From73  <-  Tag: theta_sp
 [FROM] FOpid_control_V4/From8  <-  Tag: x_in
 [FROM] FOpid_control_V4/From9  <-  Tag: orientationY
 [FROM] FOpid_control_V4/SUBSYSTEM_MODEL/From  <-  Tag: phi_interno
