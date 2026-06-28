@@ -6,9 +6,9 @@
  *
  * Code generation for model "FOpid_control_V4".
  *
- * Model version              : 13.36
+ * Model version              : 13.44
  * Simulink Coder version : 26.1 (R2026a) 20-Nov-2025
- * C++ source code generated on : Thu Jun 18 08:14:04 2026
+ * C++ source code generated on : Sun Jun 28 19:11:25 2026
  *
  * Target selection: ert.tlc
  * Note: GRT includes extra infrastructure and instrumentation for prototyping

@@ -1,7 +1,7 @@
 ==========================================================
 REPORTE DE CÓDIGO INTERNO - MATLAB FUNCTIONS
 Modelo: FOpid_control_V4
-Fecha: 18-Jun-2026 08:12:19
+Fecha: 28-Jun-2026 19:09:55
 ==========================================================
 
 ----------------------------------------------------------
@@ -25,14 +25,15 @@ end
 ----------------------------------------------------------
 BLOQUE [2]: FOpid_control_V4/MATLAB Function - fopid_altura
 ----------------------------------------------------------
-function u = fopid_altura_mod(e, y, kp, ki, kd)
+function u= fopid_altura_mod(e, y, kp, ki, kd)
+
 %#codegen
 % FOPI^lambda D discreto - ALTURA
 % e : error de altura
 % y : medicion de altura
 % u : referencia de pitch (theta_sp)
 
-mu     = 0.5;
+mu     = 0.9;
 lambda = 0.7;
 Ts     = 0.01;
 wc     = 1.0;
@@ -60,10 +61,13 @@ g3 = (-4*lm^3)/3 - (2*lm)/3;
 g4 = (2*lm^4)/3 + (4*lm^2)/3;
 g5 = (-4*lm^5)/15 - (4*lm^3)/3 - (2*lm)/5;
 
+% Actualizacion de historias
+
+
 persistent e1 e2 e3 e4 e5 e6 e7
 persistent y1 y2 y3 y4 y5 y6 y7
 persistent sumI u_prev u_prev2
-
+% 
 if isempty(e1)
     e1 = 0; e2 = 0; e3 = 0; e4 = 0; e5 = 0; e6 = 0; e7 = 0;
     y1 = 0; y2 = 0; y3 = 0; y4 = 0; y5 = 0; y6 = 0; y7 = 0;
@@ -71,6 +75,11 @@ if isempty(e1)
     u_prev = 0;
     u_prev2 = 0;
 end
+
+% 
+% 
+% e7 = e6; e6 = e5; e5 = e4; e4 = e3; e3 = e2; e2 = e1; e1 = e;
+% y7 = y6; y6 = y5; y5 = y4; y4 = y3; y3 = y2; y2 = y1; y1 = y;
 
 % Derivada fraccional sobre la medicion
 sumD = KD * ( ...
@@ -81,8 +90,10 @@ sumD = KD * ( ...
     + f4*(y4 - 2*y5 + y6) ...
     + f5*(y5 - 2*y6 + y7) );
 
+
+
 % Integral fraccional sobre el error
-dI = KI * ( ...
+sumI = KI * ( ...
     g0*(e  + 2*e1 + e2) ...
     + g1*(e1 + 2*e2 + e3) ...
     + g2*(e2 + 2*e3 + e4) ...
@@ -90,256 +101,28 @@ dI = KI * ( ...
     + g4*(e4 + 2*e5 + e6) ...
     + g5*(e5 + 2*e6 + e7) );
 
-sumI_cand = sumI + dI;
 
-% Ley de control incremental
-u_raw = u_prev2 + KP*(e - e2) + sumD + sumI_cand;
-u_sat = max(min(u_raw, u_max), u_min);
-
-% Anti-windup por integracion condicional
-if (u_raw == u_sat) || ((u_raw > u_max) && (e < 0)) || ((u_raw < u_min) && (e > 0))
-    sumI = sumI_cand;
-end
 
 % Salida final
-u_raw = u_prev2 + KP*(e - e2) + sumD + sumI;
-u = max(min(u_raw, u_max), u_min);
-
-% Actualizacion de historias
-e7 = e6; e6 = e5; e5 = e4; e4 = e3; e3 = e2; e2 = e1; e1 = e;
-y7 = y6; y6 = y5; y5 = y4; y4 = y3; y3 = y2; y2 = y1; y1 = y;
-
-u_prev2 = u_prev;
-u_prev  = u;
-end
-
-
-% function u = fopid_altura(e, kp, ki, kd)
-% %#codegen
-% mu     = 0.5;
-% lambda = 0.7;
-% Ts     = 0.01;
-% wc     = 1.0;
-% u_min  = -0.2;
-% u_max  =  0.2;
-% 
-% alpha = wc / tan(wc * Ts / 2);
-% KP = kp;
-% KD = kd * (alpha^mu);
-% KI = ki * (alpha^(-lambda));
-% 
-% f0= 1;
-% f1=-2*mu;
-% f2= 2*mu^2;
-% f3=(-4*mu^3)/3  - (2*mu)/3;
-% f4= (2*mu^4)/3  + (4*mu^2)/3;
-% f5=(-4*mu^5)/15 - (4*mu^3)/3 - (2*mu)/5;
-% 
-% lm = 1 - lambda;
-% g0= 1;
-% g1=-2*lm;
-% g2= 2*lm^2;
-% g3=(-4*lm^3)/3  - (2*lm)/3;
-% g4= (2*lm^4)/3  + (4*lm^2)/3;
-% g5=(-4*lm^5)/15 - (4*lm^3)/3 - (2*lm)/5;
-% 
-% persistent e1 e2 e3 e4 e5 e6 e7 sumI u_prev u_prev2
-% if isempty(e1)
-%     e1=0; e2=0; e3=0; e4=0; e5=0; e6=0; e7=0;
-%     sumI=0;
-%     u_prev=0; u_prev2=0;
-% end
-% 
-% sumD = KD * ( f0*(e   - 2*e1 + e2) ...
-%     + f1*(e1  - 2*e2 + e3) ...
-%     + f2*(e2  - 2*e3 + e4) ...
-%     + f3*(e3  - 2*e4 + e5) ...
-%     + f4*(e4  - 2*e5 + e6) ...
-%     + f5*(e5  - 2*e6 + e7) );
-% 
-% dI = KI * ( g0*(e   + 2*e1 + e2) ...
-%     + g1*(e1  + 2*e2 + e3) ...
-%     + g2*(e2  + 2*e3 + e4) ...
-%     + g3*(e3  + 2*e4 + e5) ...
-%     + g4*(e4  + 2*e5 + e6) ...
-%     + g5*(e5  + 2*e6 + e7) );
-% 
-% sumI_cand = sumI + dI;
-% u_raw = u_prev2 + KP*(e - e2) + sumD + sumI_cand;
-% u_sat = max(min(u_raw, u_max), u_min);
-% 
-% if (u_raw == u_sat) || ((u_raw > u_max) && (e < 0)) || ((u_raw < u_min) && (e > 0))
-%     sumI = sumI_cand;
-% end
-% 
 % u_raw = u_prev2 + KP*(e - e2) + sumD + sumI;
 % u = max(min(u_raw, u_max), u_min);
 % 
-% e7=e6; e6=e5; e5=e4; e4=e3; e3=e2; e2=e1; e1=e;
-% u_prev2=u_prev; u_prev=u;
-% end
 % 
-% % function u = fopid_altura(e, kp, ki, kd)
-% % %#codegen
-% % % FOPI^lambda D — Lazo ALTURA (h -> theta_ref)
-% % mu     = 0.5;
-% % lambda = 0.7;
-% % Ts     = 0.01;
-% % wc     = 0.50;
-% % u_min  = -0.2;
-% % u_max  =  0.2;
-% % 
-% % alpha = wc / tan(wc * Ts / 2);
-% % KP = kp;
-% % KD = kd * (alpha^mu);
-% % KI = ki * (alpha^(-lambda));
-% % 
-% % % Coeficientes GL orden 5 — derivada (mu)
-% % f0= 1;
-% % f1=-2*mu;
-% % f2= 2*mu^2;
-% % f3=(-4*mu^3)/3  - (2*mu)/3;
-% % f4= (2*mu^4)/3  + (4*mu^2)/3;
-% % f5=(-4*mu^5)/15 - (4*mu^3)/3 - (2*mu)/5;
-% % 
-% % % Coeficientes GL orden 5 — integral (1-lambda)
-% % lm = 1 - lambda;
-% % g0= 1;
-% % g1=-2*lm;
-% % g2= 2*lm^2;
-% % g3=(-4*lm^3)/3  - (2*lm)/3;
-% % g4= (2*lm^4)/3  + (4*lm^2)/3;
-% % g5=(-4*lm^5)/15 - (4*lm^3)/3 - (2*lm)/5;
-% % 
-% % persistent e1 e2 e3 e4 e5 e6 e7 sumI u_prev u_prev2
-% % if isempty(e1)
-% %     e1=0; e2=0; e3=0; e4=0; e5=0; e6=0; e7=0;
-% %     sumI=0;
-% %     u_prev=0; u_prev2=0;
-% % end
-% % 
-% % % --- Derivada fraccionaria D^mu (diferencias de 2º orden, FIR) ---
-% % sumD = KD * ( f0*(e   - 2*e1 + e2) ...
-% %     + f1*(e1  - 2*e2 + e3) ...
-% %     + f2*(e2  - 2*e3 + e4) ...
-% %     + f3*(e3  - 2*e4 + e5) ...
-% %     + f4*(e4  - 2*e5 + e6) ...
-% %     + f5*(e5  - 2*e6 + e7) );
-% % 
-% % % --- Integral fraccionaria D^-lambda (sumas de 2º orden, acumulador) ---
-% % sumI = sumI + KI * ( g0*(e   + 2*e1 + e2) ...
-% %     + g1*(e1  + 2*e2 + e3) ...
-% %     + g2*(e2  + 2*e3 + e4) ...
-% %     + g3*(e3  + 2*e4 + e5) ...
-% %     + g4*(e4  + 2*e5 + e6) ...
-% %     + g5*(e5  + 2*e6 + e7) );
-% % 
-% % % --- Ley de control explícita ---
-% % u_raw = u_prev2 + KP*(e - e2) + sumD + sumI;
-% % u = max(min(u_raw, u_max), u_min);
-% % 
-% % % --- Actualizar historia ---
-% % e7=e6; e6=e5; e5=e4; e4=e3; e3=e2; e2=e1; e1=e;
-% % u_prev2=u_prev; u_prev=u;
-% % end
-% % 
-% % 
-% % % function u = fopid_altura(e, kp, ki, kd)
-% % % function u = fopid_altura(e, kp, ki, kd)
-% % % %#codegen
-% % % % FOPI^lambda D — Lazo ALTURA (h -> theta_ref)
-% % % % kp, ki, kd entran como puertos externos (bloques Constant)
-% % % mu     = 0.5;
-% % % lambda = 0.6;
-% % % Ts     = 0.01;
-% % % wc     = 1.0;
-% % % u_min  = -0.2;
-% % % u_max  =  0.2;
-% % % 
-% % % alpha = wc / tan(wc * Ts / 2);
-% % % KP = kp;
-% % % KD = kd * (alpha^mu);
-% % % KI = ki * (alpha^(-lambda));
-% % % 
-% % % lm = 1 - lambda;
-% % % f0= 1; f1=-2*mu;    f2=2*mu^2;
-% % % f3=(-4*mu^3)/3  -(2*mu)/3;
-% % % f4=(2*mu^4)/3   +(4*mu^2)/3;
-% % % f5=(-4*mu^5)/15 -(4*mu^3)/3-(2*mu)/5;
-% % % 
-% % % g0=1; g1=-2*lm;    g2=2*lm^2;
-% % % g3=(-4*lm^3)/3  -(2*lm)/3;
-% % % g4=(2*lm^4)/3   +(4*lm^2)/3;
-% % % g5=(-4*lm^5)/15 -(4*lm^3)/3-(2*lm)/5;
-% % % 
-% % % persistent e1 e2 e3 e4 e5 y1 y2 y3 y4 y5 u1 u2
-% % % if isempty(e1)
-% % %     e1=0;e2=0;e3=0;e4=0;e5=0;
-% % %     y1=0;y2=0;y3=0;y4=0;y5=0;
-% % %     u1=0;u2=0;
-% % % end
-% % % 
-% % % Y = f0*e +f1*e1+f2*e2+f3*e3+f4*e4+f5*e5 ...
-% % %     -f1*y1-f2*y2-f3*y3-f4*y4-f5*y5;
-% % % Z = g0*e +g1*e1+g2*e2+g3*e3+g4*e4+g5*e5 ...
-% % %     -g1*y1-g2*y2-g3*y3-g4*y4-g5*y5;
-% % % 
-% % % u_raw = KP*e + KD*Y + KI*Z;
-% % % u = max(min(u_raw, u_max), u_min);
-% % % 
-% % % e5=e4;e4=e3;e3=e2;e2=e1;e1=e;
-% % % y5=y4;y4=y3;y3=y2;y2=y1;y1=u;
-% % % u2=u1;u1=u;
-% % % end
-% % % 
-% % % % function u = fopid_altura(e)
-% % % % %#codegen
-% % % % % FOPI^lambda D — Lazo ALTURA (h -> theta_ref)
-% % % % kp =  1.50;  
-% % % % ki =  0.002;  
-% % % % kd =  0.0;
-% % % % mu     = 0.5;
-% % % % lambda = 0.5;
-% % % % Ts     = 0.01;
-% % % % wc     = 1.5;
-% % % % u_min  = -0.20;
-% % % % u_max  =  0.20;
-% % % % 
-% % % % alpha = wc / tan(wc * Ts / 2);
-% % % % KP = kp;
-% % % % KD = kd * (alpha^mu);
-% % % % KI = ki * (alpha^(-lambda));
-% % % % 
-% % % % lm = 1 - lambda;
-% % % % f0= 1; f1=-2*mu; f2=2*mu^2;
-% % % % f3=(-4*mu^3)/3-(2*mu)/3;
-% % % % f4=(2*mu^4)/3+(4*mu^2)/3;
-% % % % f5=(-4*mu^5)/15-(4*mu^3)/3-(2*mu)/5;
-% % % % 
-% % % % g0=1; g1=-2*lm; g2=2*lm^2;
-% % % % g3=(-4*lm^3)/3-(2*lm)/3;
-% % % % g4=(2*lm^4)/3+(4*lm^2)/3;
-% % % % g5=(-4*lm^5)/15-(4*lm^3)/3-(2*lm)/5;
-% % % % 
-% % % % persistent e1 e2 e3 e4 e5 y1 y2 y3 y4 y5 u1 u2
-% % % % if isempty(e1)
-% % % %     e1=0;e2=0;e3=0;e4=0;e5=0;
-% % % %     y1=0;y2=0;y3=0;y4=0;y5=0;
-% % % %     u1=0;u2=0;
-% % % % end
-% % % % 
-% % % % Y = f0*e +f1*e1+f2*e2+f3*e3+f4*e4+f5*e5 ...
-% % % %    -f1*y1-f2*y2-f3*y3-f4*y4-f5*y5;
-% % % % Z = g0*e +g1*e1+g2*e2+g3*e3+g4*e4+g5*e5 ...
-% % % %    -g1*y1-g2*y2-g3*y3-g4*y4-g5*y5;
-% % % % 
-% % % % u_raw = KP*e + KD*Y + KI*Z;
-% % % % u = max(min(u_raw, u_max), u_min);
-% % % % 
-% % % % e5=e4;e4=e3;e3=e2;e2=e1;e1=e;
-% % % % y5=y4;y4=y3;y3=y2;y2=y1;y1=u;
-% % % % u2=u1;u1=u;
-% % % % end
+% u_prev2 = u_prev;
+% u_prev  = u;
+u_raw = u_prev + KP*(e - e1) + sumD + sumI;
+u = max(min(u_raw, u_max), u_min);
+
+u_prev2 = u_prev;
+u_prev  = u;
+
+e7 = e6; e6 = e5; e5 = e4; e4 = e3; e3 = e2; e2 = e1; e1 = e;
+y7 = y6; y6 = y5; y5 = y4; y4 = y3; y3 = y2; y2 = y1; y1 = y;
+
+end
+
+
+
 
 ----------------------------------------------------------
 BLOQUE [3]: FOpid_control_V4/MATLAB Function - fopid_pitch
@@ -355,6 +138,7 @@ mu     = 0.5;
 lambda = 0.6;
 Ts     = 0.01;
 wc     = 1.0;
+
 u_min  = -0.1;
 u_max  =  0.1;
 
@@ -381,38 +165,37 @@ g5 = (-4*lm^5)/15 - (4*lm^3)/3 - (2*lm)/5;
 
 persistent e1 e2 e3 e4 e5 e6 e7
 persistent y1 y2 y3 y4 y5 y6 y7
-persistent sumI u_prev u_prev2
+persistent sumI u_prev
 
 if isempty(e1)
     e1 = 0; e2 = 0; e3 = 0; e4 = 0; e5 = 0; e6 = 0; e7 = 0;
     y1 = 0; y2 = 0; y3 = 0; y4 = 0; y5 = 0; y6 = 0; y7 = 0;
     sumI = 0;
     u_prev = 0;
-    u_prev2 = 0;
 end
 
 % Derivada fraccional sobre la medicion
 sumD = KD * ( ...
     f0*(y  - 2*y1 + y2) ...
-  + f1*(y1 - 2*y2 + y3) ...
-  + f2*(y2 - 2*y3 + y4) ...
-  + f3*(y3 - 2*y4 + y5) ...
-  + f4*(y4 - 2*y5 + y6) ...
-  + f5*(y5 - 2*y6 + y7) );
+    + f1*(y1 - 2*y2 + y3) ...
+    + f2*(y2 - 2*y3 + y4) ...
+    + f3*(y3 - 2*y4 + y5) ...
+    + f4*(y4 - 2*y5 + y6) ...
+    + f5*(y5 - 2*y6 + y7) );
 
 % Integral fraccional sobre el error
 dI = KI * ( ...
     g0*(e  + 2*e1 + e2) ...
-  + g1*(e1 + 2*e2 + e3) ...
-  + g2*(e2 + 2*e3 + e4) ...
-  + g3*(e3 + 2*e4 + e5) ...
-  + g4*(e4 + 2*e5 + e6) ...
-  + g5*(e5 + 2*e6 + e7) );
+    + g1*(e1 + 2*e2 + e3) ...
+    + g2*(e2 + 2*e3 + e4) ...
+    + g3*(e3 + 2*e4 + e5) ...
+    + g4*(e4 + 2*e5 + e6) ...
+    + g5*(e5 + 2*e6 + e7) );
 
 sumI_cand = sumI + dI;
 
-% Ley de control incremental
-u_raw = u_prev2 + KP*(e - e2) + sumD + sumI_cand;
+% Control incremental
+u_raw = u_prev + KP*(e - e1) + sumD + sumI_cand;
 u_sat = max(min(u_raw, u_max), u_min);
 
 % Anti-windup por integracion condicional
@@ -421,18 +204,24 @@ if (u_raw == u_sat) || ((u_raw > u_max) && (e < 0)) || ((u_raw < u_min) && (e > 
 end
 
 % Salida final
-u_raw = u_prev2 + KP*(e - e2) + sumD + sumI;
+u_raw = u_prev + KP*(e - e1) + sumD + sumI;
 u = max(min(u_raw, u_max), u_min);
 
 % Actualizacion de historias
 e7 = e6; e6 = e5; e5 = e4; e4 = e3; e3 = e2; e2 = e1; e1 = e;
 y7 = y6; y6 = y5; y5 = y4; y4 = y3; y3 = y2; y2 = y1; y1 = y;
+u_prev = u;
 
-u_prev2 = u_prev;
-u_prev  = u;
 end
-% function u = fopid_pitch(e, kp, ki, kd)
+
+
+% function u = fopid_pitch_mod(e, y, kp, ki, kd)
 % %#codegen
+% % FOPI^lambda D discreto - PITCH
+% % e : error de pitch
+% % y : medicion de pitch
+% % u : comando de elevador
+% 
 % mu     = 0.5;
 % lambda = 0.6;
 % Ts     = 0.01;
@@ -441,67 +230,170 @@ end
 % u_max  =  0.1;
 % 
 % alpha = wc / tan(wc * Ts / 2);
+% 
 % KP = kp;
 % KD = kd * (alpha^mu);
 % KI = ki * (alpha^(-lambda));
 % 
-% f0= 1;
-% f1=-2*mu;
-% f2= 2*mu^2;
-% f3=(-4*mu^3)/3  - (2*mu)/3;
-% f4= (2*mu^4)/3  + (4*mu^2)/3;
-% f5=(-4*mu^5)/15 - (4*mu^3)/3 - (2*mu)/5;
+% f0 = 1;
+% f1 = -2*mu;
+% f2 = 2*mu^2;
+% f3 = (-4*mu^3)/3 - (2*mu)/3;
+% f4 = (2*mu^4)/3 + (4*mu^2)/3;
+% f5 = (-4*mu^5)/15 - (4*mu^3)/3 - (2*mu)/5;
 % 
 % lm = 1 - lambda;
-% g0= 1;
-% g1=-2*lm;
-% g2= 2*lm^2;
-% g3=(-4*lm^3)/3  - (2*lm)/3;
-% g4= (2*lm^4)/3  + (4*lm^2)/3;
-% g5=(-4*lm^5)/15 - (4*lm^3)/3 - (2*lm)/5;
+% g0 = 1;
+% g1 = -2*lm;
+% g2 = 2*lm^2;
+% g3 = (-4*lm^3)/3 - (2*lm)/3;
+% g4 = (2*lm^4)/3 + (4*lm^2)/3;
+% g5 = (-4*lm^5)/15 - (4*lm^3)/3 - (2*lm)/5;
 % 
-% persistent e1 e2 e3 e4 e5 e6 e7 sumI u_prev u_prev2
+% persistent e1 e2 e3 e4 e5 e6 e7
+% persistent y1 y2 y3 y4 y5 y6 y7
+% persistent sumI u_prev u_prev2
+% 
 % if isempty(e1)
-%     e1=0; e2=0; e3=0; e4=0; e5=0; e6=0; e7=0;
-%     sumI=0;
-%     u_prev=0; u_prev2=0;
+%     e1 = 0; e2 = 0; e3 = 0; e4 = 0; e5 = 0; e6 = 0; e7 = 0;
+%     y1 = 0; y2 = 0; y3 = 0; y4 = 0; y5 = 0; y6 = 0; y7 = 0;
+%     sumI = 0;
+%     u_prev = 0;
+%     u_prev2 = 0;
 % end
 % 
-% sumD = KD * ( f0*(e   - 2*e1 + e2) ...
-%     + f1*(e1  - 2*e2 + e3) ...
-%     + f2*(e2  - 2*e3 + e4) ...
-%     + f3*(e3  - 2*e4 + e5) ...
-%     + f4*(e4  - 2*e5 + e6) ...
-%     + f5*(e5  - 2*e6 + e7) );
+% % Derivada fraccional sobre la medicion
+% sumD = KD * ( ...
+%     f0*(y  - 2*y1 + y2) ...
+%     + f1*(y1 - 2*y2 + y3) ...
+%     + f2*(y2 - 2*y3 + y4) ...
+%     + f3*(y3 - 2*y4 + y5) ...
+%     + f4*(y4 - 2*y5 + y6) ...
+%     + f5*(y5 - 2*y6 + y7) );
 % 
-% dI = KI * ( g0*(e   + 2*e1 + e2) ...
-%     + g1*(e1  + 2*e2 + e3) ...
-%     + g2*(e2  + 2*e3 + e4) ...
-%     + g3*(e3  + 2*e4 + e5) ...
-%     + g4*(e4  + 2*e5 + e6) ...
-%     + g5*(e5  + 2*e6 + e7) );
+% % Integral fraccional sobre el error
+% dI = KI * ( ...
+%     g0*(e  + 2*e1 + e2) ...
+%     + g1*(e1 + 2*e2 + e3) ...
+%     + g2*(e2 + 2*e3 + e4) ...
+%     + g3*(e3 + 2*e4 + e5) ...
+%     + g4*(e4 + 2*e5 + e6) ...
+%     + g5*(e5 + 2*e6 + e7) );
 % 
 % sumI_cand = sumI + dI;
+% 
+% % Ley de control incremental
 % u_raw = u_prev2 + KP*(e - e2) + sumD + sumI_cand;
 % u_sat = max(min(u_raw, u_max), u_min);
 % 
+% % Anti-windup por integracion condicional
 % if (u_raw == u_sat) || ((u_raw > u_max) && (e < 0)) || ((u_raw < u_min) && (e > 0))
 %     sumI = sumI_cand;
 % end
 % 
+% % Salida final
 % u_raw = u_prev2 + KP*(e - e2) + sumD + sumI;
 % u = max(min(u_raw, u_max), u_min);
 % 
-% e7=e6; e6=e5; e5=e4; e4=e3; e3=e2; e2=e1; e1=e;
-% u_prev2=u_prev; u_prev=u;
+% % Actualizacion de historias
+% e7 = e6; e6 = e5; e5 = e4; e4 = e3; e3 = e2; e2 = e1; e1 = e;
+% y7 = y6; y6 = y5; y5 = y4; y4 = y3; y3 = y2; y2 = y1; y1 = y;
+% 
+% u_prev2 = u_prev;
+% u_prev  = u;
+% end
+
+% function u = fopid_pitch_mod(e, y, kp, ki, kd)
+% %#codegen
+% % FOPI^lambda D discreto - PITCH
+% % e : error de pitch
+% % y : medicion de pitch
+% % u : comando de elevador
+% 
+% mu     = 0.5;
+% lambda = 0.6;
+% Ts     = 0.01;
+% wc     = 1.0;
+% u_min  = -0.1;
+% u_max  =  0.1;
+% 
+% alpha = wc / tan(wc * Ts / 2);
+% 
+% KP = kp;
+% KD = kd * (alpha^mu);
+% KI = ki * (alpha^(-lambda));
+% 
+% f0 = 1;
+% f1 = -2*mu;
+% f2 = 2*mu^2;
+% f3 = (-4*mu^3)/3 - (2*mu)/3;
+% f4 = (2*mu^4)/3 + (4*mu^2)/3;
+% f5 = (-4*mu^5)/15 - (4*mu^3)/3 - (2*mu)/5;
+% 
+% lm = 1 - lambda;
+% g0 = 1;
+% g1 = -2*lm;
+% g2 = 2*lm^2;
+% g3 = (-4*lm^3)/3 - (2*lm)/3;
+% g4 = (2*lm^4)/3 + (4*lm^2)/3;
+% g5 = (-4*lm^5)/15 - (4*lm^3)/3 - (2*lm)/5;
+% 
+% persistent e1 e2 e3 e4 e5 e6 e7
+% persistent y1 y2 y3 y4 y5 y6 y7
+% persistent sumI u_prev u_prev2
+% 
+% if isempty(e1)
+%     e1 = 0; e2 = 0; e3 = 0; e4 = 0; e5 = 0; e6 = 0; e7 = 0;
+%     y1 = 0; y2 = 0; y3 = 0; y4 = 0; y5 = 0; y6 = 0; y7 = 0;
+%     sumI = 0;
+%     u_prev = 0;
+%     u_prev2 = 0;
 % end
 % 
-% % function u = fopid_altura(e, kp, ki, kd)
+% % Derivada fraccional sobre la medicion
+% sumD = KD * ( ...
+%     f0*(y  - 2*y1 + y2) ...
+%   + f1*(y1 - 2*y2 + y3) ...
+%   + f2*(y2 - 2*y3 + y4) ...
+%   + f3*(y3 - 2*y4 + y5) ...
+%   + f4*(y4 - 2*y5 + y6) ...
+%   + f5*(y5 - 2*y6 + y7) );
+% 
+% % Integral fraccional sobre el error
+% dI = KI * ( ...
+%     g0*(e  + 2*e1 + e2) ...
+%   + g1*(e1 + 2*e2 + e3) ...
+%   + g2*(e2 + 2*e3 + e4) ...
+%   + g3*(e3 + 2*e4 + e5) ...
+%   + g4*(e4 + 2*e5 + e6) ...
+%   + g5*(e5 + 2*e6 + e7) );
+% 
+% sumI_cand = sumI + dI;
+% 
+% % Ley de control incremental
+% u_raw = u_prev2 + KP*(e - e2) + sumD + sumI_cand;
+% u_sat = max(min(u_raw, u_max), u_min);
+% 
+% % Anti-windup por integracion condicional
+% if (u_raw == u_sat) || ((u_raw > u_max) && (e < 0)) || ((u_raw < u_min) && (e > 0))
+%     sumI = sumI_cand;
+% end
+% 
+% % Salida final
+% u_raw = u_prev2 + KP*(e - e2) + sumD + sumI;
+% u = max(min(u_raw, u_max), u_min);
+% 
+% % Actualizacion de historias
+% e7 = e6; e6 = e5; e5 = e4; e4 = e3; e3 = e2; e2 = e1; e1 = e;
+% y7 = y6; y6 = y5; y5 = y4; y4 = y3; y3 = y2; y2 = y1; y1 = y;
+% 
+% u_prev2 = u_prev;
+% u_prev  = u;
+% end
+% % function u = fopid_pitch(e, kp, ki, kd)
 % % %#codegen
-% % % FOPI^lambda D — Lazo ALTURA (h -> theta_ref)
-% % % Formulación EXPLÍCITA tipo twin-rotor: FIR diferencias + acumulador
 % % mu     = 0.5;
-% % lambda = 0.8;
+% % lambda = 0.6;
 % % Ts     = 0.01;
 % % wc     = 1.0;
 % % u_min  = -0.1;
@@ -512,7 +404,6 @@ end
 % % KD = kd * (alpha^mu);
 % % KI = ki * (alpha^(-lambda));
 % % 
-% % % Coeficientes GL orden 5 — derivada (mu)
 % % f0= 1;
 % % f1=-2*mu;
 % % f2= 2*mu^2;
@@ -520,7 +411,6 @@ end
 % % f4= (2*mu^4)/3  + (4*mu^2)/3;
 % % f5=(-4*mu^5)/15 - (4*mu^3)/3 - (2*mu)/5;
 % % 
-% % % Coeficientes GL orden 5 — integral (1-lambda)
 % % lm = 1 - lambda;
 % % g0= 1;
 % % g1=-2*lm;
@@ -536,7 +426,6 @@ end
 % %     u_prev=0; u_prev2=0;
 % % end
 % % 
-% % % --- Derivada fraccionaria D^mu (diferencias de 2º orden, FIR) ---
 % % sumD = KD * ( f0*(e   - 2*e1 + e2) ...
 % %     + f1*(e1  - 2*e2 + e3) ...
 % %     + f2*(e2  - 2*e3 + e4) ...
@@ -544,90 +433,104 @@ end
 % %     + f4*(e4  - 2*e5 + e6) ...
 % %     + f5*(e5  - 2*e6 + e7) );
 % % 
-% % % --- Integral fraccionaria D^-lambda (sumas de 2º orden, acumulador) ---
-% % sumI = sumI + KI * ( g0*(e   + 2*e1 + e2) ...
+% % dI = KI * ( g0*(e   + 2*e1 + e2) ...
 % %     + g1*(e1  + 2*e2 + e3) ...
 % %     + g2*(e2  + 2*e3 + e4) ...
 % %     + g3*(e3  + 2*e4 + e5) ...
 % %     + g4*(e4  + 2*e5 + e6) ...
 % %     + g5*(e5  + 2*e6 + e7) );
 % % 
-% % % --- Ley de control explícita ---
+% % sumI_cand = sumI + dI;
+% % u_raw = u_prev2 + KP*(e - e2) + sumD + sumI_cand;
+% % u_sat = max(min(u_raw, u_max), u_min);
+% % 
+% % if (u_raw == u_sat) || ((u_raw > u_max) && (e < 0)) || ((u_raw < u_min) && (e > 0))
+% %     sumI = sumI_cand;
+% % end
+% % 
 % % u_raw = u_prev2 + KP*(e - e2) + sumD + sumI;
 % % u = max(min(u_raw, u_max), u_min);
 % % 
-% % % --- Actualizar historia ---
 % % e7=e6; e6=e5; e5=e4; e4=e3; e3=e2; e2=e1; e1=e;
 % % u_prev2=u_prev; u_prev=u;
 % % end
 % % 
-% % 
-% % % function u = fopid_pitch(e, kp, ki, kd)
+% % % function u = fopid_altura(e, kp, ki, kd)
 % % % %#codegen
-% % % % FOPI^lambda D — Lazo PITCH (theta -> u2 elevador)
-% % % % kp, ki, kd entran como puertos externos (bloques Constant)
+% % % % FOPI^lambda D — Lazo ALTURA (h -> theta_ref)
+% % % % Formulación EXPLÍCITA tipo twin-rotor: FIR diferencias + acumulador
 % % % mu     = 0.5;
-% % % lambda = 0.6;
+% % % lambda = 0.8;
 % % % Ts     = 0.01;
-% % % wc     = 4.0;
-% % % u_min  = -0.35;
-% % % u_max  =  0.35;
+% % % wc     = 1.0;
+% % % u_min  = -0.1;
+% % % u_max  =  0.1;
 % % % 
 % % % alpha = wc / tan(wc * Ts / 2);
 % % % KP = kp;
 % % % KD = kd * (alpha^mu);
 % % % KI = ki * (alpha^(-lambda));
 % % % 
+% % % % Coeficientes GL orden 5 — derivada (mu)
+% % % f0= 1;
+% % % f1=-2*mu;
+% % % f2= 2*mu^2;
+% % % f3=(-4*mu^3)/3  - (2*mu)/3;
+% % % f4= (2*mu^4)/3  + (4*mu^2)/3;
+% % % f5=(-4*mu^5)/15 - (4*mu^3)/3 - (2*mu)/5;
+% % % 
+% % % % Coeficientes GL orden 5 — integral (1-lambda)
 % % % lm = 1 - lambda;
-% % % f0= 1; f1=-2*mu;    f2=2*mu^2;
-% % % f3=(-4*mu^3)/3  -(2*mu)/3;
-% % % f4=(2*mu^4)/3   +(4*mu^2)/3;
-% % % f5=(-4*mu^5)/15 -(4*mu^3)/3-(2*mu)/5;
+% % % g0= 1;
+% % % g1=-2*lm;
+% % % g2= 2*lm^2;
+% % % g3=(-4*lm^3)/3  - (2*lm)/3;
+% % % g4= (2*lm^4)/3  + (4*lm^2)/3;
+% % % g5=(-4*lm^5)/15 - (4*lm^3)/3 - (2*lm)/5;
 % % % 
-% % % g0=1; g1=-2*lm;    g2=2*lm^2;
-% % % g3=(-4*lm^3)/3  -(2*lm)/3;
-% % % g4=(2*lm^4)/3   +(4*lm^2)/3;
-% % % g5=(-4*lm^5)/15 -(4*lm^3)/3-(2*lm)/5;
-% % % 
-% % % persistent e1 e2 e3 e4 e5 y1 y2 y3 y4 y5 u_prev u_prev2
+% % % persistent e1 e2 e3 e4 e5 e6 e7 sumI u_prev u_prev2
 % % % if isempty(e1)
-% % %     e1=0;e2=0;e3=0;e4=0;e5=0;
-% % %     y1=0;y2=0;y3=0;y4=0;y5=0;
-% % %     u_prev=0;u_prev2=0;
+% % %     e1=0; e2=0; e3=0; e4=0; e5=0; e6=0; e7=0;
+% % %     sumI=0;
+% % %     u_prev=0; u_prev2=0;
 % % % end
 % % % 
-% % % Y = f0*e +f1*e1+f2*e2+f3*e3+f4*e4+f5*e5 ...
-% % %     -f1*y1-f2*y2-f3*y3-f4*y4-f5*y5;
-% % % Z = g0*e +g1*e1+g2*e2+g3*e3+g4*e4+g5*e5 ...
-% % %     -g1*y1-g2*y2-g3*y3-g4*y4-g5*y5;
+% % % % --- Derivada fraccionaria D^mu (diferencias de 2º orden, FIR) ---
+% % % sumD = KD * ( f0*(e   - 2*e1 + e2) ...
+% % %     + f1*(e1  - 2*e2 + e3) ...
+% % %     + f2*(e2  - 2*e3 + e4) ...
+% % %     + f3*(e3  - 2*e4 + e5) ...
+% % %     + f4*(e4  - 2*e5 + e6) ...
+% % %     + f5*(e5  - 2*e6 + e7) );
 % % % 
-% % % % Anti wind-up: congela integral si la salida anterior estaba saturada
-% % % if abs(u_prev) >= u_max * 0.99
-% % %     u_raw = KP*e + KD*Y;          % sin integral
-% % % else
-% % %     u_raw = KP*e + KD*Y + KI*Z;   % normal
-% % % end
+% % % % --- Integral fraccionaria D^-lambda (sumas de 2º orden, acumulador) ---
+% % % sumI = sumI + KI * ( g0*(e   + 2*e1 + e2) ...
+% % %     + g1*(e1  + 2*e2 + e3) ...
+% % %     + g2*(e2  + 2*e3 + e4) ...
+% % %     + g3*(e3  + 2*e4 + e5) ...
+% % %     + g4*(e4  + 2*e5 + e6) ...
+% % %     + g5*(e5  + 2*e6 + e7) );
 % % % 
+% % % % --- Ley de control explícita ---
+% % % u_raw = u_prev2 + KP*(e - e2) + sumD + sumI;
 % % % u = max(min(u_raw, u_max), u_min);
 % % % 
-% % % e5=e4;e4=e3;e3=e2;e2=e1;e1=e;
-% % % y5=y4;y4=y3;y3=y2;y2=y1;y1=u;
-% % % u_prev2=u_prev;u_prev=u;
+% % % % --- Actualizar historia ---
+% % % e7=e6; e6=e5; e5=e4; e4=e3; e3=e2; e2=e1; e1=e;
+% % % u_prev2=u_prev; u_prev=u;
 % % % end
-% % % % function u = fopid_pitch(e)
+% % % 
+% % % 
+% % % % function u = fopid_pitch(e, kp, ki, kd)
 % % % % %#codegen
 % % % % % FOPI^lambda D — Lazo PITCH (theta -> u2 elevador)
-% % % % % Logica basada en FOPID_MEJORADO_DRON.ino (twin rotor)
-% % % % % Adaptada para Ekranoplano Airfish 8 — Ts=0.01s
-% % % % kp = -0.85;  
-% % % % ki = -0.0005;  
-% % % % kd = -0.001;
+% % % % % kp, ki, kd entran como puertos externos (bloques Constant)
 % % % % mu     = 0.5;
-% % % % lambda = 0.5;
+% % % % lambda = 0.6;
 % % % % Ts     = 0.01;
-% % % % wc     = 2.0;
-% % % % u_min  = -20*pi/180;
-% % % % u_max  =  20*pi/180;
+% % % % wc     = 4.0;
+% % % % u_min  = -0.35;
+% % % % u_max  =  0.35;
 % % % % 
 % % % % alpha = wc / tan(wc * Ts / 2);
 % % % % KP = kp;
@@ -635,344 +538,569 @@ end
 % % % % KI = ki * (alpha^(-lambda));
 % % % % 
 % % % % lm = 1 - lambda;
-% % % % f0= 1; f1=-2*mu; f2=2*mu^2;
-% % % % f3=(-4*mu^3)/3-(2*mu)/3;
-% % % % f4=(2*mu^4)/3+(4*mu^2)/3;
-% % % % f5=(-4*mu^5)/15-(4*mu^3)/3-(2*mu)/5;
+% % % % f0= 1; f1=-2*mu;    f2=2*mu^2;
+% % % % f3=(-4*mu^3)/3  -(2*mu)/3;
+% % % % f4=(2*mu^4)/3   +(4*mu^2)/3;
+% % % % f5=(-4*mu^5)/15 -(4*mu^3)/3-(2*mu)/5;
 % % % % 
-% % % % g0=1; g1=-2*lm; g2=2*lm^2;
-% % % % g3=(-4*lm^3)/3-(2*lm)/3;
-% % % % g4=(2*lm^4)/3+(4*lm^2)/3;
-% % % % g5=(-4*lm^5)/15-(4*lm^3)/3-(2*lm)/5;
+% % % % g0=1; g1=-2*lm;    g2=2*lm^2;
+% % % % g3=(-4*lm^3)/3  -(2*lm)/3;
+% % % % g4=(2*lm^4)/3   +(4*lm^2)/3;
+% % % % g5=(-4*lm^5)/15 -(4*lm^3)/3-(2*lm)/5;
 % % % % 
-% % % % persistent e1 e2 e3 e4 e5 y1 y2 y3 y4 y5 u1 u2
+% % % % persistent e1 e2 e3 e4 e5 y1 y2 y3 y4 y5 u_prev u_prev2
 % % % % if isempty(e1)
 % % % %     e1=0;e2=0;e3=0;e4=0;e5=0;
 % % % %     y1=0;y2=0;y3=0;y4=0;y5=0;
-% % % %     u1=0;u2=0;
+% % % %     u_prev=0;u_prev2=0;
 % % % % end
 % % % % 
 % % % % Y = f0*e +f1*e1+f2*e2+f3*e3+f4*e4+f5*e5 ...
-% % % %    -f1*y1-f2*y2-f3*y3-f4*y4-f5*y5;
+% % % %     -f1*y1-f2*y2-f3*y3-f4*y4-f5*y5;
 % % % % Z = g0*e +g1*e1+g2*e2+g3*e3+g4*e4+g5*e5 ...
-% % % %    -g1*y1-g2*y2-g3*y3-g4*y4-g5*y5;
+% % % %     -g1*y1-g2*y2-g3*y3-g4*y4-g5*y5;
 % % % % 
-% % % % persistent integral_frozen
-% % % % if isempty(integral_frozen), integral_frozen = false; end
-% % % % 
-% % % % if abs(u1) >= u_max * 0.99
-% % % %     integral_frozen = true;
+% % % % % Anti wind-up: congela integral si la salida anterior estaba saturada
+% % % % if abs(u_prev) >= u_max * 0.99
+% % % %     u_raw = KP*e + KD*Y;          % sin integral
 % % % % else
-% % % %     integral_frozen = false;
+% % % %     u_raw = KP*e + KD*Y + KI*Z;   % normal
 % % % % end
 % % % % 
-% % % % % Ley de control — congela Z si saturado
-% % % % if integral_frozen
-% % % %     u_raw = KP*e + KD*Y;
-% % % % else
-% % % %     u_raw = KP*e + KD*Y + KI*Z;
-% % % % end
-% % % % 
-% % % % u_raw = KP*e + KD*Y + KI*Z;
 % % % % u = max(min(u_raw, u_max), u_min);
 % % % % 
 % % % % e5=e4;e4=e3;e3=e2;e2=e1;e1=e;
 % % % % y5=y4;y4=y3;y3=y2;y2=y1;y1=u;
-% % % % u2=u1;u1=u;
+% % % % u_prev2=u_prev;u_prev=u;
 % % % % end
+% % % % % function u = fopid_pitch(e)
+% % % % % %#codegen
+% % % % % % FOPI^lambda D — Lazo PITCH (theta -> u2 elevador)
+% % % % % % Logica basada en FOPID_MEJORADO_DRON.ino (twin rotor)
+% % % % % % Adaptada para Ekranoplano Airfish 8 — Ts=0.01s
+% % % % % kp = -0.85;  
+% % % % % ki = -0.0005;  
+% % % % % kd = -0.001;
+% % % % % mu     = 0.5;
+% % % % % lambda = 0.5;
+% % % % % Ts     = 0.01;
+% % % % % wc     = 2.0;
+% % % % % u_min  = -20*pi/180;
+% % % % % u_max  =  20*pi/180;
+% % % % % 
+% % % % % alpha = wc / tan(wc * Ts / 2);
+% % % % % KP = kp;
+% % % % % KD = kd * (alpha^mu);
+% % % % % KI = ki * (alpha^(-lambda));
+% % % % % 
+% % % % % lm = 1 - lambda;
+% % % % % f0= 1; f1=-2*mu; f2=2*mu^2;
+% % % % % f3=(-4*mu^3)/3-(2*mu)/3;
+% % % % % f4=(2*mu^4)/3+(4*mu^2)/3;
+% % % % % f5=(-4*mu^5)/15-(4*mu^3)/3-(2*mu)/5;
+% % % % % 
+% % % % % g0=1; g1=-2*lm; g2=2*lm^2;
+% % % % % g3=(-4*lm^3)/3-(2*lm)/3;
+% % % % % g4=(2*lm^4)/3+(4*lm^2)/3;
+% % % % % g5=(-4*lm^5)/15-(4*lm^3)/3-(2*lm)/5;
+% % % % % 
+% % % % % persistent e1 e2 e3 e4 e5 y1 y2 y3 y4 y5 u1 u2
+% % % % % if isempty(e1)
+% % % % %     e1=0;e2=0;e3=0;e4=0;e5=0;
+% % % % %     y1=0;y2=0;y3=0;y4=0;y5=0;
+% % % % %     u1=0;u2=0;
+% % % % % end
+% % % % % 
+% % % % % Y = f0*e +f1*e1+f2*e2+f3*e3+f4*e4+f5*e5 ...
+% % % % %    -f1*y1-f2*y2-f3*y3-f4*y4-f5*y5;
+% % % % % Z = g0*e +g1*e1+g2*e2+g3*e3+g4*e4+g5*e5 ...
+% % % % %    -g1*y1-g2*y2-g3*y3-g4*y4-g5*y5;
+% % % % % 
+% % % % % persistent integral_frozen
+% % % % % if isempty(integral_frozen), integral_frozen = false; end
+% % % % % 
+% % % % % if abs(u1) >= u_max * 0.99
+% % % % %     integral_frozen = true;
+% % % % % else
+% % % % %     integral_frozen = false;
+% % % % % end
+% % % % % 
+% % % % % % Ley de control — congela Z si saturado
+% % % % % if integral_frozen
+% % % % %     u_raw = KP*e + KD*Y;
+% % % % % else
+% % % % %     u_raw = KP*e + KD*Y + KI*Z;
+% % % % % end
+% % % % % 
+% % % % % u_raw = KP*e + KD*Y + KI*Z;
+% % % % % u = max(min(u_raw, u_max), u_min);
+% % % % % 
+% % % % % e5=e4;e4=e3;e3=e2;e2=e1;e1=e;
+% % % % % y5=y4;y4=y3;y3=y2;y2=y1;y1=u;
+% % % % % u2=u1;u1=u;
+% % % % % end
 
 ----------------------------------------------------------
 BLOQUE [4]: FOpid_control_V4/MATLAB Function - fopid_roll
 ----------------------------------------------------------
-function u = fopid_roll(e, kp, ki, kd)
+function u= fopid_roll_mod(e, y, kp, ki, kd)
+
 %#codegen
-% FOPI^lambda D — Lazo ROLL (phi -> u1 aileron)
-% kp, ki, kd entran como puertos externos (bloques Constant)
-mu     = 0.5;
-lambda = 0.5;
+% FOPI^lambda D discreto - ALTURA
+% e : error de altura
+% y : medicion de altura
+% u : referencia de pitch (theta_sp)
+
+mu     = 0.9;
+lambda = 0.7;
 Ts     = 0.01;
-wc     = 2.0;
-u_min  = -20*pi/180;
-u_max  =  20*pi/180;
+wc     = 1.0;
+u_min  = -0.1;
+u_max  =  0.1;
 
 alpha = wc / tan(wc * Ts / 2);
+
 KP = kp;
 KD = kd * (alpha^mu);
 KI = ki * (alpha^(-lambda));
 
+f0 = 1;
+f1 = -2*mu;
+f2 = 2*mu^2;
+f3 = (-4*mu^3)/3 - (2*mu)/3;
+f4 = (2*mu^4)/3 + (4*mu^2)/3;
+f5 = (-4*mu^5)/15 - (4*mu^3)/3 - (2*mu)/5;
+
 lm = 1 - lambda;
-f0= 1; f1=-2*mu; f2=2*mu^2;
-f3=(-4*mu^3)/3-(2*mu)/3;
-f4=(2*mu^4)/3+(4*mu^2)/3;
-f5=(-4*mu^5)/15-(4*mu^3)/3-(2*mu)/5;
+g0 = 1;
+g1 = -2*lm;
+g2 = 2*lm^2;
+g3 = (-4*lm^3)/3 - (2*lm)/3;
+g4 = (2*lm^4)/3 + (4*lm^2)/3;
+g5 = (-4*lm^5)/15 - (4*lm^3)/3 - (2*lm)/5;
 
-g0=1; g1=-2*lm; g2=2*lm^2;
-g3=(-4*lm^3)/3-(2*lm)/3;
-g4=(2*lm^4)/3+(4*lm^2)/3;
-g5=(-4*lm^5)/15-(4*lm^3)/3-(2*lm)/5;
+% Actualizacion de historias
 
-persistent e1 e2 e3 e4 e5 y1 y2 y3 y4 y5 u1 u2
+
+persistent e1 e2 e3 e4 e5 e6 e7
+persistent y1 y2 y3 y4 y5 y6 y7
+persistent sumI u_prev u_prev2
+% 
 if isempty(e1)
-    e1=0;e2=0;e3=0;e4=0;e5=0;
-    y1=0;y2=0;y3=0;y4=0;y5=0;
-    u1=0;u2=0;
+    e1 = 0; e2 = 0; e3 = 0; e4 = 0; e5 = 0; e6 = 0; e7 = 0;
+    y1 = 0; y2 = 0; y3 = 0; y4 = 0; y5 = 0; y6 = 0; y7 = 0;
+    sumI = 0;
+    u_prev = 0;
+    u_prev2 = 0;
 end
 
-Y = f0*e +f1*e1+f2*e2+f3*e3+f4*e4+f5*e5 ...
-    -f1*y1-f2*y2-f3*y3-f4*y4-f5*y5;
-Z = g0*e +g1*e1+g2*e2+g3*e3+g4*e4+g5*e5 ...
-    -g1*y1-g2*y2-g3*y3-g4*y4-g5*y5;
+% 
+% 
+% e7 = e6; e6 = e5; e5 = e4; e4 = e3; e3 = e2; e2 = e1; e1 = e;
+% y7 = y6; y6 = y5; y5 = y4; y4 = y3; y3 = y2; y2 = y1; y1 = y;
 
-u_raw = KP*e + KD*Y + KI*Z;
+% Derivada fraccional sobre la medicion
+sumD = KD * ( ...
+    f0*(y  - 2*y1 + y2) ...
+    + f1*(y1 - 2*y2 + y3) ...
+    + f2*(y2 - 2*y3 + y4) ...
+    + f3*(y3 - 2*y4 + y5) ...
+    + f4*(y4 - 2*y5 + y6) ...
+    + f5*(y5 - 2*y6 + y7) );
+
+
+
+% Integral fraccional sobre el error
+sumI = KI * ( ...
+    g0*(e  + 2*e1 + e2) ...
+    + g1*(e1 + 2*e2 + e3) ...
+    + g2*(e2 + 2*e3 + e4) ...
+    + g3*(e3 + 2*e4 + e5) ...
+    + g4*(e4 + 2*e5 + e6) ...
+    + g5*(e5 + 2*e6 + e7) );
+
+% Salida final
+
+u_raw = u_prev + KP*(e - e1) + sumD + sumI;
 u = max(min(u_raw, u_max), u_min);
 
-e5=e4;e4=e3;e3=e2;e2=e1;e1=e;
-y5=y4;y4=y3;y3=y2;y2=y1;y1=u;
-u2=u1;u1=u;
+u_prev2 = u_prev;
+u_prev  = u;
+
+e7 = e6; e6 = e5; e5 = e4; e4 = e3; e3 = e2; e2 = e1; e1 = e;
+y7 = y6; y6 = y5; y5 = y4; y4 = y3; y3 = y2; y2 = y1; y1 = y;
+
 end
-% function u = fopid_roll(e)
-% %#codegen
-% % FOPI^lambda D — Lazo ROLL (phi -> u1 aileron)
-% kp = -0.44;  
-% ki = -0.10;  
-% kd = -0.30;
-% mu     = 0.5;
-% lambda = 0.5;
-% Ts     = 0.01;
-% wc     = 2.0;
-% u_min  = -20*pi/180;
-% u_max  =  20*pi/180;
-% 
-% alpha = wc / tan(wc * Ts / 2);
-% KP = kp;
-% KD = kd * (alpha^mu);
-% KI = ki * (alpha^(-lambda));
-% 
-% lm = 1 - lambda;
-% f0= 1; f1=-2*mu; f2=2*mu^2;
-% f3=(-4*mu^3)/3-(2*mu)/3;
-% f4=(2*mu^4)/3+(4*mu^2)/3;
-% f5=(-4*mu^5)/15-(4*mu^3)/3-(2*mu)/5;
-% 
-% g0=1; g1=-2*lm; g2=2*lm^2;
-% g3=(-4*lm^3)/3-(2*lm)/3;
-% g4=(2*lm^4)/3+(4*lm^2)/3;
-% g5=(-4*lm^5)/15-(4*lm^3)/3-(2*lm)/5;
-% 
-% persistent e1 e2 e3 e4 e5 y1 y2 y3 y4 y5 u1 u2
-% if isempty(e1)
-%     e1=0;e2=0;e3=0;e4=0;e5=0;
-%     y1=0;y2=0;y3=0;y4=0;y5=0;
-%     u1=0;u2=0;
-% end
-% 
-% Y = f0*e +f1*e1+f2*e2+f3*e3+f4*e4+f5*e5 ...
-%    -f1*y1-f2*y2-f3*y3-f4*y4-f5*y5;
-% Z = g0*e +g1*e1+g2*e2+g3*e3+g4*e4+g5*e5 ...
-%    -g1*y1-g2*y2-g3*y3-g4*y4-g5*y5;
-% 
-% u_raw = KP*e + KD*Y + KI*Z;
-% u = max(min(u_raw, u_max), u_min);
-% 
-% e5=e4;e4=e3;e3=e2;e2=e1;e1=e;
-% y5=y4;y4=y3;y3=y2;y2=y1;y1=u;
-% u2=u1;u1=u;
-% end
 
 
 ----------------------------------------------------------
 BLOQUE [5]: FOpid_control_V4/MATLAB Function - fopid_velocidad
 ----------------------------------------------------------
-function u = fopid_velocidad(e, kp, ki, kd)
+function u= fopid_vel_mod(e, y, kp, ki, kd)
+
 %#codegen
-% FOPI^lambda D — Lazo VELOCIDAD (Va -> throttle u4/u5)
-% kp, ki, kd entran como puertos externos (bloques Constant)
-mu     = 0.5;
-lambda = 0.8;
+% FOPI^lambda D discreto - ALTURA
+% e : error de altura
+% y : medicion de altura
+% u : referencia de pitch (theta_sp)
+
+mu     = 0.9;
+lambda = 0.7;
 Ts     = 0.01;
-wc     = 3.0;
-u_min  = 0.40;   % minimo 40% — nunca cortar sustentacion
-u_max  = 0.80;
+wc     = 1.0;
+u_min  = 0.4;
+u_max  =  1.0;
 
 alpha = wc / tan(wc * Ts / 2);
+
 KP = kp;
 KD = kd * (alpha^mu);
 KI = ki * (alpha^(-lambda));
 
+f0 = 1;
+f1 = -2*mu;
+f2 = 2*mu^2;
+f3 = (-4*mu^3)/3 - (2*mu)/3;
+f4 = (2*mu^4)/3 + (4*mu^2)/3;
+f5 = (-4*mu^5)/15 - (4*mu^3)/3 - (2*mu)/5;
+
 lm = 1 - lambda;
-f0= 1; f1=-2*mu;    f2=2*mu^2;
-f3=(-4*mu^3)/3  -(2*mu)/3;
-f4=(2*mu^4)/3   +(4*mu^2)/3;
-f5=(-4*mu^5)/15 -(4*mu^3)/3-(2*mu)/5;
+g0 = 1;
+g1 = -2*lm;
+g2 = 2*lm^2;
+g3 = (-4*lm^3)/3 - (2*lm)/3;
+g4 = (2*lm^4)/3 + (4*lm^2)/3;
+g5 = (-4*lm^5)/15 - (4*lm^3)/3 - (2*lm)/5;
 
-g0=1; g1=-2*lm;    g2=2*lm^2;
-g3=(-4*lm^3)/3  -(2*lm)/3;
-g4=(2*lm^4)/3   +(4*lm^2)/3;
-g5=(-4*lm^5)/15 -(4*lm^3)/3-(2*lm)/5;
+% Actualizacion de historias
 
-persistent e1 e2 e3 e4 e5 y1 y2 y3 y4 y5 u1 u2
+
+persistent e1 e2 e3 e4 e5 e6 e7
+persistent y1 y2 y3 y4 y5 y6 y7
+persistent sumI u_prev u_prev2
+
 if isempty(e1)
-    e1=0;e2=0;e3=0;e4=0;e5=0;
-    y1=0;y2=0;y3=0;y4=0;y5=0;
-    u1=0;u2=0;
+    e1 = 0; e2 = 0; e3 = 0; e4 = 0; e5 = 0; e6 = 0; e7 = 0;
+    y1 = 0; y2 = 0; y3 = 0; y4 = 0; y5 = 0; y6 = 0; y7 = 0;
+    sumI = 0;
+    u_prev = 0;
+    u_prev2 = 0;
 end
 
-Y = f0*e +f1*e1+f2*e2+f3*e3+f4*e4+f5*e5 ...
-    -f1*y1-f2*y2-f3*y3-f4*y4-f5*y5;
-Z = g0*e +g1*e1+g2*e2+g3*e3+g4*e4+g5*e5 ...
-    -g1*y1-g2*y2-g3*y3-g4*y4-g5*y5;
+% 
+% 
+% e7 = e6; e6 = e5; e5 = e4; e4 = e3; e3 = e2; e2 = e1; e1 = e;
+% y7 = y6; y6 = y5; y5 = y4; y4 = y3; y3 = y2; y2 = y1; y1 = y;
 
-u_raw = KP*e + KD*Y + KI*Z;
+% Derivada fraccional sobre la medicion
+sumD = KD * ( ...
+    f0*(y  - 2*y1 + y2) ...
+    + f1*(y1 - 2*y2 + y3) ...
+    + f2*(y2 - 2*y3 + y4) ...
+    + f3*(y3 - 2*y4 + y5) ...
+    + f4*(y4 - 2*y5 + y6) ...
+    + f5*(y5 - 2*y6 + y7) );
+
+
+
+% Integral fraccional sobre el error
+sumI = KI * ( ...
+    g0*(e  + 2*e1 + e2) ...
+    + g1*(e1 + 2*e2 + e3) ...
+    + g2*(e2 + 2*e3 + e4) ...
+    + g3*(e3 + 2*e4 + e5) ...
+    + g4*(e4 + 2*e5 + e6) ...
+    + g5*(e5 + 2*e6 + e7) );
+
+% Salida final
+
+u_raw = u_prev + KP*(e - e1) + sumD + sumI;
 u = max(min(u_raw, u_max), u_min);
 
-e5=e4;e4=e3;e3=e2;e2=e1;e1=e;
-y5=y4;y4=y3;y3=y2;y2=y1;y1=u;
-u2=u1;u1=u;
+u_prev2 = u_prev;
+u_prev  = u;
+
+e7 = e6; e6 = e5; e5 = e4; e4 = e3; e3 = e2; e2 = e1; e1 = e;
+y7 = y6; y6 = y5; y5 = y4; y4 = y3; y3 = y2; y2 = y1; y1 = y;
+
 end
-% function u = fopid_velocidad(e)
+
+
+
+
+% function u = fopid_velocidad(e, y, kp, ki, kd)
 % %#codegen
-% % FOPI^lambda D — Lazo VELOCIDAD (Va -> throttle u4/u5)
-% kp =  0.15;  
-% ki =  1.50;  
-% kd =  0.0;
+% % FOPI^lambda D discreto - VELOCIDAD
+% % e : error de velocidad = Vref - V
+% % y : medicion de velocidad = V
+% % u : throttle (u4/u5)
+% 
 % mu     = 0.5;
-% lambda = 0.5;
+% lambda = 0.8;
 % Ts     = 0.01;
-% wc     = 1.0;
-% u_min  = 0.0;
-% u_max  = 1.0;
+% wc     = 3.0;
+% 
+% u_min  = 0.40;   % minimo 40%
+% u_max  = 0.80;   % maximo 80%
 % 
 % alpha = wc / tan(wc * Ts / 2);
+% 
 % KP = kp;
 % KD = kd * (alpha^mu);
 % KI = ki * (alpha^(-lambda));
 % 
+% f0 = 1;
+% f1 = -2*mu;
+% f2 = 2*mu^2;
+% f3 = (-4*mu^3)/3 - (2*mu)/3;
+% f4 = (2*mu^4)/3 + (4*mu^2)/3;
+% f5 = (-4*mu^5)/15 - (4*mu^3)/3 - (2*mu)/5;
+% 
 % lm = 1 - lambda;
-% f0= 1; f1=-2*mu; f2=2*mu^2;
-% f3=(-4*mu^3)/3-(2*mu)/3;
-% f4=(2*mu^4)/3+(4*mu^2)/3;
-% f5=(-4*mu^5)/15-(4*mu^3)/3-(2*mu)/5;
+% g0 = 1;
+% g1 = -2*lm;
+% g2 = 2*lm^2;
+% g3 = (-4*lm^3)/3 - (2*lm)/3;
+% g4 = (2*lm^4)/3 + (4*lm^2)/3;
+% g5 = (-4*lm^5)/15 - (4*lm^3)/3 - (2*lm)/5;
 % 
-% g0=1; g1=-2*lm; g2=2*lm^2;
-% g3=(-4*lm^3)/3-(2*lm)/3;
-% g4=(2*lm^4)/3+(4*lm^2)/3;
-% g5=(-4*lm^5)/15-(4*lm^3)/3-(2*lm)/5;
+% persistent e1 e2 e3 e4 e5 e6 e7
+% persistent y1 y2 y3 y4 y5 y6 y7
+% persistent sumI u_prev
 % 
-% persistent e1 e2 e3 e4 e5 y1 y2 y3 y4 y5 u1 u2
 % if isempty(e1)
-%     e1=0;e2=0;e3=0;e4=0;e5=0;
-%     y1=0;y2=0;y3=0;y4=0;y5=0;
-%     u1=0;u2=0;
+%     e1 = 0; e2 = 0; e3 = 0; e4 = 0; e5 = 0; e6 = 0; e7 = 0;
+%     y1 = 0; y2 = 0; y3 = 0; y4 = 0; y5 = 0; y6 = 0; y7 = 0;
+%     sumI = 0;
+%     u_prev = 0.50;
 % end
 % 
-% Y = f0*e +f1*e1+f2*e2+f3*e3+f4*e4+f5*e5 ...
-%    -f1*y1-f2*y2-f3*y3-f4*y4-f5*y5;
-% Z = g0*e +g1*e1+g2*e2+g3*e3+g4*e4+g5*e5 ...
-%    -g1*y1-g2*y2-g3*y3-g4*y4-g5*y5;
+% % Derivada fraccional sobre la medicion
+% sumD = KD * ( ...
+%     f0*(y  - 2*y1 + y2) ...
+%   + f1*(y1 - 2*y2 + y3) ...
+%   + f2*(y2 - 2*y3 + y4) ...
+%   + f3*(y3 - 2*y4 + y5) ...
+%   + f4*(y4 - 2*y5 + y6) ...
+%   + f5*(y5 - 2*y6 + y7) );
 % 
-% u_raw = KP*e + KD*Y + KI*Z;
+% % Integral fraccional sobre el error
+% dI = KI * ( ...
+%     g0*(e  + 2*e1 + e2) ...
+%   + g1*(e1 + 2*e2 + e3) ...
+%   + g2*(e2 + 2*e3 + e4) ...
+%   + g3*(e3 + 2*e4 + e5) ...
+%   + g4*(e4 + 2*e5 + e6) ...
+%   + g5*(e5 + 2*e6 + e7) );
+% 
+% sumI_cand = sumI + dI;
+% 
+% % Ley de control incremental
+% u_raw = u_prev + KP*(e - e1) - sumD + sumI_cand;
+% u_sat = max(min(u_raw, u_max), u_min);
+% 
+% % Anti-windup por integracion condicional
+% if (u_raw == u_sat) || ((u_raw > u_max) && (e < 0)) || ((u_raw < u_min) && (e > 0))
+%     sumI = sumI_cand;
+% end
+% 
+% % Salida final
+% u_raw = u_prev + KP*(e - e1) - sumD + sumI;
 % u = max(min(u_raw, u_max), u_min);
 % 
-% e5=e4;e4=e3;e3=e2;e2=e1;e1=e;
-% y5=y4;y4=y3;y3=y2;y2=y1;y1=u;
-% u2=u1;u1=u;
+% % Actualizacion de historias
+% e7 = e6; e6 = e5; e5 = e4; e4 = e3; e3 = e2; e2 = e1; e1 = e;
+% y7 = y6; y6 = y5; y5 = y4; y4 = y3; y3 = y2; y2 = y1; y1 = y;
+% u_prev = u;
+% 
 % end
+% 
+% % function u = fopid_velocidad(e, kp, ki, kd)
+% % %#codegen
+% % % FOPI^lambda D — Lazo VELOCIDAD (Va -> throttle u4/u5)
+% % % kp, ki, kd entran como puertos externos (bloques Constant)
+% % mu     = 0.5;
+% % lambda = 0.8;
+% % Ts     = 0.01;
+% % wc     = 3.0;
+% % u_min  = 0.40;   % minimo 40% — nunca cortar sustentacion
+% % u_max  = 0.80;
+% % 
+% % alpha = wc / tan(wc * Ts / 2);
+% % KP = kp;
+% % KD = kd * (alpha^mu);
+% % KI = ki * (alpha^(-lambda));
+% % 
+% % lm = 1 - lambda;
+% % f0= 1; f1=-2*mu;    f2=2*mu^2;
+% % f3=(-4*mu^3)/3  -(2*mu)/3;
+% % f4=(2*mu^4)/3   +(4*mu^2)/3;
+% % f5=(-4*mu^5)/15 -(4*mu^3)/3-(2*mu)/5;
+% % 
+% % g0=1; g1=-2*lm;    g2=2*lm^2;
+% % g3=(-4*lm^3)/3  -(2*lm)/3;
+% % g4=(2*lm^4)/3   +(4*lm^2)/3;
+% % g5=(-4*lm^5)/15 -(4*lm^3)/3-(2*lm)/5;
+% % 
+% % persistent e1 e2 e3 e4 e5 y1 y2 y3 y4 y5 u1 u2
+% % if isempty(e1)
+% %     e1=0;e2=0;e3=0;e4=0;e5=0;
+% %     y1=0;y2=0;y3=0;y4=0;y5=0;
+% %     u1=0;u2=0;
+% % end
+% % 
+% % Y = f0*e +f1*e1+f2*e2+f3*e3+f4*e4+f5*e5 ...
+% %     -f1*y1-f2*y2-f3*y3-f4*y4-f5*y5;
+% % Z = g0*e +g1*e1+g2*e2+g3*e3+g4*e4+g5*e5 ...
+% %     -g1*y1-g2*y2-g3*y3-g4*y4-g5*y5;
+% % 
+% % u_raw = KP*e + KD*Y + KI*Z;
+% % u = max(min(u_raw, u_max), u_min);
+% % 
+% % e5=e4;e4=e3;e3=e2;e2=e1;e1=e;
+% % y5=y4;y4=y3;y3=y2;y2=y1;y1=u;
+% % u2=u1;u1=u;
+% % end
+% % % function u = fopid_velocidad(e)
+% % % %#codegen
+% % % % FOPI^lambda D — Lazo VELOCIDAD (Va -> throttle u4/u5)
+% % % kp =  0.15;  
+% % % ki =  1.50;  
+% % % kd =  0.0;
+% % % mu     = 0.5;
+% % % lambda = 0.5;
+% % % Ts     = 0.01;
+% % % wc     = 1.0;
+% % % u_min  = 0.0;
+% % % u_max  = 1.0;
+% % % 
+% % % alpha = wc / tan(wc * Ts / 2);
+% % % KP = kp;
+% % % KD = kd * (alpha^mu);
+% % % KI = ki * (alpha^(-lambda));
+% % % 
+% % % lm = 1 - lambda;
+% % % f0= 1; f1=-2*mu; f2=2*mu^2;
+% % % f3=(-4*mu^3)/3-(2*mu)/3;
+% % % f4=(2*mu^4)/3+(4*mu^2)/3;
+% % % f5=(-4*mu^5)/15-(4*mu^3)/3-(2*mu)/5;
+% % % 
+% % % g0=1; g1=-2*lm; g2=2*lm^2;
+% % % g3=(-4*lm^3)/3-(2*lm)/3;
+% % % g4=(2*lm^4)/3+(4*lm^2)/3;
+% % % g5=(-4*lm^5)/15-(4*lm^3)/3-(2*lm)/5;
+% % % 
+% % % persistent e1 e2 e3 e4 e5 y1 y2 y3 y4 y5 u1 u2
+% % % if isempty(e1)
+% % %     e1=0;e2=0;e3=0;e4=0;e5=0;
+% % %     y1=0;y2=0;y3=0;y4=0;y5=0;
+% % %     u1=0;u2=0;
+% % % end
+% % % 
+% % % Y = f0*e +f1*e1+f2*e2+f3*e3+f4*e4+f5*e5 ...
+% % %    -f1*y1-f2*y2-f3*y3-f4*y4-f5*y5;
+% % % Z = g0*e +g1*e1+g2*e2+g3*e3+g4*e4+g5*e5 ...
+% % %    -g1*y1-g2*y2-g3*y3-g4*y4-g5*y5;
+% % % 
+% % % u_raw = KP*e + KD*Y + KI*Z;
+% % % u = max(min(u_raw, u_max), u_min);
+% % % 
+% % % e5=e4;e4=e3;e3=e2;e2=e1;e1=e;
+% % % y5=y4;y4=y3;y3=y2;y2=y1;y1=u;
+% % % u2=u1;u1=u;
+% % % end
 
 ----------------------------------------------------------
 BLOQUE [6]: FOpid_control_V4/MATLAB Function - fopid_yaw
 ----------------------------------------------------------
-function u = fopid_yaw(e, kp, ki, kd)
+function u= fopid_yaw_mod(e, y, kp, ki, kd)
+
 %#codegen
-% FOPI^lambda D — Lazo YAW (psi -> u3 timon)
-% kp, ki, kd entran como puertos externos (bloques Constant)
+% FOPI^lambda D discreto - ALTURA
+% e : error de altura
+% y : medicion de altura
+% u : referencia de pitch (theta_sp)
+
 mu     = 0.5;
-lambda = 0.5;
+lambda = 0.7;
 Ts     = 0.01;
-wc     = 2.0;
-u_min  = -15*pi/180;
-u_max  =  15*pi/180;
+wc     = 1.0;
+u_min  = -0.09;
+u_max  =  0.09;
 
 alpha = wc / tan(wc * Ts / 2);
+
 KP = kp;
 KD = kd * (alpha^mu);
 KI = ki * (alpha^(-lambda));
 
+f0 = 1;
+f1 = -2*mu;
+f2 = 2*mu^2;
+f3 = (-4*mu^3)/3 - (2*mu)/3;
+f4 = (2*mu^4)/3 + (4*mu^2)/3;
+f5 = (-4*mu^5)/15 - (4*mu^3)/3 - (2*mu)/5;
+
 lm = 1 - lambda;
-f0= 1; f1=-2*mu;    f2=2*mu^2;
-f3=(-4*mu^3)/3  -(2*mu)/3;
-f4=(2*mu^4)/3   +(4*mu^2)/3;
-f5=(-4*mu^5)/15 -(4*mu^3)/3-(2*mu)/5;
+g0 = 1;
+g1 = -2*lm;
+g2 = 2*lm^2;
+g3 = (-4*lm^3)/3 - (2*lm)/3;
+g4 = (2*lm^4)/3 + (4*lm^2)/3;
+g5 = (-4*lm^5)/15 - (4*lm^3)/3 - (2*lm)/5;
 
-g0=1; g1=-2*lm;    g2=2*lm^2;
-g3=(-4*lm^3)/3  -(2*lm)/3;
-g4=(2*lm^4)/3   +(4*lm^2)/3;
-g5=(-4*lm^5)/15 -(4*lm^3)/3-(2*lm)/5;
+% Actualizacion de historias
 
-persistent e1 e2 e3 e4 e5 y1 y2 y3 y4 y5 u1 u2
+
+persistent e1 e2 e3 e4 e5 e6 e7
+persistent y1 y2 y3 y4 y5 y6 y7
+persistent sumI u_prev u_prev2
+% 
 if isempty(e1)
-    e1=0;e2=0;e3=0;e4=0;e5=0;
-    y1=0;y2=0;y3=0;y4=0;y5=0;
-    u1=0;u2=0;
+    e1 = 0; e2 = 0; e3 = 0; e4 = 0; e5 = 0; e6 = 0; e7 = 0;
+    y1 = 0; y2 = 0; y3 = 0; y4 = 0; y5 = 0; y6 = 0; y7 = 0;
+    sumI = 0;
+    u_prev = 0;
+    u_prev2 = 0;
 end
 
-Y = f0*e +f1*e1+f2*e2+f3*e3+f4*e4+f5*e5 ...
-   -f1*y1-f2*y2-f3*y3-f4*y4-f5*y5;
-Z = g0*e +g1*e1+g2*e2+g3*e3+g4*e4+g5*e5 ...
-   -g1*y1-g2*y2-g3*y3-g4*y4-g5*y5;
+% 
+% 
+% e7 = e6; e6 = e5; e5 = e4; e4 = e3; e3 = e2; e2 = e1; e1 = e;
+% y7 = y6; y6 = y5; y5 = y4; y4 = y3; y3 = y2; y2 = y1; y1 = y;
 
-u_raw = KP*e + KD*Y + KI*Z;
+% Derivada fraccional sobre la medicion
+sumD = KD * ( ...
+    f0*(y  - 2*y1 + y2) ...
+    + f1*(y1 - 2*y2 + y3) ...
+    + f2*(y2 - 2*y3 + y4) ...
+    + f3*(y3 - 2*y4 + y5) ...
+    + f4*(y4 - 2*y5 + y6) ...
+    + f5*(y5 - 2*y6 + y7) );
+
+
+
+% Integral fraccional sobre el error
+sumI = KI * ( ...
+    g0*(e  + 2*e1 + e2) ...
+    + g1*(e1 + 2*e2 + e3) ...
+    + g2*(e2 + 2*e3 + e4) ...
+    + g3*(e3 + 2*e4 + e5) ...
+    + g4*(e4 + 2*e5 + e6) ...
+    + g5*(e5 + 2*e6 + e7) );
+
+% Salida final
+
+u_raw = u_prev + KP*(e - e1) + sumD + sumI;
 u = max(min(u_raw, u_max), u_min);
 
-e5=e4;e4=e3;e3=e2;e2=e1;e1=e;
-y5=y4;y4=y3;y3=y2;y2=y1;y1=u;
-u2=u1;u1=u;
+u_prev2 = u_prev;
+u_prev  = u;
+
+e7 = e6; e6 = e5; e5 = e4; e4 = e3; e3 = e2; e2 = e1; e1 = e;
+y7 = y6; y6 = y5; y5 = y4; y4 = y3; y3 = y2; y2 = y1; y1 = y;
+
 end
-% function u = fopid_yaw(e)
-% %#codegen
-% % FOPI^lambda D — Lazo YAW (psi -> u3 timon)
-% kp = -1.32;  ki = -0.080;  kd = -2.60;
-% mu     = 0.5;
-% lambda = 0.5;
-% Ts     = 0.01;
-% wc     = 2.0;
-% u_min  = -15*pi/180;
-% u_max  =  15*pi/180;
-% 
-% alpha = wc / tan(wc * Ts / 2);
-% KP = kp;
-% KD = kd * (alpha^mu);
-% KI = ki * (alpha^(-lambda));
-% 
-% lm = 1 - lambda;
-% f0= 1; f1=-2*mu; f2=2*mu^2;
-% f3=(-4*mu^3)/3-(2*mu)/3;
-% f4=(2*mu^4)/3+(4*mu^2)/3;
-% f5=(-4*mu^5)/15-(4*mu^3)/3-(2*mu)/5;
-% 
-% g0=1; g1=-2*lm; g2=2*lm^2;
-% g3=(-4*lm^3)/3-(2*lm)/3;
-% g4=(2*lm^4)/3+(4*lm^2)/3;
-% g5=(-4*lm^5)/15-(4*lm^3)/3-(2*lm)/5;
-% 
-% persistent e1 e2 e3 e4 e5 y1 y2 y3 y4 y5 u1 u2
-% if isempty(e1)
-%     e1=0;e2=0;e3=0;e4=0;e5=0;
-%     y1=0;y2=0;y3=0;y4=0;y5=0;
-%     u1=0;u2=0;
-% end
-% 
-% Y = f0*e +f1*e1+f2*e2+f3*e3+f4*e4+f5*e5 ...
-%    -f1*y1-f2*y2-f3*y3-f4*y4-f5*y5;
-% Z = g0*e +g1*e1+g2*e2+g3*e3+g4*e4+g5*e5 ...
-%    -g1*y1-g2*y2-g3*y3-g4*y4-g5*y5;
-% 
-% u_raw = KP*e + KD*Y + KI*Z;
-% u = max(min(u_raw, u_max), u_min);
-% 
-% e5=e4;e4=e3;e3=e2;e2=e1;e1=e;
-% y5=y4;y4=y3;y3=y2;y2=y1;y1=u;
-% u2=u1;u1=u;
-% end
 
 
 ----------------------------------------------------------

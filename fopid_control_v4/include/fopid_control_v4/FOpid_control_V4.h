@@ -6,9 +6,9 @@
  *
  * Code generation for model "FOpid_control_V4".
  *
- * Model version              : 13.36
+ * Model version              : 13.44
  * Simulink Coder version : 26.1 (R2026a) 20-Nov-2025
- * C++ source code generated on : Thu Jun 18 08:14:04 2026
+ * C++ source code generated on : Sun Jun 28 19:11:25 2026
  *
  * Target selection: ert.tlc
  * Note: GRT includes extra infrastructure and instrumentation for prototyping
@@ -249,11 +249,11 @@ struct B_FOpid_control_V4_T {
   real_T GainZ;                        /* '<Root>/Gain-Z' */
   real_T Switch3;                      /* '<Root>/Switch3' */
   real_T Sum2;                         /* '<Root>/Sum2' */
-  real_T Sum1;                         /* '<Root>/Sum1' */
   real_T Switch2;                      /* '<Root>/Switch2' */
   real_T Sum5;                         /* '<Root>/Sum5' */
   real_T Saturation_roll_sp;           /* '<Root>/Saturation_roll_sp' */
   real_T Sum4;                         /* '<Root>/Sum4' */
+  real_T Sum1;                         /* '<Root>/Sum1' */
   real_T Saturation1;                  /* '<Root>/Saturation1' */
   real_T Sum3;                         /* '<Root>/Sum3' */
   real_T Memory[3];                    /* '<S30>/Memory' */
@@ -373,51 +373,62 @@ struct DW_FOpid_control_V4_T {
   real_T e3;                          /* '<Root>/MATLAB Function - fopid_yaw' */
   real_T e4;                          /* '<Root>/MATLAB Function - fopid_yaw' */
   real_T e5;                          /* '<Root>/MATLAB Function - fopid_yaw' */
+  real_T e6;                          /* '<Root>/MATLAB Function - fopid_yaw' */
+  real_T e7;                          /* '<Root>/MATLAB Function - fopid_yaw' */
   real_T y1;                          /* '<Root>/MATLAB Function - fopid_yaw' */
   real_T y2;                          /* '<Root>/MATLAB Function - fopid_yaw' */
   real_T y3;                          /* '<Root>/MATLAB Function - fopid_yaw' */
   real_T y4;                          /* '<Root>/MATLAB Function - fopid_yaw' */
   real_T y5;                          /* '<Root>/MATLAB Function - fopid_yaw' */
-  real_T u1;                          /* '<Root>/MATLAB Function - fopid_yaw' */
+  real_T y6;                          /* '<Root>/MATLAB Function - fopid_yaw' */
+  real_T y7;                          /* '<Root>/MATLAB Function - fopid_yaw' */
+  real_T u_prev;                      /* '<Root>/MATLAB Function - fopid_yaw' */
   real_T e1_o;                  /* '<Root>/MATLAB Function - fopid_velocidad' */
   real_T e2_k;                  /* '<Root>/MATLAB Function - fopid_velocidad' */
   real_T e3_i;                  /* '<Root>/MATLAB Function - fopid_velocidad' */
   real_T e4_m;                  /* '<Root>/MATLAB Function - fopid_velocidad' */
   real_T e5_m;                  /* '<Root>/MATLAB Function - fopid_velocidad' */
+  real_T e6_n;                  /* '<Root>/MATLAB Function - fopid_velocidad' */
+  real_T e7_b;                  /* '<Root>/MATLAB Function - fopid_velocidad' */
   real_T y1_f;                  /* '<Root>/MATLAB Function - fopid_velocidad' */
-  real_T y2_n;                  /* '<Root>/MATLAB Function - fopid_velocidad' */
-  real_T y3_p;                  /* '<Root>/MATLAB Function - fopid_velocidad' */
-  real_T y4_b;                  /* '<Root>/MATLAB Function - fopid_velocidad' */
+  real_T y2_h;                  /* '<Root>/MATLAB Function - fopid_velocidad' */
+  real_T y3_d;                  /* '<Root>/MATLAB Function - fopid_velocidad' */
+  real_T y4_f;                  /* '<Root>/MATLAB Function - fopid_velocidad' */
   real_T y5_k;                  /* '<Root>/MATLAB Function - fopid_velocidad' */
-  real_T u1_m;                  /* '<Root>/MATLAB Function - fopid_velocidad' */
+  real_T y6_l;                  /* '<Root>/MATLAB Function - fopid_velocidad' */
+  real_T y7_m;                  /* '<Root>/MATLAB Function - fopid_velocidad' */
+  real_T u_prev_g;              /* '<Root>/MATLAB Function - fopid_velocidad' */
   real_T e1_p;                       /* '<Root>/MATLAB Function - fopid_roll' */
   real_T e2_g;                       /* '<Root>/MATLAB Function - fopid_roll' */
   real_T e3_p;                       /* '<Root>/MATLAB Function - fopid_roll' */
   real_T e4_l;                       /* '<Root>/MATLAB Function - fopid_roll' */
   real_T e5_f;                       /* '<Root>/MATLAB Function - fopid_roll' */
-  real_T y1_l;                       /* '<Root>/MATLAB Function - fopid_roll' */
-  real_T y2_j;                       /* '<Root>/MATLAB Function - fopid_roll' */
-  real_T y3_l;                       /* '<Root>/MATLAB Function - fopid_roll' */
-  real_T y4_f;                       /* '<Root>/MATLAB Function - fopid_roll' */
-  real_T y5_c;                       /* '<Root>/MATLAB Function - fopid_roll' */
-  real_T u1_mt;                      /* '<Root>/MATLAB Function - fopid_roll' */
+  real_T e6_m;                       /* '<Root>/MATLAB Function - fopid_roll' */
+  real_T e7_j;                       /* '<Root>/MATLAB Function - fopid_roll' */
+  real_T y1_fg;                      /* '<Root>/MATLAB Function - fopid_roll' */
+  real_T y2_a;                       /* '<Root>/MATLAB Function - fopid_roll' */
+  real_T y3_m;                       /* '<Root>/MATLAB Function - fopid_roll' */
+  real_T y4_c;                       /* '<Root>/MATLAB Function - fopid_roll' */
+  real_T y5_n;                       /* '<Root>/MATLAB Function - fopid_roll' */
+  real_T y6_lk;                      /* '<Root>/MATLAB Function - fopid_roll' */
+  real_T y7_g;                       /* '<Root>/MATLAB Function - fopid_roll' */
+  real_T u_prev_l;                   /* '<Root>/MATLAB Function - fopid_roll' */
   real_T e1_g;                      /* '<Root>/MATLAB Function - fopid_pitch' */
   real_T e2_o;                      /* '<Root>/MATLAB Function - fopid_pitch' */
   real_T e3_m;                      /* '<Root>/MATLAB Function - fopid_pitch' */
   real_T e4_e;                      /* '<Root>/MATLAB Function - fopid_pitch' */
   real_T e5_o;                      /* '<Root>/MATLAB Function - fopid_pitch' */
-  real_T e6;                        /* '<Root>/MATLAB Function - fopid_pitch' */
-  real_T e7;                        /* '<Root>/MATLAB Function - fopid_pitch' */
+  real_T e6_d;                      /* '<Root>/MATLAB Function - fopid_pitch' */
+  real_T e7_p;                      /* '<Root>/MATLAB Function - fopid_pitch' */
   real_T y1_j;                      /* '<Root>/MATLAB Function - fopid_pitch' */
   real_T y2_g;                      /* '<Root>/MATLAB Function - fopid_pitch' */
   real_T y3_a;                      /* '<Root>/MATLAB Function - fopid_pitch' */
   real_T y4_h;                      /* '<Root>/MATLAB Function - fopid_pitch' */
-  real_T y5_cm;                     /* '<Root>/MATLAB Function - fopid_pitch' */
-  real_T y6;                        /* '<Root>/MATLAB Function - fopid_pitch' */
-  real_T y7;                        /* '<Root>/MATLAB Function - fopid_pitch' */
+  real_T y5_c;                      /* '<Root>/MATLAB Function - fopid_pitch' */
+  real_T y6_k;                      /* '<Root>/MATLAB Function - fopid_pitch' */
+  real_T y7_l;                      /* '<Root>/MATLAB Function - fopid_pitch' */
   real_T sumI;                      /* '<Root>/MATLAB Function - fopid_pitch' */
-  real_T u_prev;                    /* '<Root>/MATLAB Function - fopid_pitch' */
-  real_T u_prev2;                   /* '<Root>/MATLAB Function - fopid_pitch' */
+  real_T u_prev_n;                  /* '<Root>/MATLAB Function - fopid_pitch' */
   real_T e1_j;                     /* '<Root>/MATLAB Function - fopid_altura' */
   real_T e2_i;                     /* '<Root>/MATLAB Function - fopid_altura' */
   real_T e3_c;                     /* '<Root>/MATLAB Function - fopid_altura' */
@@ -426,15 +437,13 @@ struct DW_FOpid_control_V4_T {
   real_T e6_b;                     /* '<Root>/MATLAB Function - fopid_altura' */
   real_T e7_d;                     /* '<Root>/MATLAB Function - fopid_altura' */
   real_T y1_b;                     /* '<Root>/MATLAB Function - fopid_altura' */
-  real_T y2_h;                     /* '<Root>/MATLAB Function - fopid_altura' */
+  real_T y2_he;                    /* '<Root>/MATLAB Function - fopid_altura' */
   real_T y3_a3;                    /* '<Root>/MATLAB Function - fopid_altura' */
   real_T y4_g;                     /* '<Root>/MATLAB Function - fopid_altura' */
   real_T y5_e;                     /* '<Root>/MATLAB Function - fopid_altura' */
   real_T y6_b;                     /* '<Root>/MATLAB Function - fopid_altura' */
-  real_T y7_m;                     /* '<Root>/MATLAB Function - fopid_altura' */
-  real_T sumI_c;                   /* '<Root>/MATLAB Function - fopid_altura' */
-  real_T u_prev_c;                 /* '<Root>/MATLAB Function - fopid_altura' */
-  real_T u_prev2_e;                /* '<Root>/MATLAB Function - fopid_altura' */
+  real_T y7_mc;                    /* '<Root>/MATLAB Function - fopid_altura' */
+  real_T u_prev_i;                 /* '<Root>/MATLAB Function - fopid_altura' */
   uint32_T PreLookUpIndexSearchprobofexcee;
                          /* '<S60>/PreLook-Up Index Search  (prob of exceed)' */
   uint32_T PreLookUpIndexSearchaltitude_DW;
@@ -570,7 +579,7 @@ struct ConstP_FOpid_control_V4_T {
    *   '<S30>/IC'
    *   '<S30>/Memory2'
    */
-  real_T pooled10[12];
+  real_T pooled12[12];
 
   /* Expression: h_vec
    * Referenced by: '<S60>/PreLook-Up Index Search  (altitude)'
@@ -750,8 +759,6 @@ extern volatile boolean_T runModel;
  * Block '<Root>/Display' : Unused code path elimination
  * Block '<S30>/Gain4' : Unused code path elimination
  * Block '<Root>/Manual Switch' : Eliminated due to constant selection input
- * Block '<Root>/Manual Switch1' : Eliminated due to constant selection input
- * Block '<Root>/Manual Switch2' : Eliminated due to constant selection input
  * Block '<S35>/Cast' : Eliminate redundant data type conversion
  * Block '<S35>/Cast To Double' : Eliminate redundant data type conversion
  * Block '<S35>/Cast To Double1' : Eliminate redundant data type conversion
@@ -765,7 +772,6 @@ extern volatile boolean_T runModel;
  * Block '<S74>/Reshape1' : Reshape block reduction
  * Block '<S76>/Reshape' : Reshape block reduction
  * Block '<Root>/Constant_U' : Unused code path elimination
- * Block '<Root>/Constant_U1' : Unused code path elimination
  */
 
 /*-

@@ -32,7 +32,6 @@ FOpid_control_V4/Constant7
 FOpid_control_V4/Constant8
 FOpid_control_V4/Constant9
 FOpid_control_V4/Constant_U
-FOpid_control_V4/Constant_U1
 FOpid_control_V4/Coordinate Transformation Conversion
 FOpid_control_V4/Demux
 FOpid_control_V4/Demux1
@@ -75,7 +74,6 @@ FOpid_control_V4/From4
 FOpid_control_V4/From40
 FOpid_control_V4/From41
 FOpid_control_V4/From42
-FOpid_control_V4/From43
 FOpid_control_V4/From44
 FOpid_control_V4/From45
 FOpid_control_V4/From46
@@ -108,10 +106,8 @@ FOpid_control_V4/From7
 FOpid_control_V4/From70
 FOpid_control_V4/From71
 FOpid_control_V4/From72
-FOpid_control_V4/From73
 FOpid_control_V4/From8
 FOpid_control_V4/From9
-FOpid_control_V4/Gain
 FOpid_control_V4/Gain-Z
 FOpid_control_V4/Gain-roll_sp
 FOpid_control_V4/Goto
@@ -128,7 +124,6 @@ FOpid_control_V4/Goto19
 FOpid_control_V4/Goto2
 FOpid_control_V4/Goto20
 FOpid_control_V4/Goto21
-FOpid_control_V4/Goto22
 FOpid_control_V4/Goto23
 FOpid_control_V4/Goto24
 FOpid_control_V4/Goto25
@@ -142,7 +137,6 @@ FOpid_control_V4/Goto31
 FOpid_control_V4/Goto32
 FOpid_control_V4/Goto33
 FOpid_control_V4/Goto34
-FOpid_control_V4/Goto35
 FOpid_control_V4/Goto4
 FOpid_control_V4/Goto5
 FOpid_control_V4/Goto6
@@ -166,8 +160,6 @@ FOpid_control_V4/MATLAB Function-ned_to_imu
 FOpid_control_V4/MATLAB Function-ned_to_odometry
 FOpid_control_V4/MATLAB Function2
 FOpid_control_V4/Manual Switch
-FOpid_control_V4/Manual Switch1
-FOpid_control_V4/Manual Switch2
 FOpid_control_V4/Mux
 FOpid_control_V4/Mux1
 FOpid_control_V4/Mux2
@@ -348,10 +340,8 @@ FOpid_control_V4/SUBSYSTEM_MODEL/x_wp
 FOpid_control_V4/SUBSYSTEM_MODEL/y_wp
 FOpid_control_V4/SUBSYSTEM_MODEL/y_pos
 FOpid_control_V4/SUBSYSTEM_MODEL/Out12
-FOpid_control_V4/Saturation
 FOpid_control_V4/Saturation1
 FOpid_control_V4/Saturation_roll_sp
-FOpid_control_V4/Scope
 FOpid_control_V4/Scopes-States
 FOpid_control_V4/Subscribe-ALTURA
 FOpid_control_V4/Subscribe-YAW

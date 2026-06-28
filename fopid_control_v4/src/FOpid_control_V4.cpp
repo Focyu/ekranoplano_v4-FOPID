@@ -6,9 +6,9 @@
  *
  * Code generation for model "FOpid_control_V4".
  *
- * Model version              : 13.36
+ * Model version              : 13.44
  * Simulink Coder version : 26.1 (R2026a) 20-Nov-2025
- * C++ source code generated on : Thu Jun 18 08:14:04 2026
+ * C++ source code generated on : Sun Jun 28 19:11:25 2026
  *
  * Target selection: ert.tlc
  * Note: GRT includes extra infrastructure and instrumentation for prototyping
@@ -841,8 +841,7 @@ void FOpid_control_V4::step()
   /* RelationalOperator: '<S34>/Compare' incorporates:
    *  Constant: '<S34>/Constant'
    */
-  FOpid_control_V4_B.Compare = (FOpid_control_V4_X.Integrator_CSTATE[11] >=
-    100.05);
+  FOpid_control_V4_B.Compare = (FOpid_control_V4_X.Integrator_CSTATE[11] >= 0.05);
 
   /* Outputs for Enabled SubSystem: '<S43>/Hrgw' incorporates:
    *  EnablePort: '<S56>/Enable'
@@ -881,7 +880,7 @@ void FOpid_control_V4::step()
       FOpid_control_V4_DW.IC_FirstOutputTime = false;
 
       /* InitialCondition: '<S30>/IC' */
-      memcpy(&FOpid_control_V4_B.IC[0], &FOpid_control_V4_ConstP.pooled10[0],
+      memcpy(&FOpid_control_V4_B.IC[0], &FOpid_control_V4_ConstP.pooled12[0],
              12U * sizeof(real_T));
     }
 
@@ -1248,21 +1247,20 @@ void FOpid_control_V4::step()
     FOpid_control_V4_B.GainZ;
   if (tmp_0) {
     /* MATLAB Function: '<Root>/MATLAB Function - fopid_altura' incorporates:
-     *  Constant: '<Root>/Constant3'
      *  Constant: '<Root>/Constant4'
      *  Constant: '<Root>/Constant5'
      */
-    FOpid_control_V4_B.rtb_CoordinateTransformationC_o =
-      (((((((FOpid_control_V4_B.GainZ - 2.0 * FOpid_control_V4_DW.y1_b) +
-            FOpid_control_V4_DW.y2_h) - ((FOpid_control_V4_DW.y1_b - 2.0 *
-             FOpid_control_V4_DW.y2_h) + FOpid_control_V4_DW.y3_a3)) +
-          ((FOpid_control_V4_DW.y2_h - 2.0 * FOpid_control_V4_DW.y3_a3) +
-           FOpid_control_V4_DW.y4_g) * 0.5) + ((FOpid_control_V4_DW.y3_a3 - 2.0 *
-           FOpid_control_V4_DW.y4_g) + FOpid_control_V4_DW.y5_e) * -0.5) +
-        ((FOpid_control_V4_DW.y4_g - 2.0 * FOpid_control_V4_DW.y5_e) +
-         FOpid_control_V4_DW.y6_b) * 0.375) + ((FOpid_control_V4_DW.y5_e - 2.0 *
-         FOpid_control_V4_DW.y6_b) + FOpid_control_V4_DW.y7_m) * -0.375) * 0.0;
-    FOpid_control_V4_B.rtb_CoordinateTransformationC_l = (((((((2.0 *
+    FOpid_control_V4_B.u_l = ((((((((FOpid_control_V4_DW.y1_b - 2.0 *
+      FOpid_control_V4_DW.y2_he) + FOpid_control_V4_DW.y3_a3) * -1.8 +
+      ((FOpid_control_V4_B.GainZ - 2.0 * FOpid_control_V4_DW.y1_b) +
+       FOpid_control_V4_DW.y2_he)) + ((FOpid_control_V4_DW.y2_he - 2.0 *
+      FOpid_control_V4_DW.y3_a3) + FOpid_control_V4_DW.y4_g) * 1.62) +
+      ((FOpid_control_V4_DW.y3_a3 - 2.0 * FOpid_control_V4_DW.y4_g) +
+       FOpid_control_V4_DW.y5_e) * -1.572) + ((FOpid_control_V4_DW.y4_g - 2.0 *
+      FOpid_control_V4_DW.y5_e) + FOpid_control_V4_DW.y6_b) * 1.5174) +
+      ((FOpid_control_V4_DW.y5_e - 2.0 * FOpid_control_V4_DW.y6_b) +
+       FOpid_control_V4_DW.y7_mc) * -1.489464) * 0.0 + ((FOpid_control_V4_B.Sum2
+      - FOpid_control_V4_DW.e1_j) + FOpid_control_V4_DW.u_prev_i)) + (((((((2.0 *
       FOpid_control_V4_DW.e2_i + FOpid_control_V4_DW.e1_j) +
       FOpid_control_V4_DW.e3_c) * -0.6000000000000001 + ((2.0 *
       FOpid_control_V4_DW.e1_j + FOpid_control_V4_B.Sum2) +
@@ -1274,38 +1272,7 @@ void FOpid_control_V4::step()
       FOpid_control_V4_DW.e4_p) + FOpid_control_V4_DW.e6_b) *
       0.12540000000000004) + ((2.0 * FOpid_control_V4_DW.e6_b +
       FOpid_control_V4_DW.e5_b) + FOpid_control_V4_DW.e7_d) *
-      -0.15664800000000004) * 0.00019605211121644705 +
-      FOpid_control_V4_DW.sumI_c;
-    FOpid_control_V4_B.rtb_CoordinateTransformationC_d =
-      (((FOpid_control_V4_B.Sum2 - FOpid_control_V4_DW.e2_i) * 1.15 +
-        FOpid_control_V4_DW.u_prev2_e) +
-       FOpid_control_V4_B.rtb_CoordinateTransformationC_o) +
-      FOpid_control_V4_B.rtb_CoordinateTransformationC_l;
-    if (FOpid_control_V4_B.rtb_CoordinateTransformationC_d <= 0.2) {
-      FOpid_control_V4_B.q_aero =
-        FOpid_control_V4_B.rtb_CoordinateTransformationC_d;
-    } else {
-      FOpid_control_V4_B.q_aero = 0.2;
-    }
-
-    if (!(FOpid_control_V4_B.q_aero >= -0.2)) {
-      FOpid_control_V4_B.q_aero = -0.2;
-    }
-
-    if ((FOpid_control_V4_B.rtb_CoordinateTransformationC_d ==
-         FOpid_control_V4_B.q_aero) ||
-        (((FOpid_control_V4_B.rtb_CoordinateTransformationC_d > 0.2) &&
-          (FOpid_control_V4_B.Sum2 < 0.0)) ||
-         ((FOpid_control_V4_B.rtb_CoordinateTransformationC_d < -0.2) &&
-          (FOpid_control_V4_B.Sum2 > 0.0)))) {
-      FOpid_control_V4_DW.sumI_c =
-        FOpid_control_V4_B.rtb_CoordinateTransformationC_l;
-    }
-
-    FOpid_control_V4_B.u_l = (((FOpid_control_V4_B.Sum2 -
-      FOpid_control_V4_DW.e2_i) * 1.15 + FOpid_control_V4_DW.u_prev2_e) +
-      FOpid_control_V4_B.rtb_CoordinateTransformationC_o) +
-      FOpid_control_V4_DW.sumI_c;
+      -0.15664800000000004) * 0.0019605211121644706;
     if (!(FOpid_control_V4_B.u_l <= 0.2)) {
       FOpid_control_V4_B.u_l = 0.2;
     }
@@ -1314,6 +1281,7 @@ void FOpid_control_V4::step()
       FOpid_control_V4_B.u_l = -0.2;
     }
 
+    FOpid_control_V4_DW.u_prev_i = FOpid_control_V4_B.u_l;
     FOpid_control_V4_DW.e7_d = FOpid_control_V4_DW.e6_b;
     FOpid_control_V4_DW.e6_b = FOpid_control_V4_DW.e5_b;
     FOpid_control_V4_DW.e5_b = FOpid_control_V4_DW.e4_p;
@@ -1321,107 +1289,16 @@ void FOpid_control_V4::step()
     FOpid_control_V4_DW.e3_c = FOpid_control_V4_DW.e2_i;
     FOpid_control_V4_DW.e2_i = FOpid_control_V4_DW.e1_j;
     FOpid_control_V4_DW.e1_j = FOpid_control_V4_B.Sum2;
-    FOpid_control_V4_DW.y7_m = FOpid_control_V4_DW.y6_b;
+    FOpid_control_V4_DW.y7_mc = FOpid_control_V4_DW.y6_b;
     FOpid_control_V4_DW.y6_b = FOpid_control_V4_DW.y5_e;
     FOpid_control_V4_DW.y5_e = FOpid_control_V4_DW.y4_g;
     FOpid_control_V4_DW.y4_g = FOpid_control_V4_DW.y3_a3;
-    FOpid_control_V4_DW.y3_a3 = FOpid_control_V4_DW.y2_h;
-    FOpid_control_V4_DW.y2_h = FOpid_control_V4_DW.y1_b;
+    FOpid_control_V4_DW.y3_a3 = FOpid_control_V4_DW.y2_he;
+    FOpid_control_V4_DW.y2_he = FOpid_control_V4_DW.y1_b;
     FOpid_control_V4_DW.y1_b = FOpid_control_V4_B.GainZ;
-    FOpid_control_V4_DW.u_prev2_e = FOpid_control_V4_DW.u_prev_c;
-    FOpid_control_V4_DW.u_prev_c = FOpid_control_V4_B.u_l;
 
     /* End of MATLAB Function: '<Root>/MATLAB Function - fopid_altura' */
-  }
 
-  /* Sum: '<Root>/Sum1' */
-  FOpid_control_V4_B.Sum1 = FOpid_control_V4_B.u_l - FOpid_control_V4_B.x[7];
-  if (tmp_0) {
-    /* MATLAB Function: '<Root>/MATLAB Function - fopid_pitch' incorporates:
-     *  Constant: '<Root>/Constant6'
-     *  Constant: '<Root>/Constant7'
-     *  Constant: '<Root>/Constant8'
-     */
-    FOpid_control_V4_B.rtb_CoordinateTransformationC_o =
-      (((((((FOpid_control_V4_B.x[7] - 2.0 * FOpid_control_V4_DW.y1_j) +
-            FOpid_control_V4_DW.y2_g) - ((FOpid_control_V4_DW.y1_j - 2.0 *
-             FOpid_control_V4_DW.y2_g) + FOpid_control_V4_DW.y3_a)) +
-          ((FOpid_control_V4_DW.y2_g - 2.0 * FOpid_control_V4_DW.y3_a) +
-           FOpid_control_V4_DW.y4_h) * 0.5) + ((FOpid_control_V4_DW.y3_a - 2.0 *
-           FOpid_control_V4_DW.y4_h) + FOpid_control_V4_DW.y5_cm) * -0.5) +
-        ((FOpid_control_V4_DW.y4_h - 2.0 * FOpid_control_V4_DW.y5_cm) +
-         FOpid_control_V4_DW.y6) * 0.375) + ((FOpid_control_V4_DW.y5_cm - 2.0 *
-         FOpid_control_V4_DW.y6) + FOpid_control_V4_DW.y7) * -0.375) *
-      -0.1414207669794488;
-    FOpid_control_V4_B.rtb_CoordinateTransformationC_l = (((((((2.0 *
-      FOpid_control_V4_DW.e2_o + FOpid_control_V4_DW.e1_g) +
-      FOpid_control_V4_DW.e3_m) * -0.8 + ((2.0 * FOpid_control_V4_DW.e1_g +
-      FOpid_control_V4_B.Sum1) + FOpid_control_V4_DW.e2_o)) + ((2.0 *
-      FOpid_control_V4_DW.e3_m + FOpid_control_V4_DW.e2_o) +
-      FOpid_control_V4_DW.e4_e) * 0.32000000000000006) + ((2.0 *
-      FOpid_control_V4_DW.e4_e + FOpid_control_V4_DW.e3_m) +
-      FOpid_control_V4_DW.e5_o) * -0.35200000000000004) + ((2.0 *
-      FOpid_control_V4_DW.e5_o + FOpid_control_V4_DW.e4_e) +
-      FOpid_control_V4_DW.e6) * 0.23040000000000005) + ((2.0 *
-      FOpid_control_V4_DW.e6 + FOpid_control_V4_DW.e5_o) +
-      FOpid_control_V4_DW.e7) * -0.24806400000000003) * -0.00041627868510130014
-      + FOpid_control_V4_DW.sumI;
-    FOpid_control_V4_B.rtb_CoordinateTransformationC_d =
-      (((FOpid_control_V4_B.Sum1 - FOpid_control_V4_DW.e2_o) * -0.8 +
-        FOpid_control_V4_DW.u_prev2) +
-       FOpid_control_V4_B.rtb_CoordinateTransformationC_o) +
-      FOpid_control_V4_B.rtb_CoordinateTransformationC_l;
-    if (FOpid_control_V4_B.rtb_CoordinateTransformationC_d <= 0.1) {
-      FOpid_control_V4_B.q_aero =
-        FOpid_control_V4_B.rtb_CoordinateTransformationC_d;
-    } else {
-      FOpid_control_V4_B.q_aero = 0.1;
-    }
-
-    if (!(FOpid_control_V4_B.q_aero >= -0.1)) {
-      FOpid_control_V4_B.q_aero = -0.1;
-    }
-
-    if ((FOpid_control_V4_B.rtb_CoordinateTransformationC_d ==
-         FOpid_control_V4_B.q_aero) ||
-        (((FOpid_control_V4_B.rtb_CoordinateTransformationC_d > 0.1) &&
-          (FOpid_control_V4_B.Sum1 < 0.0)) ||
-         ((FOpid_control_V4_B.rtb_CoordinateTransformationC_d < -0.1) &&
-          (FOpid_control_V4_B.Sum1 > 0.0)))) {
-      FOpid_control_V4_DW.sumI =
-        FOpid_control_V4_B.rtb_CoordinateTransformationC_l;
-    }
-
-    FOpid_control_V4_B.u_o = (((FOpid_control_V4_B.Sum1 -
-      FOpid_control_V4_DW.e2_o) * -0.8 + FOpid_control_V4_DW.u_prev2) +
-      FOpid_control_V4_B.rtb_CoordinateTransformationC_o) +
-      FOpid_control_V4_DW.sumI;
-    if (!(FOpid_control_V4_B.u_o <= 0.1)) {
-      FOpid_control_V4_B.u_o = 0.1;
-    }
-
-    if (!(FOpid_control_V4_B.u_o >= -0.1)) {
-      FOpid_control_V4_B.u_o = -0.1;
-    }
-
-    FOpid_control_V4_DW.e7 = FOpid_control_V4_DW.e6;
-    FOpid_control_V4_DW.e6 = FOpid_control_V4_DW.e5_o;
-    FOpid_control_V4_DW.e5_o = FOpid_control_V4_DW.e4_e;
-    FOpid_control_V4_DW.e4_e = FOpid_control_V4_DW.e3_m;
-    FOpid_control_V4_DW.e3_m = FOpid_control_V4_DW.e2_o;
-    FOpid_control_V4_DW.e2_o = FOpid_control_V4_DW.e1_g;
-    FOpid_control_V4_DW.e1_g = FOpid_control_V4_B.Sum1;
-    FOpid_control_V4_DW.y7 = FOpid_control_V4_DW.y6;
-    FOpid_control_V4_DW.y6 = FOpid_control_V4_DW.y5_cm;
-    FOpid_control_V4_DW.y5_cm = FOpid_control_V4_DW.y4_h;
-    FOpid_control_V4_DW.y4_h = FOpid_control_V4_DW.y3_a;
-    FOpid_control_V4_DW.y3_a = FOpid_control_V4_DW.y2_g;
-    FOpid_control_V4_DW.y2_g = FOpid_control_V4_DW.y1_j;
-    FOpid_control_V4_DW.y1_j = FOpid_control_V4_B.x[7];
-    FOpid_control_V4_DW.u_prev2 = FOpid_control_V4_DW.u_prev;
-    FOpid_control_V4_DW.u_prev = FOpid_control_V4_B.u_o;
-
-    /* End of MATLAB Function: '<Root>/MATLAB Function - fopid_pitch' */
     /* MATLABSystem: '<S32>/SourceBlock' */
     FOpid_control_V4_B.SourceBlock_o1 =
       Sub_FOpid_control_V4_377.getLatestMessage
@@ -1454,40 +1331,51 @@ void FOpid_control_V4::step()
     /* MATLAB Function: '<Root>/MATLAB Function - fopid_yaw' incorporates:
      *  Constant: '<Root>/Constant10'
      *  Constant: '<Root>/Constant11'
-     *  Constant: '<Root>/Constant9'
      */
-    FOpid_control_V4_B.u = (((((((((((FOpid_control_V4_B.Sum5 -
-      FOpid_control_V4_DW.e1) + 0.5 * FOpid_control_V4_DW.e2) + -0.5 *
-      FOpid_control_V4_DW.e3) + 0.375 * FOpid_control_V4_DW.e4) + -0.375 *
-      FOpid_control_V4_DW.e5) - (-FOpid_control_V4_DW.y1)) - 0.5 *
-      FOpid_control_V4_DW.y2) - -0.5 * FOpid_control_V4_DW.y3) - 0.375 *
-      FOpid_control_V4_DW.y4) - -0.375 * FOpid_control_V4_DW.y5) *
-      -36.76893978663086 + -1.32 * FOpid_control_V4_B.Sum5) +
-      ((((((((((FOpid_control_V4_B.Sum5 - FOpid_control_V4_DW.e1) + 0.5 *
-               FOpid_control_V4_DW.e2) + -0.5 * FOpid_control_V4_DW.e3) + 0.375 *
-             FOpid_control_V4_DW.e4) + -0.375 * FOpid_control_V4_DW.e5) -
-           (-FOpid_control_V4_DW.y1)) - 0.5 * FOpid_control_V4_DW.y2) - -0.5 *
-         FOpid_control_V4_DW.y3) - 0.375 * FOpid_control_V4_DW.y4) - -0.375 *
-       FOpid_control_V4_DW.y5) * -0.005656948533382203;
-    if (!(FOpid_control_V4_B.u <= 0.2617993877991494)) {
-      FOpid_control_V4_B.u = 0.2617993877991494;
+    FOpid_control_V4_B.u = ((((((((FOpid_control_V4_B.x[8] - 2.0 *
+      FOpid_control_V4_DW.y1) + FOpid_control_V4_DW.y2) -
+      ((FOpid_control_V4_DW.y1 - 2.0 * FOpid_control_V4_DW.y2) +
+       FOpid_control_V4_DW.y3)) + ((FOpid_control_V4_DW.y2 - 2.0 *
+      FOpid_control_V4_DW.y3) + FOpid_control_V4_DW.y4) * 0.5) +
+      ((FOpid_control_V4_DW.y3 - 2.0 * FOpid_control_V4_DW.y4) +
+       FOpid_control_V4_DW.y5) * -0.5) + ((FOpid_control_V4_DW.y4 - 2.0 *
+      FOpid_control_V4_DW.y5) + FOpid_control_V4_DW.y6) * 0.375) +
+      ((FOpid_control_V4_DW.y5 - 2.0 * FOpid_control_V4_DW.y6) +
+       FOpid_control_V4_DW.y7) * -0.375) * -0.0 + (FOpid_control_V4_DW.u_prev -
+      (FOpid_control_V4_B.Sum5 - FOpid_control_V4_DW.e1))) + (((((((2.0 *
+      FOpid_control_V4_DW.e2 + FOpid_control_V4_DW.e1) + FOpid_control_V4_DW.e3)
+      * -0.6000000000000001 + ((2.0 * FOpid_control_V4_DW.e1 +
+      FOpid_control_V4_B.Sum5) + FOpid_control_V4_DW.e2)) + ((2.0 *
+      FOpid_control_V4_DW.e3 + FOpid_control_V4_DW.e2) + FOpid_control_V4_DW.e4)
+      * 0.18000000000000005) + ((2.0 * FOpid_control_V4_DW.e4 +
+      FOpid_control_V4_DW.e3) + FOpid_control_V4_DW.e5) * -0.23600000000000004)
+      + ((2.0 * FOpid_control_V4_DW.e5 + FOpid_control_V4_DW.e4) +
+         FOpid_control_V4_DW.e6) * 0.12540000000000004) + ((2.0 *
+      FOpid_control_V4_DW.e6 + FOpid_control_V4_DW.e5) + FOpid_control_V4_DW.e7)
+      * -0.15664800000000004) * -0.012253256951027941;
+    if (!(FOpid_control_V4_B.u <= 0.09)) {
+      FOpid_control_V4_B.u = 0.09;
     }
 
-    if (!(FOpid_control_V4_B.u >= -0.2617993877991494)) {
-      FOpid_control_V4_B.u = -0.2617993877991494;
+    if (!(FOpid_control_V4_B.u >= -0.09)) {
+      FOpid_control_V4_B.u = -0.09;
     }
 
+    FOpid_control_V4_DW.u_prev = FOpid_control_V4_B.u;
+    FOpid_control_V4_DW.e7 = FOpid_control_V4_DW.e6;
+    FOpid_control_V4_DW.e6 = FOpid_control_V4_DW.e5;
     FOpid_control_V4_DW.e5 = FOpid_control_V4_DW.e4;
     FOpid_control_V4_DW.e4 = FOpid_control_V4_DW.e3;
     FOpid_control_V4_DW.e3 = FOpid_control_V4_DW.e2;
     FOpid_control_V4_DW.e2 = FOpid_control_V4_DW.e1;
     FOpid_control_V4_DW.e1 = FOpid_control_V4_B.Sum5;
+    FOpid_control_V4_DW.y7 = FOpid_control_V4_DW.y6;
+    FOpid_control_V4_DW.y6 = FOpid_control_V4_DW.y5;
     FOpid_control_V4_DW.y5 = FOpid_control_V4_DW.y4;
     FOpid_control_V4_DW.y4 = FOpid_control_V4_DW.y3;
     FOpid_control_V4_DW.y3 = FOpid_control_V4_DW.y2;
     FOpid_control_V4_DW.y2 = FOpid_control_V4_DW.y1;
-    FOpid_control_V4_DW.y1 = FOpid_control_V4_B.u;
-    FOpid_control_V4_DW.u1 = FOpid_control_V4_B.u;
+    FOpid_control_V4_DW.y1 = FOpid_control_V4_B.x[8];
 
     /* End of MATLAB Function: '<Root>/MATLAB Function - fopid_yaw' */
 
@@ -1508,63 +1396,151 @@ void FOpid_control_V4::step()
     /* End of Saturate: '<Root>/Saturation_roll_sp' */
   }
 
-  /* Gain: '<Root>/Gain' */
-  FOpid_control_V4_B.rtb_CoordinateTransformationC_o = 0.13 *
-    FOpid_control_V4_B.Sum5;
-
-  /* Saturate: '<Root>/Saturation' */
-  if (FOpid_control_V4_B.rtb_CoordinateTransformationC_o > 0.14) {
-    FOpid_control_V4_B.rtb_CoordinateTransformationC_o = 0.14;
-  } else if (FOpid_control_V4_B.rtb_CoordinateTransformationC_o < -0.14) {
-    FOpid_control_V4_B.rtb_CoordinateTransformationC_o = -0.14;
-  }
-
-  /* Sum: '<Root>/Sum4' incorporates:
-   *  Saturate: '<Root>/Saturation'
-   */
-  FOpid_control_V4_B.Sum4 = (FOpid_control_V4_B.Saturation_roll_sp +
-    FOpid_control_V4_B.rtb_CoordinateTransformationC_o) - FOpid_control_V4_B.x[6];
+  /* Sum: '<Root>/Sum4' */
+  FOpid_control_V4_B.Sum4 = FOpid_control_V4_B.Saturation_roll_sp -
+    FOpid_control_V4_B.x[6];
   if (tmp_0) {
     /* MATLAB Function: '<Root>/MATLAB Function - fopid_roll' incorporates:
-     *  Constant: '<Root>/Constant'
      *  Constant: '<Root>/Constant1'
      *  Constant: '<Root>/Constant2'
      */
-    FOpid_control_V4_B.u_d = (((((((((((FOpid_control_V4_B.Sum4 -
-      FOpid_control_V4_DW.e1_p) + 0.5 * FOpid_control_V4_DW.e2_g) + -0.5 *
-      FOpid_control_V4_DW.e3_p) + 0.375 * FOpid_control_V4_DW.e4_l) + -0.375 *
-      FOpid_control_V4_DW.e5_f) - (-FOpid_control_V4_DW.y1_l)) - 0.5 *
-      FOpid_control_V4_DW.y2_j) - -0.5 * FOpid_control_V4_DW.y3_l) - 0.375 *
-      FOpid_control_V4_DW.y4_f) - -0.375 * FOpid_control_V4_DW.y5_c) *
-      -4.2425699753804835 + -0.44 * FOpid_control_V4_B.Sum4) +
-      ((((((((((FOpid_control_V4_B.Sum4 - FOpid_control_V4_DW.e1_p) + 0.5 *
-               FOpid_control_V4_DW.e2_g) + -0.5 * FOpid_control_V4_DW.e3_p) +
-             0.375 * FOpid_control_V4_DW.e4_l) + -0.375 *
-            FOpid_control_V4_DW.e5_f) - (-FOpid_control_V4_DW.y1_l)) - 0.5 *
-          FOpid_control_V4_DW.y2_j) - -0.5 * FOpid_control_V4_DW.y3_l) - 0.375 *
-        FOpid_control_V4_DW.y4_f) - -0.375 * FOpid_control_V4_DW.y5_c) *
-      -0.007071185666727754;
-    if (!(FOpid_control_V4_B.u_d <= 0.3490658503988659)) {
-      FOpid_control_V4_B.u_d = 0.3490658503988659;
+    FOpid_control_V4_B.u_d = ((((((((FOpid_control_V4_DW.y1_fg - 2.0 *
+      FOpid_control_V4_DW.y2_a) + FOpid_control_V4_DW.y3_m) * -1.8 +
+      ((FOpid_control_V4_B.x[6] - 2.0 * FOpid_control_V4_DW.y1_fg) +
+       FOpid_control_V4_DW.y2_a)) + ((FOpid_control_V4_DW.y2_a - 2.0 *
+      FOpid_control_V4_DW.y3_m) + FOpid_control_V4_DW.y4_c) * 1.62) +
+      ((FOpid_control_V4_DW.y3_m - 2.0 * FOpid_control_V4_DW.y4_c) +
+       FOpid_control_V4_DW.y5_n) * -1.572) + ((FOpid_control_V4_DW.y4_c - 2.0 *
+      FOpid_control_V4_DW.y5_n) + FOpid_control_V4_DW.y6_lk) * 1.5174) +
+      ((FOpid_control_V4_DW.y5_n - 2.0 * FOpid_control_V4_DW.y6_lk) +
+       FOpid_control_V4_DW.y7_g) * -1.489464) * -0.0 +
+      (FOpid_control_V4_DW.u_prev_l - (FOpid_control_V4_B.Sum4 -
+      FOpid_control_V4_DW.e1_p))) + (((((((2.0 * FOpid_control_V4_DW.e2_g +
+      FOpid_control_V4_DW.e1_p) + FOpid_control_V4_DW.e3_p) *
+      -0.6000000000000001 + ((2.0 * FOpid_control_V4_DW.e1_p +
+      FOpid_control_V4_B.Sum4) + FOpid_control_V4_DW.e2_g)) + ((2.0 *
+      FOpid_control_V4_DW.e3_p + FOpid_control_V4_DW.e2_g) +
+      FOpid_control_V4_DW.e4_l) * 0.18000000000000005) + ((2.0 *
+      FOpid_control_V4_DW.e4_l + FOpid_control_V4_DW.e3_p) +
+      FOpid_control_V4_DW.e5_f) * -0.23600000000000004) + ((2.0 *
+      FOpid_control_V4_DW.e5_f + FOpid_control_V4_DW.e4_l) +
+      FOpid_control_V4_DW.e6_m) * 0.12540000000000004) + ((2.0 *
+      FOpid_control_V4_DW.e6_m + FOpid_control_V4_DW.e5_f) +
+      FOpid_control_V4_DW.e7_j) * -0.15664800000000004) * -0.012253256951027941;
+    if (!(FOpid_control_V4_B.u_d <= 0.1)) {
+      FOpid_control_V4_B.u_d = 0.1;
     }
 
-    if (!(FOpid_control_V4_B.u_d >= -0.3490658503988659)) {
-      FOpid_control_V4_B.u_d = -0.3490658503988659;
+    if (!(FOpid_control_V4_B.u_d >= -0.1)) {
+      FOpid_control_V4_B.u_d = -0.1;
     }
 
+    FOpid_control_V4_DW.u_prev_l = FOpid_control_V4_B.u_d;
+    FOpid_control_V4_DW.e7_j = FOpid_control_V4_DW.e6_m;
+    FOpid_control_V4_DW.e6_m = FOpid_control_V4_DW.e5_f;
     FOpid_control_V4_DW.e5_f = FOpid_control_V4_DW.e4_l;
     FOpid_control_V4_DW.e4_l = FOpid_control_V4_DW.e3_p;
     FOpid_control_V4_DW.e3_p = FOpid_control_V4_DW.e2_g;
     FOpid_control_V4_DW.e2_g = FOpid_control_V4_DW.e1_p;
     FOpid_control_V4_DW.e1_p = FOpid_control_V4_B.Sum4;
-    FOpid_control_V4_DW.y5_c = FOpid_control_V4_DW.y4_f;
-    FOpid_control_V4_DW.y4_f = FOpid_control_V4_DW.y3_l;
-    FOpid_control_V4_DW.y3_l = FOpid_control_V4_DW.y2_j;
-    FOpid_control_V4_DW.y2_j = FOpid_control_V4_DW.y1_l;
-    FOpid_control_V4_DW.y1_l = FOpid_control_V4_B.u_d;
-    FOpid_control_V4_DW.u1_mt = FOpid_control_V4_B.u_d;
+    FOpid_control_V4_DW.y7_g = FOpid_control_V4_DW.y6_lk;
+    FOpid_control_V4_DW.y6_lk = FOpid_control_V4_DW.y5_n;
+    FOpid_control_V4_DW.y5_n = FOpid_control_V4_DW.y4_c;
+    FOpid_control_V4_DW.y4_c = FOpid_control_V4_DW.y3_m;
+    FOpid_control_V4_DW.y3_m = FOpid_control_V4_DW.y2_a;
+    FOpid_control_V4_DW.y2_a = FOpid_control_V4_DW.y1_fg;
+    FOpid_control_V4_DW.y1_fg = FOpid_control_V4_B.x[6];
 
     /* End of MATLAB Function: '<Root>/MATLAB Function - fopid_roll' */
+  }
+
+  /* Sum: '<Root>/Sum1' */
+  FOpid_control_V4_B.Sum1 = FOpid_control_V4_B.u_l - FOpid_control_V4_B.x[7];
+  if (tmp_0) {
+    /* MATLAB Function: '<Root>/MATLAB Function - fopid_pitch' incorporates:
+     *  Constant: '<Root>/Constant6'
+     *  Constant: '<Root>/Constant7'
+     *  Constant: '<Root>/Constant8'
+     */
+    FOpid_control_V4_B.rtb_CoordinateTransformationC_o =
+      (((((((FOpid_control_V4_B.x[7] - 2.0 * FOpid_control_V4_DW.y1_j) +
+            FOpid_control_V4_DW.y2_g) - ((FOpid_control_V4_DW.y1_j - 2.0 *
+             FOpid_control_V4_DW.y2_g) + FOpid_control_V4_DW.y3_a)) +
+          ((FOpid_control_V4_DW.y2_g - 2.0 * FOpid_control_V4_DW.y3_a) +
+           FOpid_control_V4_DW.y4_h) * 0.5) + ((FOpid_control_V4_DW.y3_a - 2.0 *
+           FOpid_control_V4_DW.y4_h) + FOpid_control_V4_DW.y5_c) * -0.5) +
+        ((FOpid_control_V4_DW.y4_h - 2.0 * FOpid_control_V4_DW.y5_c) +
+         FOpid_control_V4_DW.y6_k) * 0.375) + ((FOpid_control_V4_DW.y5_c - 2.0 *
+         FOpid_control_V4_DW.y6_k) + FOpid_control_V4_DW.y7_l) * -0.375) *
+      -0.1414207669794488;
+    FOpid_control_V4_B.rtb_CoordinateTransformationC_l = (((((((2.0 *
+      FOpid_control_V4_DW.e2_o + FOpid_control_V4_DW.e1_g) +
+      FOpid_control_V4_DW.e3_m) * -0.8 + ((2.0 * FOpid_control_V4_DW.e1_g +
+      FOpid_control_V4_B.Sum1) + FOpid_control_V4_DW.e2_o)) + ((2.0 *
+      FOpid_control_V4_DW.e3_m + FOpid_control_V4_DW.e2_o) +
+      FOpid_control_V4_DW.e4_e) * 0.32000000000000006) + ((2.0 *
+      FOpid_control_V4_DW.e4_e + FOpid_control_V4_DW.e3_m) +
+      FOpid_control_V4_DW.e5_o) * -0.35200000000000004) + ((2.0 *
+      FOpid_control_V4_DW.e5_o + FOpid_control_V4_DW.e4_e) +
+      FOpid_control_V4_DW.e6_d) * 0.23040000000000005) + ((2.0 *
+      FOpid_control_V4_DW.e6_d + FOpid_control_V4_DW.e5_o) +
+      FOpid_control_V4_DW.e7_p) * -0.24806400000000003) *
+      -0.00041627868510130014 + FOpid_control_V4_DW.sumI;
+    FOpid_control_V4_B.rtb_CoordinateTransformationC_d =
+      (((FOpid_control_V4_B.Sum1 - FOpid_control_V4_DW.e1_g) * -0.8 +
+        FOpid_control_V4_DW.u_prev_n) +
+       FOpid_control_V4_B.rtb_CoordinateTransformationC_o) +
+      FOpid_control_V4_B.rtb_CoordinateTransformationC_l;
+    if (FOpid_control_V4_B.rtb_CoordinateTransformationC_d <= 0.1) {
+      FOpid_control_V4_B.q_aero =
+        FOpid_control_V4_B.rtb_CoordinateTransformationC_d;
+    } else {
+      FOpid_control_V4_B.q_aero = 0.1;
+    }
+
+    if (!(FOpid_control_V4_B.q_aero >= -0.1)) {
+      FOpid_control_V4_B.q_aero = -0.1;
+    }
+
+    if ((FOpid_control_V4_B.rtb_CoordinateTransformationC_d ==
+         FOpid_control_V4_B.q_aero) ||
+        (((FOpid_control_V4_B.rtb_CoordinateTransformationC_d > 0.1) &&
+          (FOpid_control_V4_B.Sum1 < 0.0)) ||
+         ((FOpid_control_V4_B.rtb_CoordinateTransformationC_d < -0.1) &&
+          (FOpid_control_V4_B.Sum1 > 0.0)))) {
+      FOpid_control_V4_DW.sumI =
+        FOpid_control_V4_B.rtb_CoordinateTransformationC_l;
+    }
+
+    FOpid_control_V4_B.u_o = (((FOpid_control_V4_B.Sum1 -
+      FOpid_control_V4_DW.e1_g) * -0.8 + FOpid_control_V4_DW.u_prev_n) +
+      FOpid_control_V4_B.rtb_CoordinateTransformationC_o) +
+      FOpid_control_V4_DW.sumI;
+    if (!(FOpid_control_V4_B.u_o <= 0.1)) {
+      FOpid_control_V4_B.u_o = 0.1;
+    }
+
+    if (!(FOpid_control_V4_B.u_o >= -0.1)) {
+      FOpid_control_V4_B.u_o = -0.1;
+    }
+
+    FOpid_control_V4_DW.e7_p = FOpid_control_V4_DW.e6_d;
+    FOpid_control_V4_DW.e6_d = FOpid_control_V4_DW.e5_o;
+    FOpid_control_V4_DW.e5_o = FOpid_control_V4_DW.e4_e;
+    FOpid_control_V4_DW.e4_e = FOpid_control_V4_DW.e3_m;
+    FOpid_control_V4_DW.e3_m = FOpid_control_V4_DW.e2_o;
+    FOpid_control_V4_DW.e2_o = FOpid_control_V4_DW.e1_g;
+    FOpid_control_V4_DW.e1_g = FOpid_control_V4_B.Sum1;
+    FOpid_control_V4_DW.y7_l = FOpid_control_V4_DW.y6_k;
+    FOpid_control_V4_DW.y6_k = FOpid_control_V4_DW.y5_c;
+    FOpid_control_V4_DW.y5_c = FOpid_control_V4_DW.y4_h;
+    FOpid_control_V4_DW.y4_h = FOpid_control_V4_DW.y3_a;
+    FOpid_control_V4_DW.y3_a = FOpid_control_V4_DW.y2_g;
+    FOpid_control_V4_DW.y2_g = FOpid_control_V4_DW.y1_j;
+    FOpid_control_V4_DW.y1_j = FOpid_control_V4_B.x[7];
+    FOpid_control_V4_DW.u_prev_n = FOpid_control_V4_B.u_o;
+
+    /* End of MATLAB Function: '<Root>/MATLAB Function - fopid_pitch' */
   }
 
   /* Step: '<S29>/Step' */
@@ -1604,41 +1580,52 @@ void FOpid_control_V4::step()
      *  Constant: '<Root>/Constant13'
      *  Constant: '<Root>/Constant14'
      */
-    FOpid_control_V4_B.u_b = (((((((((((FOpid_control_V4_B.Sum3 -
-      FOpid_control_V4_DW.e1_o) + 0.5 * FOpid_control_V4_DW.e2_k) + -0.5 *
-      FOpid_control_V4_DW.e3_i) + 0.375 * FOpid_control_V4_DW.e4_m) + -0.375 *
-      FOpid_control_V4_DW.e5_m) - (-FOpid_control_V4_DW.y1_f)) - 0.5 *
-      FOpid_control_V4_DW.y2_n) - -0.5 * FOpid_control_V4_DW.y3_p) - 0.375 *
-      FOpid_control_V4_DW.y4_b) - -0.375 * FOpid_control_V4_DW.y5_k) * 0.0 + 1.5
-      * FOpid_control_V4_B.Sum3) + ((((((((((-0.3999999999999999 *
-      FOpid_control_V4_DW.e1_o + FOpid_control_V4_B.Sum3) + 0.07999999999999996 *
-      FOpid_control_V4_DW.e2_k) + -0.14399999999999996 *
-      FOpid_control_V4_DW.e3_i) + 0.054399999999999976 *
-      FOpid_control_V4_DW.e4_m) + -0.09075199999999999 *
-      FOpid_control_V4_DW.e5_m) - -0.3999999999999999 * FOpid_control_V4_DW.y1_f)
-      - 0.07999999999999996 * FOpid_control_V4_DW.y2_n) - -0.14399999999999996 *
-      FOpid_control_V4_DW.y3_p) - 0.054399999999999976 *
-      FOpid_control_V4_DW.y4_b) - -0.09075199999999999 *
-      FOpid_control_V4_DW.y5_k) * 0.014427864750435443;
-    if (!(FOpid_control_V4_B.u_b <= 0.8)) {
-      FOpid_control_V4_B.u_b = 0.8;
+    FOpid_control_V4_B.u_b = ((((((((FOpid_control_V4_DW.y1_f - 2.0 *
+      FOpid_control_V4_DW.y2_h) + FOpid_control_V4_DW.y3_d) * -1.8 +
+      ((FOpid_control_V4_B.x[0] - 2.0 * FOpid_control_V4_DW.y1_f) +
+       FOpid_control_V4_DW.y2_h)) + ((FOpid_control_V4_DW.y2_h - 2.0 *
+      FOpid_control_V4_DW.y3_d) + FOpid_control_V4_DW.y4_f) * 1.62) +
+      ((FOpid_control_V4_DW.y3_d - 2.0 * FOpid_control_V4_DW.y4_f) +
+       FOpid_control_V4_DW.y5_k) * -1.572) + ((FOpid_control_V4_DW.y4_f - 2.0 *
+      FOpid_control_V4_DW.y5_k) + FOpid_control_V4_DW.y6_l) * 1.5174) +
+      ((FOpid_control_V4_DW.y5_k - 2.0 * FOpid_control_V4_DW.y6_l) +
+       FOpid_control_V4_DW.y7_m) * -1.489464) * 0.0 + ((FOpid_control_V4_B.Sum3
+      - FOpid_control_V4_DW.e1_o) * 2.0 + FOpid_control_V4_DW.u_prev_g)) +
+      (((((((2.0 * FOpid_control_V4_DW.e2_k + FOpid_control_V4_DW.e1_o) +
+            FOpid_control_V4_DW.e3_i) * -0.6000000000000001 + ((2.0 *
+             FOpid_control_V4_DW.e1_o + FOpid_control_V4_B.Sum3) +
+            FOpid_control_V4_DW.e2_k)) + ((2.0 * FOpid_control_V4_DW.e3_i +
+            FOpid_control_V4_DW.e2_k) + FOpid_control_V4_DW.e4_m) *
+          0.18000000000000005) + ((2.0 * FOpid_control_V4_DW.e4_m +
+           FOpid_control_V4_DW.e3_i) + FOpid_control_V4_DW.e5_m) *
+         -0.23600000000000004) + ((2.0 * FOpid_control_V4_DW.e5_m +
+          FOpid_control_V4_DW.e4_m) + FOpid_control_V4_DW.e6_n) *
+        0.12540000000000004) + ((2.0 * FOpid_control_V4_DW.e6_n +
+         FOpid_control_V4_DW.e5_m) + FOpid_control_V4_DW.e7_b) *
+       -0.15664800000000004) * 0.024506513902055882;
+    if (!(FOpid_control_V4_B.u_b <= 1.0)) {
+      FOpid_control_V4_B.u_b = 1.0;
     }
 
     if (!(FOpid_control_V4_B.u_b >= 0.4)) {
       FOpid_control_V4_B.u_b = 0.4;
     }
 
+    FOpid_control_V4_DW.u_prev_g = FOpid_control_V4_B.u_b;
+    FOpid_control_V4_DW.e7_b = FOpid_control_V4_DW.e6_n;
+    FOpid_control_V4_DW.e6_n = FOpid_control_V4_DW.e5_m;
     FOpid_control_V4_DW.e5_m = FOpid_control_V4_DW.e4_m;
     FOpid_control_V4_DW.e4_m = FOpid_control_V4_DW.e3_i;
     FOpid_control_V4_DW.e3_i = FOpid_control_V4_DW.e2_k;
     FOpid_control_V4_DW.e2_k = FOpid_control_V4_DW.e1_o;
     FOpid_control_V4_DW.e1_o = FOpid_control_V4_B.Sum3;
-    FOpid_control_V4_DW.y5_k = FOpid_control_V4_DW.y4_b;
-    FOpid_control_V4_DW.y4_b = FOpid_control_V4_DW.y3_p;
-    FOpid_control_V4_DW.y3_p = FOpid_control_V4_DW.y2_n;
-    FOpid_control_V4_DW.y2_n = FOpid_control_V4_DW.y1_f;
-    FOpid_control_V4_DW.y1_f = FOpid_control_V4_B.u_b;
-    FOpid_control_V4_DW.u1_m = FOpid_control_V4_B.u_b;
+    FOpid_control_V4_DW.y7_m = FOpid_control_V4_DW.y6_l;
+    FOpid_control_V4_DW.y6_l = FOpid_control_V4_DW.y5_k;
+    FOpid_control_V4_DW.y5_k = FOpid_control_V4_DW.y4_f;
+    FOpid_control_V4_DW.y4_f = FOpid_control_V4_DW.y3_d;
+    FOpid_control_V4_DW.y3_d = FOpid_control_V4_DW.y2_h;
+    FOpid_control_V4_DW.y2_h = FOpid_control_V4_DW.y1_f;
+    FOpid_control_V4_DW.y1_f = FOpid_control_V4_B.x[0];
 
     /* End of MATLAB Function: '<Root>/MATLAB Function - fopid_velocidad' */
     /* MATLAB Function: '<Root>/MATLAB Function' */
@@ -3544,7 +3531,7 @@ void FOpid_control_V4::initialize()
     static const char_T b_zeroDelimTopic[18] = "/ekranoplano/odom";
 
     /* Start for InitialCondition: '<S30>/IC' */
-    memcpy(&FOpid_control_V4_B.IC[0], &FOpid_control_V4_ConstP.pooled10[0], 12U *
+    memcpy(&FOpid_control_V4_B.IC[0], &FOpid_control_V4_ConstP.pooled12[0], 12U *
            sizeof(real_T));
 
     /* Start for InitialCondition: '<S30>/IC' */
@@ -3713,11 +3700,11 @@ void FOpid_control_V4::initialize()
 
   /* InitializeConditions for Memory: '<S30>/Memory2' */
   memcpy(&FOpid_control_V4_DW.Memory2_PreviousInput[0],
-         &FOpid_control_V4_ConstP.pooled10[0], 12U * sizeof(real_T));
+         &FOpid_control_V4_ConstP.pooled12[0], 12U * sizeof(real_T));
 
   /* InitializeConditions for Integrator: '<S30>/Integrator' */
   if (rtmIsFirstInitCond((&FOpid_control_V4_M))) {
-    FOpid_control_V4_X.Integrator_CSTATE[0] = 20.0;
+    FOpid_control_V4_X.Integrator_CSTATE[0] = 16.0;
     FOpid_control_V4_X.Integrator_CSTATE[1] = 0.0;
     FOpid_control_V4_X.Integrator_CSTATE[2] = 0.0;
     FOpid_control_V4_X.Integrator_CSTATE[3] = 0.0;
@@ -3728,7 +3715,7 @@ void FOpid_control_V4::initialize()
     FOpid_control_V4_X.Integrator_CSTATE[8] = 0.0;
     FOpid_control_V4_X.Integrator_CSTATE[9] = 0.0;
     FOpid_control_V4_X.Integrator_CSTATE[10] = 0.0;
-    FOpid_control_V4_X.Integrator_CSTATE[11] = -1.0;
+    FOpid_control_V4_X.Integrator_CSTATE[11] = -0.05;
   }
 
   FOpid_control_V4_DW.Integrator_DWORK1 = true;

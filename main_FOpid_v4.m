@@ -20,37 +20,36 @@ tsim = 1;
 step = 0.01;
 x_nom = zeros(12,1);
 % Velocidad y ángulo de trimado calculado
-x_nom(1)  = 20.0;           % u [m/s] — velocidad crucero
+x_nom(1)  = 16.00;        % u [m/s] — velocidad crucero
 x_nom(3)  = 0;              % w [m/s]
 x_nom(8)  = 1.5*(pi/180);   % theta trimado (~1.5° con iw=1.5°)
 % x_nom(8)  = 0;   % theta trimado (~1.5° con iw=1.5°)
 x_nom(10) = 0;              % x_NED
 x_nom(11) = 0;              % y_NED
-x_nom(12) = -1.0;         % z_NED (altura = 0.55 m)
+x_nom(12) = -0.05;         % z_NED (altura = 0.55 m)
 
 % Throttle inicial: calculado para equilibrar drag
 u_nom = zeros(5,1);
 u_nom(2)   = 0.0;   % Elevador neutro
-u_nom(4:5) = 0.52;  % CORREGIDO: era 0.80 (sobreempujaba), ahora equilibrado
+u_nom(4:5) = 0.52;  % CORREGIDO: era 0.80 (sobreempujaba)
 % x0 = x_nom;
 x0 = zeros(12,1);   % todos los estados en cero al inicio
 
-%% PARAMETROS DE CONTROL PID (Para modelo de 1.2 kg)
-% lambda = 0.5;   mu = 0.5;   % Órdenes fraccionarios (fijos)
+%% PARAMETROS DE CONTROL FOPID (Para modelo de 1.2 kg)
+
 
 % 1. Lazo de Velocidad
 u_sp    = 20.0;
-Kp_u    =  1.50;   
+Kp_u    =  2.0;   
 Ki_u    =  1.0;   
 Kd_u    =  0.0;
-
 
 
 % 2. Lazo de Altura
 h_sp    =  1.0;
 
-Kp_h    =  1.15;   
-Ki_h    =  0.008;   
+Kp_h    =  1.0;   
+Ki_h    =  0.08;   
 Kd_h    =  0.0;
 
 
@@ -65,15 +64,15 @@ Kd_pitch = -0.01;
 
 % 4. Lazo de Timón (Yaw)
 psi_sp   = 0*(pi/180);
-Kp_yaw   = -1.3200;  
-Ki_yaw   = -0.0800;  
-Kd_yaw   = -2.6000;
+Kp_yaw   = -1.0;  
+Ki_yaw   = -0.50;  
+Kd_yaw   = -0.0;
 
 % 5. Lazo de Alerones (Roll)
 phi_sp   = 0.0;
-Kp_roll  = -0.4400;  
-Ki_roll  = -0.1000;  
-Kd_roll  = -0.3000;
+Kp_roll  = -1.00;  
+Ki_roll  = -0.50;  
+Kd_roll  = -0.0;
 
 %% Simulation
 sim = sim('FOpid_control_V4.slx');

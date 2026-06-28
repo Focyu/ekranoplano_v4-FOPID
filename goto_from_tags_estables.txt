@@ -13,7 +13,6 @@
 [GOTO] FOpid_control_V4/Goto2  ->  Tag: orientationZ
 [GOTO] FOpid_control_V4/Goto20  ->  Tag: VELOCIDADX_ACTUAL
 [GOTO] FOpid_control_V4/Goto21  ->  Tag: FOPID_VEL
-[GOTO] FOpid_control_V4/Goto22  ->  Tag: u_yaw
 [GOTO] FOpid_control_V4/Goto23  ->  Tag: px
 [GOTO] FOpid_control_V4/Goto24  ->  Tag: py
 [GOTO] FOpid_control_V4/Goto25  ->  Tag: pz
@@ -27,7 +26,6 @@
 [GOTO] FOpid_control_V4/Goto32  ->  Tag: s
 [GOTO] FOpid_control_V4/Goto33  ->  Tag: ns
 [GOTO] FOpid_control_V4/Goto34  ->  Tag: VEL_SET
-[GOTO] FOpid_control_V4/Goto35  ->  Tag: theta_sp
 [GOTO] FOpid_control_V4/Goto4  ->  Tag: orientationX
 [GOTO] FOpid_control_V4/Goto5  ->  Tag: orientationW
 [GOTO] FOpid_control_V4/Goto6  ->  Tag: positionY
@@ -96,7 +94,6 @@
 [FROM] FOpid_control_V4/From40  <-  Tag: FOPID_TIMON
 [FROM] FOpid_control_V4/From41  <-  Tag: VELOCIDADX_ACTUAL
 [FROM] FOpid_control_V4/From42  <-  Tag: FOPID_VEL
-[FROM] FOpid_control_V4/From43  <-  Tag: u_yaw
 [FROM] FOpid_control_V4/From44  <-  Tag: px
 [FROM] FOpid_control_V4/From45  <-  Tag: py
 [FROM] FOpid_control_V4/From46  <-  Tag: pz
@@ -129,7 +126,6 @@
 [FROM] FOpid_control_V4/From70  <-  Tag: pz
 [FROM] FOpid_control_V4/From71  <-  Tag: x_in
 [FROM] FOpid_control_V4/From72  <-  Tag: positionX
-[FROM] FOpid_control_V4/From73  <-  Tag: theta_sp
 [FROM] FOpid_control_V4/From8  <-  Tag: x_in
 [FROM] FOpid_control_V4/From9  <-  Tag: orientationY
 [FROM] FOpid_control_V4/SUBSYSTEM_MODEL/From  <-  Tag: phi_interno
