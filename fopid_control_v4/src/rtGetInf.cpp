@@ -4,11 +4,11 @@
  * Trial License - for use to evaluate programs for possible purchase as
  * an end-user only.
  *
- * Code generation for model "FOpid_control_V4".
+ * Code generation for model "FOpid_control".
  *
- * Model version              : 13.44
+ * Model version              : 13.61
  * Simulink Coder version : 26.1 (R2026a) 20-Nov-2025
- * C++ source code generated on : Sun Jun 28 19:11:25 2026
+ * C++ source code generated on : Wed Aug 19 13:10:53 2026
  *
  * Target selection: ert.tlc
  * Note: GRT includes extra infrastructure and instrumentation for prototyping

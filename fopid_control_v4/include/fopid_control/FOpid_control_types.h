@@ -1,14 +1,14 @@
 /*
- * FOpid_control_V4_types.h
+ * FOpid_control_types.h
  *
  * Trial License - for use to evaluate programs for possible purchase as
  * an end-user only.
  *
- * Code generation for model "FOpid_control_V4".
+ * Code generation for model "FOpid_control".
  *
- * Model version              : 13.44
+ * Model version              : 13.61
  * Simulink Coder version : 26.1 (R2026a) 20-Nov-2025
- * C++ source code generated on : Sun Jun 28 19:11:25 2026
+ * C++ source code generated on : Wed Aug 19 13:10:53 2026
  *
  * Target selection: ert.tlc
  * Note: GRT includes extra infrastructure and instrumentation for prototyping
@@ -17,8 +17,8 @@
  * Validation result: Not run
  */
 
-#ifndef FOPID_CONTROL_V4_TYPES_H_
-#define FOPID_CONTROL_V4_TYPES_H_
+#ifndef FOPID_CONTROL_TYPES_H_
+#define FOPID_CONTROL_TYPES_H_
 #include "rtwtypes.h"
 #ifndef DEFINED_TYPEDEF_FOR_SL_BUS_ROSVARIABLELENGTHARRAYINFO_
 #define DEFINED_TYPEDEF_FOR_SL_BUS_ROSVARIABLELENGTHARRAYINFO_
@@ -313,6 +313,6 @@ struct ros_slros2_internal_block_Sub_T
 #endif                              /* STRUCT_ROS_SLROS2_INTERNAL_BLOCK_SUB_T */
 
 /* Forward declaration for rtModel */
-typedef struct tag_RTM_FOpid_control_V4_T RT_MODEL_FOpid_control_V4_T;
+typedef struct tag_RTM_FOpid_control_T RT_MODEL_FOpid_control_T;
 
-#endif                                 /* FOPID_CONTROL_V4_TYPES_H_ */
+#endif                                 /* FOPID_CONTROL_TYPES_H_ */

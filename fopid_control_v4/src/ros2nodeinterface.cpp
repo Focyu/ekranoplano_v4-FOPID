@@ -2,11 +2,11 @@
 //
 // File ros2nodeinterface.cpp
 //
-// Code generated for Simulink model 'FOpid_control_V4'.
+// Code generated for Simulink model 'FOpid_control'.
 //
-// Model version                  : 13.44
+// Model version                  : 13.61
 // Simulink Coder version         : 26.1 (R2026a) 20-Nov-2025
-// C/C++ source code generated on : Sun Jun 28 19:11:40 2026
+// C/C++ source code generated on : Wed Aug 19 13:11:09 2026
 //
 #ifdef _MSC_VER
 #pragma warning(push)
@@ -26,7 +26,7 @@
 #pragma GCC diagnostic ignored "-Wshadow"
 #endif //_MSC_VER
 #include "rclcpp/rclcpp.hpp"
-#include "FOpid_control_V4.h"
+#include "FOpid_control.h"
 #include "ros2nodeinterface.h"
 #include <thread>
 #include <chrono>
@@ -82,13 +82,13 @@ void NodeInterface::initialize(int argc, char * const argv[]) {
         std::vector<char *> args(argv, argv + argc);
         rclcpp::init(static_cast<int>(args.size()), args.data());
         //create the Node specified in Model
-        std::string NodeName("FOpid_control_V4");
+        std::string NodeName("FOpid_control");
         SLROSNodePtr = std::make_shared<rclcpp::Node>(NodeName);
-        RCLCPP_INFO(SLROSNodePtr->get_logger(),"** Starting the model \"FOpid_control_V4\" **\n");
+        RCLCPP_INFO(SLROSNodePtr->get_logger(),"** Starting the model \"FOpid_control\" **\n");
         mExec = std::make_shared<rclcpp::executors::SLMultiThreadedExecutor>();
         mExec->add_node(SLROSNodePtr);
         //initialize the model which will initialize the publishers and subscribers
-        mModel = std::make_shared<FOpid_control_V4>(
+        mModel = std::make_shared<FOpid_control>(
         );
         ROS_SET_RTM_ERROR_STATUS(NULL);
         //Initialize the callback map and then initialize the model

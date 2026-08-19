@@ -2,11 +2,11 @@
 //
 // File ros2nodeinterface.h
 //
-// Code generated for Simulink model 'FOpid_control_V4'.
+// Code generated for Simulink model 'FOpid_control'.
 //
-// Model version                  : 13.44
+// Model version                  : 13.61
 // Simulink Coder version         : 26.1 (R2026a) 20-Nov-2025
-// C/C++ source code generated on : Sun Jun 28 19:11:40 2026
+// C/C++ source code generated on : Wed Aug 19 13:11:09 2026
 //
 #ifndef _ROS2_MATLAB_NODEINTERFACE_
 #define _ROS2_MATLAB_NODEINTERFACE_
@@ -31,8 +31,8 @@ namespace executors{
 class SLMultiThreadedExecutor;
 }
 }
-class FOpid_control_V4;
-#include "FOpid_control_V4_types.h"
+class FOpid_control;
+#include "FOpid_control_types.h"
 #include "rtwtypes.h"
 #include "gazebo_msgs/srv/set_entity_state.hpp"
 #include "geometry_msgs/msg/pose_stamped.hpp"
@@ -78,7 +78,7 @@ namespace matlab {
     NodeInterface& operator=(const NodeInterface& );
     //
     rclcpp::Node::SharedPtr mNode;
-    std::shared_ptr<FOpid_control_V4> mModel;
+    std::shared_ptr<FOpid_control> mModel;
     std::shared_ptr<rclcpp::executors::SLMultiThreadedExecutor> mExec;
     //
     Semaphore mBaseRateSem;
@@ -106,7 +106,7 @@ namespace matlab {
       return mNode;
     }
     //
-    std::shared_ptr<FOpid_control_V4> getModel() {
+    std::shared_ptr<FOpid_control> getModel() {
       return mModel;
     }
   }; //class NodeInterface

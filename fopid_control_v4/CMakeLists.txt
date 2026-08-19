@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.5)
-project(fopid_control_v4)
+project(fopid_control)
 set(CMAKE_VERBOSE_MAKEFILE ON)
 # Set CMAKE_BUILD_TYPE
 set(CMAKE_BUILD_TYPE Debug)
@@ -40,15 +40,15 @@ find_package( rosgraph_msgs REQUIRED)
 find_package( sensor_msgs REQUIRED)
 find_package( std_msgs REQUIRED)
 # Add package include directories
-include_directories("${CMAKE_CURRENT_SOURCE_DIR}/include/fopid_control_v4")
+include_directories("${CMAKE_CURRENT_SOURCE_DIR}/include/fopid_control")
 set (CMAKE_SKIP_BUILD_RPATH false)
 set (CMAKE_BUILD_WITH_INSTALL_RPATH true)
 set (CMAKE_INSTALL_RPATH "${CMAKE_INSTALL_PREFIX}/lib")
 set (CMAKE_INSTALL_RPATH_USE_LINK_PATH TRUE)
 # Node
-add_executable(FOpid_control_V4 
-src/FOpid_control_V4.cpp
-src/FOpid_control_V4_data.cpp
+add_executable(FOpid_control 
+src/FOpid_control.cpp
+src/FOpid_control_data.cpp
 src/main.cpp
 src/ros2nodeinterface.cpp
 src/rtGetInf.cpp
@@ -58,16 +58,16 @@ src/slros2_initialize.cpp
 src/slros2_multi_threaded_executor.cpp
 )
 if(CMAKE_COMPILER_IS_GNUCXX OR CMAKE_CXX_COMPILER_ID MATCHES "Clang")
-target_compile_options(FOpid_control_V4 PUBLIC 
+target_compile_options(FOpid_control PUBLIC 
   $<$<OR:$<COMPILE_LANGUAGE:CXX>,$<COMPILE_LANGUAGE:C>>:
   -Wall -Wextra -Wpedantic
   >)
 endif()
-target_compile_options(FOpid_control_V4 PRIVATE
+target_compile_options(FOpid_control PRIVATE
   $<$<OR:$<COMPILE_LANGUAGE:CXX>,$<COMPILE_LANGUAGE:C>>:
-  -DMODEL=FOpid_control_V4
+  -DMODEL=FOpid_control
   -DNUMST=2
-  -DNCSTATES=32
+  -DNCSTATES=42
   -DHAVESTDIO
   -DMODEL_HAS_DYNAMICALLY_LOADED_SFCNS=0
   -DCLASSIC_INTERFACE=0
@@ -107,7 +107,7 @@ target_compile_options(FOpid_control_V4 PRIVATE
   -fpermissive  >
   )
 ament_target_dependencies(
-  FOpid_control_V4
+  FOpid_control
   "gazebo_msgs"
   "geometry_msgs"
   "nav_msgs"
@@ -116,14 +116,14 @@ ament_target_dependencies(
   "sensor_msgs"
   "std_msgs"
 )
-target_include_directories(FOpid_control_V4 PUBLIC
+target_include_directories(FOpid_control PUBLIC
   $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
   $<INSTALL_INTERFACE:include>)
-target_link_libraries(FOpid_control_V4 
+target_link_libraries(FOpid_control 
     "/usr/local/MATLAB/R2026a/sys/os/glnxa64/orig/libstdc++.so.6"
 	${CMAKE_DL_LIBS}
     )
-install(TARGETS FOpid_control_V4
+install(TARGETS FOpid_control
   EXPORT export_${PROJECT_NAME}
   DESTINATION lib/${PROJECT_NAME})
 ament_export_include_directories(
@@ -131,17 +131,17 @@ ament_export_include_directories(
 )
 foreach(file_i ${CUDA_BINS})
 add_custom_command(
-                   TARGET FOpid_control_V4
+                   TARGET FOpid_control
                    POST_BUILD
                    COMMAND ${CMAKE_COMMAND}
-                   ARGS -E copy ${PROJECT_SOURCE_DIR}/src/${file_i} ${CMAKE_INSTALL_PREFIX}/FOpid_control_V4_ert_rtw/${file_i}
+                   ARGS -E copy ${PROJECT_SOURCE_DIR}/src/${file_i} ${CMAKE_INSTALL_PREFIX}/FOpid_control_ert_rtw/${file_i}
 				   )
 add_custom_command(
-                   TARGET FOpid_control_V4
+                   TARGET FOpid_control
                    POST_BUILD
                    COMMAND ${CMAKE_COMMAND}
-                   ARGS -E copy ${PROJECT_SOURCE_DIR}/src/${file_i} ${CMAKE_INSTALL_PREFIX}/codegen/exe/FOpid_control_V4/${file_i}
+                   ARGS -E copy ${PROJECT_SOURCE_DIR}/src/${file_i} ${CMAKE_INSTALL_PREFIX}/codegen/exe/FOpid_control/${file_i}
 				   )				   
 endforeach(file_i)
 ament_package()
-# Generated on Sun Jun 28 19:11:53 2026
+# Generated on Wed Aug 19 13:11:23 2026

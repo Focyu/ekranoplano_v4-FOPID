@@ -1,10 +1,10 @@
 /*
  * rtmodel.h
  *
- * Code generation for Simulink model "FOpid_control_V4".
+ * Code generation for Simulink model "FOpid_control".
  *
  * Simulink Coder version                : 26.1 (R2026a) 20-Nov-2025
- * C++ source code generated on : Sun Jun 28 19:11:25 2026
+ * C++ source code generated on : Wed Aug 19 13:10:53 2026
  *
  * Note that the generated code is not dependent on this header file.
  * The file is used in cojuction with the automatic build procedure.
@@ -15,8 +15,8 @@
 
 #ifndef RTMODEL_H_
 #define RTMODEL_H_
-#include "FOpid_control_V4.h"
-#define MODEL_CLASSNAME                FOpid_control_V4
+#include "FOpid_control.h"
+#define MODEL_CLASSNAME                FOpid_control
 #define MODEL_STEPNAME                 step
 
 /*

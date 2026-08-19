@@ -1,14 +1,14 @@
 /*
- * FOpid_control_V4_private.h
+ * FOpid_control_private.h
  *
  * Trial License - for use to evaluate programs for possible purchase as
  * an end-user only.
  *
- * Code generation for model "FOpid_control_V4".
+ * Code generation for model "FOpid_control".
  *
- * Model version              : 13.44
+ * Model version              : 13.61
  * Simulink Coder version : 26.1 (R2026a) 20-Nov-2025
- * C++ source code generated on : Sun Jun 28 19:11:25 2026
+ * C++ source code generated on : Wed Aug 19 13:10:53 2026
  *
  * Target selection: ert.tlc
  * Note: GRT includes extra infrastructure and instrumentation for prototyping
@@ -17,13 +17,13 @@
  * Validation result: Not run
  */
 
-#ifndef FOPID_CONTROL_V4_PRIVATE_H_
-#define FOPID_CONTROL_V4_PRIVATE_H_
+#ifndef FOPID_CONTROL_PRIVATE_H_
+#define FOPID_CONTROL_PRIVATE_H_
 #include "rtwtypes.h"
 #include "multiword_types.h"
 #include "zero_crossing_types.h"
-#include "FOpid_control_V4_types.h"
-#include "FOpid_control_V4.h"
+#include "FOpid_control_types.h"
+#include "FOpid_control.h"
 
 /* Private macros used by the generated code to access rtModel */
 #ifndef rtmSetFirstInitCond
@@ -59,6 +59,6 @@ extern uint32_T binsearch_u32d_prevIdx(real_T u, const real_T bp[], uint32_T
   startIndex, uint32_T maxIndex);
 
 /* private model entry point functions */
-extern void FOpid_control_V4_derivatives();
+extern void FOpid_control_derivatives();
 
-#endif                                 /* FOPID_CONTROL_V4_PRIVATE_H_ */
+#endif                                 /* FOPID_CONTROL_PRIVATE_H_ */
