@@ -1,11 +1,11 @@
 ==========================================================
 REPORTE DE CÓDIGO INTERNO - MATLAB FUNCTIONS
-Modelo: FOpid_control_V4
-Fecha: 28-Jun-2026 19:09:55
+Modelo: FOpid_control
+Fecha: 19-Aug-2026 13:36:26
 ==========================================================
 
 ----------------------------------------------------------
-BLOQUE [1]: FOpid_control_V4/MATLAB Function
+BLOQUE [1]: FOpid_control/MATLAB Function
 ----------------------------------------------------------
 function [stringOut, lengthOut] = stringToROS()
     
@@ -23,7 +23,7 @@ end
 
 
 ----------------------------------------------------------
-BLOQUE [2]: FOpid_control_V4/MATLAB Function - fopid_altura
+BLOQUE [2]: FOpid_control/MATLAB Function - fopid_altura
 ----------------------------------------------------------
 function u= fopid_altura_mod(e, y, kp, ki, kd)
 
@@ -125,7 +125,7 @@ end
 
 
 ----------------------------------------------------------
-BLOQUE [3]: FOpid_control_V4/MATLAB Function - fopid_pitch
+BLOQUE [3]: FOpid_control/MATLAB Function - fopid_pitch
 ----------------------------------------------------------
 function u = fopid_pitch_mod(e, y, kp, ki, kd)
 %#codegen
@@ -134,7 +134,7 @@ function u = fopid_pitch_mod(e, y, kp, ki, kd)
 % y : medicion de pitch
 % u : comando de elevador
 
-mu     = 0.5;
+mu     = 0.9;
 lambda = 0.6;
 Ts     = 0.01;
 wc     = 1.0;
@@ -165,7 +165,7 @@ g5 = (-4*lm^5)/15 - (4*lm^3)/3 - (2*lm)/5;
 
 persistent e1 e2 e3 e4 e5 e6 e7
 persistent y1 y2 y3 y4 y5 y6 y7
-persistent sumI u_prev
+persistent sumI u_prev u_prev2
 
 if isempty(e1)
     e1 = 0; e2 = 0; e3 = 0; e4 = 0; e5 = 0; e6 = 0; e7 = 0;
@@ -184,35 +184,57 @@ sumD = KD * ( ...
     + f5*(y5 - 2*y6 + y7) );
 
 % Integral fraccional sobre el error
-dI = KI * ( ...
+% dI = KI * ( ...
+%     g0*(e  + 2*e1 + e2) ...
+%     + g1*(e1 + 2*e2 + e3) ...
+%     + g2*(e2 + 2*e3 + e4) ...
+%     + g3*(e3 + 2*e4 + e5) ...
+%     + g4*(e4 + 2*e5 + e6) ...
+%     + g5*(e5 + 2*e6 + e7) );
+sumI = KI * ( ...
     g0*(e  + 2*e1 + e2) ...
     + g1*(e1 + 2*e2 + e3) ...
     + g2*(e2 + 2*e3 + e4) ...
     + g3*(e3 + 2*e4 + e5) ...
     + g4*(e4 + 2*e5 + e6) ...
     + g5*(e5 + 2*e6 + e7) );
-
-sumI_cand = sumI + dI;
-
-% Control incremental
-u_raw = u_prev + KP*(e - e1) + sumD + sumI_cand;
-u_sat = max(min(u_raw, u_max), u_min);
-
-% Anti-windup por integracion condicional
-if (u_raw == u_sat) || ((u_raw > u_max) && (e < 0)) || ((u_raw < u_min) && (e > 0))
-    sumI = sumI_cand;
-end
-
-% Salida final
 u_raw = u_prev + KP*(e - e1) + sumD + sumI;
 u = max(min(u_raw, u_max), u_min);
 
-% Actualizacion de historias
+u_prev2 = u_prev;
+u_prev  = u;
+
 e7 = e6; e6 = e5; e5 = e4; e4 = e3; e3 = e2; e2 = e1; e1 = e;
 y7 = y6; y6 = y5; y5 = y4; y4 = y3; y3 = y2; y2 = y1; y1 = y;
-u_prev = u;
 
 end
+
+
+
+
+
+% 
+% sumI_cand = sumI + dI;
+% 
+% % Control incremental
+% u_raw = u_prev + KP*(e - e1) + sumD + sumI_cand;
+% u_sat = max(min(u_raw, u_max), u_min);
+% 
+% % Anti-windup por integracion condicional
+% if (u_raw == u_sat) || ((u_raw > u_max) && (e < 0)) || ((u_raw < u_min) && (e > 0))
+%     sumI = sumI_cand;
+% end
+% 
+% % Salida final
+% u_raw = u_prev + KP*(e - e1) + sumD + sumI;
+% u = max(min(u_raw, u_max), u_min);
+% 
+% % Actualizacion de historias
+% e7 = e6; e6 = e5; e5 = e4; e4 = e3; e3 = e2; e2 = e1; e1 = e;
+% y7 = y6; y6 = y5; y5 = y4; y4 = y3; y3 = y2; y2 = y1; y1 = y;
+% u_prev = u;
+% 
+% end
 
 
 % function u = fopid_pitch_mod(e, y, kp, ki, kd)
@@ -641,7 +663,7 @@ end
 % % % % % end
 
 ----------------------------------------------------------
-BLOQUE [4]: FOpid_control_V4/MATLAB Function - fopid_roll
+BLOQUE [4]: FOpid_control/MATLAB Function - fopid_roll
 ----------------------------------------------------------
 function u= fopid_roll_mod(e, y, kp, ki, kd)
 
@@ -734,7 +756,7 @@ end
 
 
 ----------------------------------------------------------
-BLOQUE [5]: FOpid_control_V4/MATLAB Function - fopid_velocidad
+BLOQUE [5]: FOpid_control/MATLAB Function - fopid_velocidad
 ----------------------------------------------------------
 function u= fopid_vel_mod(e, y, kp, ki, kd)
 
@@ -744,12 +766,12 @@ function u= fopid_vel_mod(e, y, kp, ki, kd)
 % y : medicion de altura
 % u : referencia de pitch (theta_sp)
 
-mu     = 0.9;
+mu     = 0.5;
 lambda = 0.7;
 Ts     = 0.01;
 wc     = 1.0;
-u_min  = 0.4;
-u_max  =  1.0;
+u_min  = 0.0;
+u_max  =  0.80;
 
 alpha = wc / tan(wc * Ts / 2);
 
@@ -1011,7 +1033,7 @@ end
 % % % end
 
 ----------------------------------------------------------
-BLOQUE [6]: FOpid_control_V4/MATLAB Function - fopid_yaw
+BLOQUE [6]: FOpid_control/MATLAB Function - fopid_yaw
 ----------------------------------------------------------
 function u= fopid_yaw_mod(e, y, kp, ki, kd)
 
@@ -1104,7 +1126,7 @@ end
 
 
 ----------------------------------------------------------
-BLOQUE [7]: FOpid_control_V4/MATLAB Function-IMU2
+BLOQUE [7]: FOpid_control/MATLAB Function-IMU2
 ----------------------------------------------------------
 function [stringOut, lengthOut] = stringToROS()
     
@@ -1122,7 +1144,7 @@ end
 
 
 ----------------------------------------------------------
-BLOQUE [8]: FOpid_control_V4/MATLAB Function-MODELO
+BLOQUE [8]: FOpid_control/MATLAB Function-MODELO
 ----------------------------------------------------------
 function [stringOut, lengthOut] = frameToROS()
 
@@ -1142,7 +1164,7 @@ end
 
 
 ----------------------------------------------------------
-BLOQUE [9]: FOpid_control_V4/MATLAB Function-Odometry
+BLOQUE [9]: FOpid_control/MATLAB Function-Odometry
 ----------------------------------------------------------
 function [str_out, currentLen, receivedLen] = childFrameID()
 
@@ -1156,7 +1178,7 @@ function [str_out, currentLen, receivedLen] = childFrameID()
 end
 
 ----------------------------------------------------------
-BLOQUE [10]: FOpid_control_V4/MATLAB Function-Odometry1
+BLOQUE [10]: FOpid_control/MATLAB Function-Odometry1
 ----------------------------------------------------------
 function [str_out, currentLen, receivedLen] = childFrameID()
     
@@ -1170,7 +1192,7 @@ function [str_out, currentLen, receivedLen] = childFrameID()
 end
 
 ----------------------------------------------------------
-BLOQUE [11]: FOpid_control_V4/MATLAB Function-clocl
+BLOQUE [11]: FOpid_control/MATLAB Function-clocl
 ----------------------------------------------------------
 function [sec, nsec] = getStamp(t)
     sec  = int32(floor(t));
@@ -1178,7 +1200,7 @@ function [sec, nsec] = getStamp(t)
 end
 
 ----------------------------------------------------------
-BLOQUE [12]: FOpid_control_V4/MATLAB Function-ned_to_PoseStaamped
+BLOQUE [12]: FOpid_control/MATLAB Function-ned_to_PoseStaamped
 ----------------------------------------------------------
 function [px_out, py_out, pz_out, x_out, y_out, z_out, w_out] = ...
          ned_to_PoseStaamped(w_in, x_in, y_in, z_in, px_ned, py_ned, pz_ned)
@@ -1202,7 +1224,7 @@ z_out = -double(z1);
 end
 
 ----------------------------------------------------------
-BLOQUE [13]: FOpid_control_V4/MATLAB Function-ned_to_PoseStamped
+BLOQUE [13]: FOpid_control/MATLAB Function-ned_to_PoseStamped
 ----------------------------------------------------------
 function [stringOut, lengthOut] = stringToROS()
     
@@ -1220,7 +1242,7 @@ end
 
 
 ----------------------------------------------------------
-BLOQUE [14]: FOpid_control_V4/MATLAB Function-ned_to_TwistStamped
+BLOQUE [14]: FOpid_control/MATLAB Function-ned_to_TwistStamped
 ----------------------------------------------------------
 function [stringOut, lengthOut] = stringToROS()
     
@@ -1238,7 +1260,7 @@ end
 
 
 ----------------------------------------------------------
-BLOQUE [15]: FOpid_control_V4/MATLAB Function-ned_to_gazebo
+BLOQUE [15]: FOpid_control/MATLAB Function-ned_to_gazebo
 ----------------------------------------------------------
 function [w_out, x_out, y_out, z_out, px_out, py_out, pz_out] = ...
          ned_to_gazebo(w_in, x_in, y_in, z_in, px_ned, py_ned, pz_ned)
@@ -1256,7 +1278,7 @@ y_out = cz*y_in + sz*x_in;
 z_out = cz*z_in + sz*w_in;
 
 ----------------------------------------------------------
-BLOQUE [16]: FOpid_control_V4/MATLAB Function-ned_to_imu
+BLOQUE [16]: FOpid_control/MATLAB Function-ned_to_imu
 ----------------------------------------------------------
 function [x_out, y_out, z_out, w_out] = ...
          ned_to_imu(w_in, x_in, y_in, z_in)
@@ -1275,7 +1297,7 @@ y_out =  x1;
 z_out =  -w1;
 
 ----------------------------------------------------------
-BLOQUE [17]: FOpid_control_V4/MATLAB Function-ned_to_odometry
+BLOQUE [17]: FOpid_control/MATLAB Function-ned_to_odometry
 ----------------------------------------------------------
 function [px_out, py_out, pz_out, x_out, y_out, z_out, w_out ] = ...
          ned_to_odometry(w_in, x_in, y_in, z_in, px_ned, py_ned, pz_ned)
@@ -1304,7 +1326,7 @@ z2 = wz*z_out + zz*w_out;
 w_out = w2; x_out = x2; y_out = y2; z_out = z2;
 
 ----------------------------------------------------------
-BLOQUE [18]: FOpid_control_V4/MATLAB Function2
+BLOQUE [18]: FOpid_control/MATLAB Function2
 ----------------------------------------------------------
 function [vx_enu, vy_enu, vz_enu] = twist_stamped(vx_ned, vy_ned, vz_ned)
     vx_enu =  double(vy_ned);   % Out2 del SUBSYSTEM_MODEL → v (lateral)
@@ -1313,7 +1335,7 @@ function [vx_enu, vy_enu, vz_enu] = twist_stamped(vx_ned, vy_ned, vz_ned)
 end
 
 ----------------------------------------------------------
-BLOQUE [19]: FOpid_control_V4/SUBSYSTEM_MODEL/MATLAB Function - MODEL
+BLOQUE [19]: FOpid_control/SUBSYSTEM_MODEL/MATLAB Function - MODEL
 ----------------------------------------------------------
 function [XDOT, Va_out, CL_total, h_out, mu_Lw_out, mu_Dw_out] = Model(X, U, U_wind, W_wind)
 % Modelo Dinámico del Ekranoplano AirFish 8 (Sincronizado)
@@ -1432,8 +1454,8 @@ Cm = Cm_alpha*alpha + Delta_Cm_IGE + Cm_q*(q_aero*cbar/(2*Va)) + Cm_de*u2;
 Cn = -0.1146*beta   + Cn_r*(r_aero*bw/(2*Va))   + Cn_dr*u3  + Cn_da*u1;
 MAcg_b = [Cl; Cm; Cn] .* [bw*Q*Sw; cbar*Q*Sw; bw*Q*Sw];
 
-%-----------MOTOR BRUSHLESS (CORREGIDO)---------------------------
-km_motor = 25.0;
+%-----------MOTOR BRUSHLESS---------------------------
+km_motor = 32.0;
 Cp_motor = 0.57;
 D_prop   = 0.1270;
 Sp_prop  = pi*(D_prop^2/4);
@@ -1509,12 +1531,42 @@ V_NED = [R(1,:)*V_body; R(2,:)*V_body; R(3,:)*V_body];
 end
 
 ----------------------------------------------------------
-BLOQUE [20]: FOpid_control_V4/SUBSYSTEM_MODEL/MATLAB Function-reset
+BLOQUE [20]: FOpid_control/SUBSYSTEM_MODEL/MATLAB Function-reset
 ----------------------------------------------------------
+% function x_reset = fcn(x, h_suelo)
 function x_reset = fcn(x)
     x_reset = x;
     x_reset(3) = 0.0;   % congela w (velocidad vertical)
     x_reset(12) = 0.0;   % fija z_NED = 0 (superficie del agua)
 end
-
+% function x_reset = fcn(x, h_suelo)
+% #codegen
+% SUELO VIRTUAL — Simula la superficie del mar
+% Impide que el ekranoplano se hunda por debajo de h_suelo
+% 
+% Fisica simulada:
+%   - Si h <= h_suelo: clavar z_NED en -h_suelo (no en 0)
+%   - Matar SOLO la componente de bajada de w (choque inelastico)
+%   - Conservar w > 0 (rebote hacia arriba, fisicamente correcto)
+%   - No tocar velocidad horizontal u — el ekranoplano sigue navegando
+% 
+% x_reset = x;
+% 
+% Altura actual en metros (z_NED negativo = altura positiva en NED)
+% h_actual = -x(12);
+% 
+% if h_actual <= h_suelo
+%     1. Clavar la posicion vertical exactamente en la superficie
+%        z_NED = -h_suelo, NO en 0.0 (evita bucle de reset)
+%     x_reset(12) = -h_suelo;
+% 
+%     2. Choque inelastico con el mar:
+%        Solo matar w si esta bajando (w > 0 en convencion NED-body)
+%        Si w < 0 (ya rebota hacia arriba), conservar — es fisico
+%     if x(3) > 0.0
+%         x_reset(3) = 0.0;
+%     end
+% end
+% 
+% end
 

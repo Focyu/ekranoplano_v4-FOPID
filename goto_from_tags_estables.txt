@@ -1,152 +1,207 @@
 === GOTO BLOCKS (Enviando señal) ===
-[GOTO] FOpid_control_V4/Goto  ->  Tag: FOPID_ALTURA
-[GOTO] FOpid_control_V4/Goto1  ->  Tag: positionZ
-[GOTO] FOpid_control_V4/Goto11  ->  Tag: ALTURA_sp
-[GOTO] FOpid_control_V4/Goto12  ->  Tag: theta
-[GOTO] FOpid_control_V4/Goto13  ->  Tag: phi
-[GOTO] FOpid_control_V4/Goto14  ->  Tag: psi
-[GOTO] FOpid_control_V4/Goto15  ->  Tag: ROLL_sp
-[GOTO] FOpid_control_V4/Goto16  ->  Tag: FOPID_ROLL
-[GOTO] FOpid_control_V4/Goto17  ->  Tag: FOPID_ELEVATOR
-[GOTO] FOpid_control_V4/Goto18  ->  Tag: YAW_sp
-[GOTO] FOpid_control_V4/Goto19  ->  Tag: FOPID_TIMON
-[GOTO] FOpid_control_V4/Goto2  ->  Tag: orientationZ
-[GOTO] FOpid_control_V4/Goto20  ->  Tag: VELOCIDADX_ACTUAL
-[GOTO] FOpid_control_V4/Goto21  ->  Tag: FOPID_VEL
-[GOTO] FOpid_control_V4/Goto23  ->  Tag: px
-[GOTO] FOpid_control_V4/Goto24  ->  Tag: py
-[GOTO] FOpid_control_V4/Goto25  ->  Tag: pz
-[GOTO] FOpid_control_V4/Goto26  ->  Tag: z_in
-[GOTO] FOpid_control_V4/Goto27  ->  Tag: y_in
-[GOTO] FOpid_control_V4/Goto28  ->  Tag: x_in
-[GOTO] FOpid_control_V4/Goto29  ->  Tag: w_in
-[GOTO] FOpid_control_V4/Goto3  ->  Tag: orientationY
-[GOTO] FOpid_control_V4/Goto30  ->  Tag: VELOCIDADY_ACTUAL
-[GOTO] FOpid_control_V4/Goto31  ->  Tag: VELOCIDADZ_ACTUAL
-[GOTO] FOpid_control_V4/Goto32  ->  Tag: s
-[GOTO] FOpid_control_V4/Goto33  ->  Tag: ns
-[GOTO] FOpid_control_V4/Goto34  ->  Tag: VEL_SET
-[GOTO] FOpid_control_V4/Goto4  ->  Tag: orientationX
-[GOTO] FOpid_control_V4/Goto5  ->  Tag: orientationW
-[GOTO] FOpid_control_V4/Goto6  ->  Tag: positionY
-[GOTO] FOpid_control_V4/Goto7  ->  Tag: positionX
-[GOTO] FOpid_control_V4/SUBSYSTEM_MODEL/Goto10  ->  Tag: psi_interno
-[GOTO] FOpid_control_V4/SUBSYSTEM_MODEL/Goto13  ->  Tag: z_interno
-[GOTO] FOpid_control_V4/SUBSYSTEM_MODEL/Goto14  ->  Tag: STATE_TURBU1
-[GOTO] FOpid_control_V4/SUBSYSTEM_MODEL/Goto15  ->  Tag: w_wind
-[GOTO] FOpid_control_V4/SUBSYSTEM_MODEL/Goto16  ->  Tag: Va_out
-[GOTO] FOpid_control_V4/SUBSYSTEM_MODEL/Goto17  ->  Tag: u2
-[GOTO] FOpid_control_V4/SUBSYSTEM_MODEL/Goto18  ->  Tag: X_modelOut
-[GOTO] FOpid_control_V4/SUBSYSTEM_MODEL/Goto19  ->  Tag: XDOT
-[GOTO] FOpid_control_V4/SUBSYSTEM_MODEL/Goto2  ->  Tag: h
-[GOTO] FOpid_control_V4/SUBSYSTEM_MODEL/Goto20  ->  Tag: v2
-[GOTO] FOpid_control_V4/SUBSYSTEM_MODEL/Goto21  ->  Tag: w2
-[GOTO] FOpid_control_V4/SUBSYSTEM_MODEL/Goto22  ->  Tag: z2
-[GOTO] FOpid_control_V4/SUBSYSTEM_MODEL/Goto23  ->  Tag: Integrator_OUT
-[GOTO] FOpid_control_V4/SUBSYSTEM_MODEL/Goto24  ->  Tag: SUMOLA1
-[GOTO] FOpid_control_V4/SUBSYSTEM_MODEL/Goto25  ->  Tag: SUMOLA
-[GOTO] FOpid_control_V4/SUBSYSTEM_MODEL/Goto26  ->  Tag: STATE_TURBU
-[GOTO] FOpid_control_V4/SUBSYSTEM_MODEL/Goto27  ->  Tag: v_wind
-[GOTO] FOpid_control_V4/SUBSYSTEM_MODEL/Goto3  ->  Tag: b
-[GOTO] FOpid_control_V4/SUBSYSTEM_MODEL/Goto4  ->  Tag: WAV
-[GOTO] FOpid_control_V4/SUBSYSTEM_MODEL/Goto5  ->  Tag: WAV2
-[GOTO] FOpid_control_V4/SUBSYSTEM_MODEL/Goto6  ->  Tag: Com_aire
-[GOTO] FOpid_control_V4/SUBSYSTEM_MODEL/Goto7  ->  Tag: Colch_desli
-[GOTO] FOpid_control_V4/SUBSYSTEM_MODEL/Goto8  ->  Tag: phi_interno
-[GOTO] FOpid_control_V4/SUBSYSTEM_MODEL/Goto9  ->  Tag: theta_interno
+[GOTO] FOpid_control/Goto  ->  Tag: FOPID_ALTURA
+[GOTO] FOpid_control/Goto1  ->  Tag: positionZ
+[GOTO] FOpid_control/Goto11  ->  Tag: ALTURA_sp
+[GOTO] FOpid_control/Goto12  ->  Tag: theta
+[GOTO] FOpid_control/Goto13  ->  Tag: phi
+[GOTO] FOpid_control/Goto14  ->  Tag: psi
+[GOTO] FOpid_control/Goto15  ->  Tag: ROLL_sp
+[GOTO] FOpid_control/Goto16  ->  Tag: FOPID_ROLL
+[GOTO] FOpid_control/Goto17  ->  Tag: FOPID_ELEVATOR
+[GOTO] FOpid_control/Goto18  ->  Tag: YAW_sp
+[GOTO] FOpid_control/Goto19  ->  Tag: FOPID_TIMON
+[GOTO] FOpid_control/Goto2  ->  Tag: orientationZ
+[GOTO] FOpid_control/Goto20  ->  Tag: VELOCIDADX_ACTUAL
+[GOTO] FOpid_control/Goto21  ->  Tag: FOPID_VEL
+[GOTO] FOpid_control/Goto23  ->  Tag: px
+[GOTO] FOpid_control/Goto24  ->  Tag: py
+[GOTO] FOpid_control/Goto25  ->  Tag: pz
+[GOTO] FOpid_control/Goto26  ->  Tag: z_in
+[GOTO] FOpid_control/Goto27  ->  Tag: y_in
+[GOTO] FOpid_control/Goto28  ->  Tag: x_in
+[GOTO] FOpid_control/Goto29  ->  Tag: w_in
+[GOTO] FOpid_control/Goto3  ->  Tag: orientationY
+[GOTO] FOpid_control/Goto30  ->  Tag: VELOCIDADY_ACTUAL
+[GOTO] FOpid_control/Goto31  ->  Tag: VELOCIDADZ_ACTUAL
+[GOTO] FOpid_control/Goto32  ->  Tag: s
+[GOTO] FOpid_control/Goto33  ->  Tag: ns
+[GOTO] FOpid_control/Goto34  ->  Tag: VEL_SET
+[GOTO] FOpid_control/Goto35  ->  Tag: aileron
+[GOTO] FOpid_control/Goto36  ->  Tag: elevator
+[GOTO] FOpid_control/Goto37  ->  Tag: rudder
+[GOTO] FOpid_control/Goto4  ->  Tag: orientationX
+[GOTO] FOpid_control/Goto5  ->  Tag: orientationW
+[GOTO] FOpid_control/Goto6  ->  Tag: positionY
+[GOTO] FOpid_control/Goto7  ->  Tag: positionX
+[GOTO] FOpid_control/SUBSYSTEM_MODEL/Goto10  ->  Tag: psi_interno
+[GOTO] FOpid_control/SUBSYSTEM_MODEL/Goto13  ->  Tag: z_interno
+[GOTO] FOpid_control/SUBSYSTEM_MODEL/Goto14  ->  Tag: STATE_TURBU1
+[GOTO] FOpid_control/SUBSYSTEM_MODEL/Goto15  ->  Tag: w_wind
+[GOTO] FOpid_control/SUBSYSTEM_MODEL/Goto16  ->  Tag: Va_out
+[GOTO] FOpid_control/SUBSYSTEM_MODEL/Goto17  ->  Tag: u2
+[GOTO] FOpid_control/SUBSYSTEM_MODEL/Goto18  ->  Tag: X_modelOut
+[GOTO] FOpid_control/SUBSYSTEM_MODEL/Goto19  ->  Tag: XDOT
+[GOTO] FOpid_control/SUBSYSTEM_MODEL/Goto2  ->  Tag: h
+[GOTO] FOpid_control/SUBSYSTEM_MODEL/Goto20  ->  Tag: v2
+[GOTO] FOpid_control/SUBSYSTEM_MODEL/Goto21  ->  Tag: w2
+[GOTO] FOpid_control/SUBSYSTEM_MODEL/Goto22  ->  Tag: z2
+[GOTO] FOpid_control/SUBSYSTEM_MODEL/Goto23  ->  Tag: Integrator_OUT
+[GOTO] FOpid_control/SUBSYSTEM_MODEL/Goto24  ->  Tag: SUMOLA1
+[GOTO] FOpid_control/SUBSYSTEM_MODEL/Goto25  ->  Tag: SUMOLA
+[GOTO] FOpid_control/SUBSYSTEM_MODEL/Goto26  ->  Tag: STATE_TURBU
+[GOTO] FOpid_control/SUBSYSTEM_MODEL/Goto27  ->  Tag: v_wind
+[GOTO] FOpid_control/SUBSYSTEM_MODEL/Goto3  ->  Tag: b
+[GOTO] FOpid_control/SUBSYSTEM_MODEL/Goto4  ->  Tag: WAV
+[GOTO] FOpid_control/SUBSYSTEM_MODEL/Goto5  ->  Tag: WAV2
+[GOTO] FOpid_control/SUBSYSTEM_MODEL/Goto6  ->  Tag: Com_aire
+[GOTO] FOpid_control/SUBSYSTEM_MODEL/Goto7  ->  Tag: Colch_desli
+[GOTO] FOpid_control/SUBSYSTEM_MODEL/Goto8  ->  Tag: phi_interno
+[GOTO] FOpid_control/SUBSYSTEM_MODEL/Goto9  ->  Tag: theta_interno
 
 === FROM BLOCKS (Recibiendo señal) ===
-[FROM] FOpid_control_V4/From  <-  Tag: VELOCIDADX_ACTUAL
-[FROM] FOpid_control_V4/From1  <-  Tag: VEL_SET
-[FROM] FOpid_control_V4/From10  <-  Tag: y_in
-[FROM] FOpid_control_V4/From11  <-  Tag: orientationX
-[FROM] FOpid_control_V4/From12  <-  Tag: z_in
-[FROM] FOpid_control_V4/From13  <-  Tag: orientationW
-[FROM] FOpid_control_V4/From14  <-  Tag: positionY
-[FROM] FOpid_control_V4/From15  <-  Tag: positionX
-[FROM] FOpid_control_V4/From16  <-  Tag: y_in
-[FROM] FOpid_control_V4/From17  <-  Tag: z_in
-[FROM] FOpid_control_V4/From18  <-  Tag: w_in
-[FROM] FOpid_control_V4/From19  <-  Tag: positionZ
-[FROM] FOpid_control_V4/From2  <-  Tag: FOPID_VEL
-[FROM] FOpid_control_V4/From20  <-  Tag: FOPID_ALTURA
-[FROM] FOpid_control_V4/From21  <-  Tag: FOPID_ALTURA
-[FROM] FOpid_control_V4/From22  <-  Tag: FOPID_ALTURA
-[FROM] FOpid_control_V4/From23  <-  Tag: theta
-[FROM] FOpid_control_V4/From24  <-  Tag: theta
-[FROM] FOpid_control_V4/From25  <-  Tag: phi
-[FROM] FOpid_control_V4/From26  <-  Tag: phi
-[FROM] FOpid_control_V4/From27  <-  Tag: phi
-[FROM] FOpid_control_V4/From28  <-  Tag: psi
-[FROM] FOpid_control_V4/From29  <-  Tag: psi
-[FROM] FOpid_control_V4/From3  <-  Tag: positionZ
-[FROM] FOpid_control_V4/From30  <-  Tag: psi
-[FROM] FOpid_control_V4/From31  <-  Tag: theta
-[FROM] FOpid_control_V4/From32  <-  Tag: ROLL_sp
-[FROM] FOpid_control_V4/From33  <-  Tag: FOPID_ROLL
-[FROM] FOpid_control_V4/From34  <-  Tag: FOPID_ROLL
-[FROM] FOpid_control_V4/From35  <-  Tag: FOPID_ELEVATOR
-[FROM] FOpid_control_V4/From36  <-  Tag: FOPID_ELEVATOR
-[FROM] FOpid_control_V4/From37  <-  Tag: YAW_sp
-[FROM] FOpid_control_V4/From38  <-  Tag: FOPID_TIMON
-[FROM] FOpid_control_V4/From39  <-  Tag: FOPID_TIMON
-[FROM] FOpid_control_V4/From4  <-  Tag: ALTURA_sp
-[FROM] FOpid_control_V4/From40  <-  Tag: FOPID_TIMON
-[FROM] FOpid_control_V4/From41  <-  Tag: VELOCIDADX_ACTUAL
-[FROM] FOpid_control_V4/From42  <-  Tag: FOPID_VEL
-[FROM] FOpid_control_V4/From44  <-  Tag: px
-[FROM] FOpid_control_V4/From45  <-  Tag: py
-[FROM] FOpid_control_V4/From46  <-  Tag: pz
-[FROM] FOpid_control_V4/From47  <-  Tag: px
-[FROM] FOpid_control_V4/From48  <-  Tag: py
-[FROM] FOpid_control_V4/From49  <-  Tag: pz
-[FROM] FOpid_control_V4/From5  <-  Tag: positionZ
-[FROM] FOpid_control_V4/From50  <-  Tag: x_in
-[FROM] FOpid_control_V4/From51  <-  Tag: VELOCIDADX_ACTUAL
-[FROM] FOpid_control_V4/From52  <-  Tag: VELOCIDADY_ACTUAL
-[FROM] FOpid_control_V4/From53  <-  Tag: VELOCIDADZ_ACTUAL
-[FROM] FOpid_control_V4/From54  <-  Tag: x_in
-[FROM] FOpid_control_V4/From55  <-  Tag: w_in
-[FROM] FOpid_control_V4/From56  <-  Tag: y_in
-[FROM] FOpid_control_V4/From57  <-  Tag: z_in
-[FROM] FOpid_control_V4/From58  <-  Tag: VELOCIDADX_ACTUAL
-[FROM] FOpid_control_V4/From59  <-  Tag: VELOCIDADY_ACTUAL
-[FROM] FOpid_control_V4/From6  <-  Tag: w_in
-[FROM] FOpid_control_V4/From60  <-  Tag: VELOCIDADZ_ACTUAL
-[FROM] FOpid_control_V4/From61  <-  Tag: s
-[FROM] FOpid_control_V4/From62  <-  Tag: ns
-[FROM] FOpid_control_V4/From63  <-  Tag: s
-[FROM] FOpid_control_V4/From64  <-  Tag: ns
-[FROM] FOpid_control_V4/From65  <-  Tag: y_in
-[FROM] FOpid_control_V4/From66  <-  Tag: z_in
-[FROM] FOpid_control_V4/From67  <-  Tag: w_in
-[FROM] FOpid_control_V4/From68  <-  Tag: px
-[FROM] FOpid_control_V4/From69  <-  Tag: py
-[FROM] FOpid_control_V4/From7  <-  Tag: orientationZ
-[FROM] FOpid_control_V4/From70  <-  Tag: pz
-[FROM] FOpid_control_V4/From71  <-  Tag: x_in
-[FROM] FOpid_control_V4/From72  <-  Tag: positionX
-[FROM] FOpid_control_V4/From8  <-  Tag: x_in
-[FROM] FOpid_control_V4/From9  <-  Tag: orientationY
-[FROM] FOpid_control_V4/SUBSYSTEM_MODEL/From  <-  Tag: phi_interno
-[FROM] FOpid_control_V4/SUBSYSTEM_MODEL/From1  <-  Tag: WAV2
-[FROM] FOpid_control_V4/SUBSYSTEM_MODEL/From10  <-  Tag: X_modelOut
-[FROM] FOpid_control_V4/SUBSYSTEM_MODEL/From11  <-  Tag: XDOT
-[FROM] FOpid_control_V4/SUBSYSTEM_MODEL/From12  <-  Tag: u2
-[FROM] FOpid_control_V4/SUBSYSTEM_MODEL/From13  <-  Tag: v2
-[FROM] FOpid_control_V4/SUBSYSTEM_MODEL/From14  <-  Tag: w2
-[FROM] FOpid_control_V4/SUBSYSTEM_MODEL/From15  <-  Tag: z2
-[FROM] FOpid_control_V4/SUBSYSTEM_MODEL/From16  <-  Tag: Integrator_OUT
-[FROM] FOpid_control_V4/SUBSYSTEM_MODEL/From17  <-  Tag: SUMOLA1
-[FROM] FOpid_control_V4/SUBSYSTEM_MODEL/From18  <-  Tag: SUMOLA
-[FROM] FOpid_control_V4/SUBSYSTEM_MODEL/From19  <-  Tag: STATE_TURBU
-[FROM] FOpid_control_V4/SUBSYSTEM_MODEL/From2  <-  Tag: WAV
-[FROM] FOpid_control_V4/SUBSYSTEM_MODEL/From20  <-  Tag: STATE_TURBU
-[FROM] FOpid_control_V4/SUBSYSTEM_MODEL/From21  <-  Tag: v_wind
-[FROM] FOpid_control_V4/SUBSYSTEM_MODEL/From3  <-  Tag: theta_interno
-[FROM] FOpid_control_V4/SUBSYSTEM_MODEL/From4  <-  Tag: psi_interno
-[FROM] FOpid_control_V4/SUBSYSTEM_MODEL/From5  <-  Tag: STATE_TURBU1
-[FROM] FOpid_control_V4/SUBSYSTEM_MODEL/From6  <-  Tag: STATE_TURBU1
-[FROM] FOpid_control_V4/SUBSYSTEM_MODEL/From7  <-  Tag: w_wind
-[FROM] FOpid_control_V4/SUBSYSTEM_MODEL/From8  <-  Tag: z_interno
-[FROM] FOpid_control_V4/SUBSYSTEM_MODEL/From9  <-  Tag: Va_out
+[FROM] FOpid_control/From  <-  Tag: VELOCIDADX_ACTUAL
+[FROM] FOpid_control/From1  <-  Tag: VEL_SET
+[FROM] FOpid_control/From10  <-  Tag: y_in
+[FROM] FOpid_control/From11  <-  Tag: orientationX
+[FROM] FOpid_control/From12  <-  Tag: z_in
+[FROM] FOpid_control/From13  <-  Tag: orientationW
+[FROM] FOpid_control/From14  <-  Tag: positionY
+[FROM] FOpid_control/From15  <-  Tag: positionX
+[FROM] FOpid_control/From16  <-  Tag: y_in
+[FROM] FOpid_control/From17  <-  Tag: z_in
+[FROM] FOpid_control/From18  <-  Tag: w_in
+[FROM] FOpid_control/From19  <-  Tag: positionZ
+[FROM] FOpid_control/From2  <-  Tag: FOPID_VEL
+[FROM] FOpid_control/From20  <-  Tag: FOPID_ALTURA
+[FROM] FOpid_control/From21  <-  Tag: FOPID_ALTURA
+[FROM] FOpid_control/From22  <-  Tag: FOPID_ALTURA
+[FROM] FOpid_control/From23  <-  Tag: theta
+[FROM] FOpid_control/From24  <-  Tag: theta
+[FROM] FOpid_control/From25  <-  Tag: phi
+[FROM] FOpid_control/From26  <-  Tag: phi
+[FROM] FOpid_control/From27  <-  Tag: phi
+[FROM] FOpid_control/From28  <-  Tag: psi
+[FROM] FOpid_control/From29  <-  Tag: psi
+[FROM] FOpid_control/From3  <-  Tag: positionZ
+[FROM] FOpid_control/From30  <-  Tag: psi
+[FROM] FOpid_control/From31  <-  Tag: theta
+[FROM] FOpid_control/From32  <-  Tag: ROLL_sp
+[FROM] FOpid_control/From33  <-  Tag: FOPID_ROLL
+[FROM] FOpid_control/From34  <-  Tag: FOPID_ROLL
+[FROM] FOpid_control/From35  <-  Tag: FOPID_ELEVATOR
+[FROM] FOpid_control/From36  <-  Tag: FOPID_ELEVATOR
+[FROM] FOpid_control/From37  <-  Tag: YAW_sp
+[FROM] FOpid_control/From38  <-  Tag: FOPID_TIMON
+[FROM] FOpid_control/From39  <-  Tag: FOPID_TIMON
+[FROM] FOpid_control/From4  <-  Tag: ALTURA_sp
+[FROM] FOpid_control/From40  <-  Tag: FOPID_TIMON
+[FROM] FOpid_control/From41  <-  Tag: VELOCIDADX_ACTUAL
+[FROM] FOpid_control/From42  <-  Tag: FOPID_VEL
+[FROM] FOpid_control/From44  <-  Tag: px
+[FROM] FOpid_control/From45  <-  Tag: py
+[FROM] FOpid_control/From46  <-  Tag: pz
+[FROM] FOpid_control/From47  <-  Tag: px
+[FROM] FOpid_control/From48  <-  Tag: py
+[FROM] FOpid_control/From49  <-  Tag: pz
+[FROM] FOpid_control/From5  <-  Tag: positionZ
+[FROM] FOpid_control/From50  <-  Tag: x_in
+[FROM] FOpid_control/From51  <-  Tag: VELOCIDADX_ACTUAL
+[FROM] FOpid_control/From52  <-  Tag: VELOCIDADY_ACTUAL
+[FROM] FOpid_control/From53  <-  Tag: VELOCIDADZ_ACTUAL
+[FROM] FOpid_control/From54  <-  Tag: x_in
+[FROM] FOpid_control/From55  <-  Tag: w_in
+[FROM] FOpid_control/From56  <-  Tag: y_in
+[FROM] FOpid_control/From57  <-  Tag: z_in
+[FROM] FOpid_control/From58  <-  Tag: VELOCIDADX_ACTUAL
+[FROM] FOpid_control/From59  <-  Tag: VELOCIDADY_ACTUAL
+[FROM] FOpid_control/From6  <-  Tag: w_in
+[FROM] FOpid_control/From60  <-  Tag: VELOCIDADZ_ACTUAL
+[FROM] FOpid_control/From61  <-  Tag: s
+[FROM] FOpid_control/From62  <-  Tag: ns
+[FROM] FOpid_control/From63  <-  Tag: s
+[FROM] FOpid_control/From64  <-  Tag: ns
+[FROM] FOpid_control/From65  <-  Tag: y_in
+[FROM] FOpid_control/From66  <-  Tag: z_in
+[FROM] FOpid_control/From67  <-  Tag: w_in
+[FROM] FOpid_control/From68  <-  Tag: px
+[FROM] FOpid_control/From69  <-  Tag: py
+[FROM] FOpid_control/From7  <-  Tag: orientationZ
+[FROM] FOpid_control/From70  <-  Tag: pz
+[FROM] FOpid_control/From71  <-  Tag: x_in
+[FROM] FOpid_control/From72  <-  Tag: positionX
+[FROM] FOpid_control/From8  <-  Tag: x_in
+[FROM] FOpid_control/From9  <-  Tag: orientationY
+[FROM] FOpid_control/SUBSYSTEM_MODEL/From  <-  Tag: phi_interno
+[FROM] FOpid_control/SUBSYSTEM_MODEL/From1  <-  Tag: WAV2
+[FROM] FOpid_control/SUBSYSTEM_MODEL/From10  <-  Tag: X_modelOut
+[FROM] FOpid_control/SUBSYSTEM_MODEL/From11  <-  Tag: XDOT
+[FROM] FOpid_control/SUBSYSTEM_MODEL/From12  <-  Tag: u2
+[FROM] FOpid_control/SUBSYSTEM_MODEL/From13  <-  Tag: v2
+[FROM] FOpid_control/SUBSYSTEM_MODEL/From14  <-  Tag: w2
+[FROM] FOpid_control/SUBSYSTEM_MODEL/From15  <-  Tag: z2
+[FROM] FOpid_control/SUBSYSTEM_MODEL/From16  <-  Tag: Integrator_OUT
+[FROM] FOpid_control/SUBSYSTEM_MODEL/From17  <-  Tag: SUMOLA1
+[FROM] FOpid_control/SUBSYSTEM_MODEL/From18  <-  Tag: SUMOLA
+[FROM] FOpid_control/SUBSYSTEM_MODEL/From19  <-  Tag: STATE_TURBU
+[FROM] FOpid_control/SUBSYSTEM_MODEL/From2  <-  Tag: WAV
+[FROM] FOpid_control/SUBSYSTEM_MODEL/From20  <-  Tag: STATE_TURBU
+[FROM] FOpid_control/SUBSYSTEM_MODEL/From21  <-  Tag: v_wind
+[FROM] FOpid_control/SUBSYSTEM_MODEL/From3  <-  Tag: theta_interno
+[FROM] FOpid_control/SUBSYSTEM_MODEL/From4  <-  Tag: psi_interno
+[FROM] FOpid_control/SUBSYSTEM_MODEL/From5  <-  Tag: STATE_TURBU1
+[FROM] FOpid_control/SUBSYSTEM_MODEL/From6  <-  Tag: STATE_TURBU1
+[FROM] FOpid_control/SUBSYSTEM_MODEL/From7  <-  Tag: w_wind
+[FROM] FOpid_control/SUBSYSTEM_MODEL/From8  <-  Tag: z_interno
+[FROM] FOpid_control/SUBSYSTEM_MODEL/From9  <-  Tag: Va_out
+
+=== TO WORKSPACE BLOCKS (Guardando en Workspace) ===
+[TO WORKSPACE] FOpid_control/SUBSYSTEM_MODEL/To Workspace  >>  Variable: states
+[TO WORKSPACE] FOpid_control/SUBSYSTEM_MODEL/To Workspace1  >>  Variable: control
+[TO WORKSPACE] FOpid_control/SUBSYSTEM_MODEL/To Workspace10  >>  Variable: CL_w_OGE
+[TO WORKSPACE] FOpid_control/SUBSYSTEM_MODEL/To Workspace11  >>  Variable: CQ
+[TO WORKSPACE] FOpid_control/SUBSYSTEM_MODEL/To Workspace12  >>  Variable: CL_h_OGE
+[TO WORKSPACE] FOpid_control/SUBSYSTEM_MODEL/To Workspace13  >>  Variable: Cl
+[TO WORKSPACE] FOpid_control/SUBSYSTEM_MODEL/To Workspace14  >>  Variable: Cm
+[TO WORKSPACE] FOpid_control/SUBSYSTEM_MODEL/To Workspace15  >>  Variable: Cn
+[TO WORKSPACE] FOpid_control/SUBSYSTEM_MODEL/To Workspace16  >>  Variable: alpha
+[TO WORKSPACE] FOpid_control/SUBSYSTEM_MODEL/To Workspace17  >>  Variable: beta
+[TO WORKSPACE] FOpid_control/SUBSYSTEM_MODEL/To Workspace18  >>  Variable: CL_h_IGE
+[TO WORKSPACE] FOpid_control/SUBSYSTEM_MODEL/To Workspace19  >>  Variable: CD_iw_IGE
+[TO WORKSPACE] FOpid_control/SUBSYSTEM_MODEL/To Workspace2  >>  Variable: LD
+[TO WORKSPACE] FOpid_control/SUBSYSTEM_MODEL/To Workspace20  >>  Variable: CD_ih_IGE
+[TO WORKSPACE] FOpid_control/SUBSYSTEM_MODEL/To Workspace21  >>  Variable: Fgx
+[TO WORKSPACE] FOpid_control/SUBSYSTEM_MODEL/To Workspace22  >>  Variable: Fgy
+[TO WORKSPACE] FOpid_control/SUBSYSTEM_MODEL/To Workspace23  >>  Variable: Fgz
+[TO WORKSPACE] FOpid_control/SUBSYSTEM_MODEL/To Workspace24  >>  Variable: Ftx
+[TO WORKSPACE] FOpid_control/SUBSYSTEM_MODEL/To Workspace25  >>  Variable: Fty
+[TO WORKSPACE] FOpid_control/SUBSYSTEM_MODEL/To Workspace26  >>  Variable: Ftz
+[TO WORKSPACE] FOpid_control/SUBSYSTEM_MODEL/To Workspace27  >>  Variable: Fax
+[TO WORKSPACE] FOpid_control/SUBSYSTEM_MODEL/To Workspace28  >>  Variable: Fay
+[TO WORKSPACE] FOpid_control/SUBSYSTEM_MODEL/To Workspace29  >>  Variable: Faz
+[TO WORKSPACE] FOpid_control/SUBSYSTEM_MODEL/To Workspace3  >>  Variable: CL_w_IGE
+[TO WORKSPACE] FOpid_control/SUBSYSTEM_MODEL/To Workspace30  >>  Variable: Power
+[TO WORKSPACE] FOpid_control/SUBSYSTEM_MODEL/To Workspace31  >>  Variable: Energy
+[TO WORKSPACE] FOpid_control/SUBSYSTEM_MODEL/To Workspace32  >>  Variable: Power_Demand
+[TO WORKSPACE] FOpid_control/SUBSYSTEM_MODEL/To Workspace33  >>  Variable: Load_Torque
+[TO WORKSPACE] FOpid_control/SUBSYSTEM_MODEL/To Workspace4  >>  Variable: Fbx
+[TO WORKSPACE] FOpid_control/SUBSYSTEM_MODEL/To Workspace5  >>  Variable: Fby
+[TO WORKSPACE] FOpid_control/SUBSYSTEM_MODEL/To Workspace6  >>  Variable: Fbz
+[TO WORKSPACE] FOpid_control/SUBSYSTEM_MODEL/To Workspace7  >>  Variable: Mbx
+[TO WORKSPACE] FOpid_control/SUBSYSTEM_MODEL/To Workspace8  >>  Variable: Mby
+[TO WORKSPACE] FOpid_control/SUBSYSTEM_MODEL/To Workspace9  >>  Variable: Mbz
+[TO WORKSPACE] FOpid_control/To Workspace  >>  Variable: control_out
+[TO WORKSPACE] FOpid_control/To Workspace1  >>  Variable: altura_sp
+[TO WORKSPACE] FOpid_control/To Workspace10  >>  Variable: fopid_u
+[TO WORKSPACE] FOpid_control/To Workspace11  >>  Variable: estado_z
+[TO WORKSPACE] FOpid_control/To Workspace12  >>  Variable: estado_phi
+[TO WORKSPACE] FOpid_control/To Workspace13  >>  Variable: estado_theta
+[TO WORKSPACE] FOpid_control/To Workspace14  >>  Variable: estado_psi
+[TO WORKSPACE] FOpid_control/To Workspace15  >>  Variable: estado_u
+[TO WORKSPACE] FOpid_control/To Workspace2  >>  Variable: fopid_h
+[TO WORKSPACE] FOpid_control/To Workspace3  >>  Variable: roll_sp
+[TO WORKSPACE] FOpid_control/To Workspace4  >>  Variable: fopid_roll
+[TO WORKSPACE] FOpid_control/To Workspace5  >>  Variable: theta_sp
+[TO WORKSPACE] FOpid_control/To Workspace6  >>  Variable: fopid_theta
+[TO WORKSPACE] FOpid_control/To Workspace7  >>  Variable: yaw_sp
+[TO WORKSPACE] FOpid_control/To Workspace8  >>  Variable: fopid_yaw
+[TO WORKSPACE] FOpid_control/To Workspace9  >>  Variable: u_set
