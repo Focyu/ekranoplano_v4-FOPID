@@ -4,7 +4,7 @@
  * Code generation for Simulink model "FOpid_control".
  *
  * Simulink Coder version                : 26.1 (R2026a) 20-Nov-2025
- * C++ source code generated on : Wed Aug 19 13:10:53 2026
+ * C++ source code generated on : Tue Sep  1 18:34:30 2026
  *
  * Note that the generated code is not dependent on this header file.
  * The file is used in cojuction with the automatic build procedure.

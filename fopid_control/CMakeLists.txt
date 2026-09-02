@@ -54,6 +54,7 @@ src/ros2nodeinterface.cpp
 src/rtGetInf.cpp
 src/rtGetNaN.cpp
 src/rt_nonfinite.cpp
+src/rt_zcfcn.cpp
 src/slros2_initialize.cpp
 src/slros2_multi_threaded_executor.cpp
 )
@@ -144,4 +145,4 @@ add_custom_command(
 				   )				   
 endforeach(file_i)
 ament_package()
-# Generated on Wed Aug 19 13:11:23 2026
+# Generated on Tue Sep 01 18:34:41 2026

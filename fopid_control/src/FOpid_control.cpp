@@ -6,9 +6,9 @@
  *
  * Code generation for model "FOpid_control".
  *
- * Model version              : 13.61
+ * Model version              : 13.62
  * Simulink Coder version : 26.1 (R2026a) 20-Nov-2025
- * C++ source code generated on : Wed Aug 19 13:10:53 2026
+ * C++ source code generated on : Tue Sep  1 18:34:30 2026
  *
  * Target selection: ert.tlc
  * Note: GRT includes extra infrastructure and instrumentation for prototyping
@@ -219,23 +219,58 @@ void FOpid_control::MATLABFunctionned_to_PoseStampe
 
 /*
  * System initialize for enable system:
- *    '<S43>/Enabled Subsystem'
- *    '<S46>/Enabled Subsystem'
+ *    '<S42>/Enabled Subsystem'
+ *    '<S45>/Enabled Subsystem'
  */
 void FOpid_control::FOpid_con_EnabledSubsystem_Init
   (B_EnabledSubsystem_FOpid_cont_T *localB)
 {
-  /* SystemInitialize for SignalConversion generated from: '<S86>/In1' */
+  /* SystemInitialize for SignalConversion generated from: '<S85>/In1' */
   memset(&localB->In1, 0, sizeof(SL_Bus_std_msgs_Bool));
 }
 
 /*
  * Output and update for enable system:
- *    '<S43>/Enabled Subsystem'
- *    '<S46>/Enabled Subsystem'
+ *    '<S42>/Enabled Subsystem'
+ *    '<S45>/Enabled Subsystem'
  */
 void FOpid_control::FOpid_control_EnabledSubsystem(boolean_T rtu_Enable, const
   SL_Bus_std_msgs_Bool *rtu_In1, B_EnabledSubsystem_FOpid_cont_T *localB)
+{
+  /* Outputs for Enabled SubSystem: '<S42>/Enabled Subsystem' incorporates:
+   *  EnablePort: '<S85>/Enable'
+   */
+  if (rtu_Enable) {
+    /* SignalConversion generated from: '<S85>/In1' */
+    localB->In1 = *rtu_In1;
+  }
+
+  /* End of Outputs for SubSystem: '<S42>/Enabled Subsystem' */
+}
+
+/*
+ * System initialize for enable system:
+ *    '<S43>/Enabled Subsystem'
+ *    '<S44>/Enabled Subsystem'
+ *    '<S36>/Enabled Subsystem'
+ *    '<S37>/Enabled Subsystem'
+ */
+void FOpid_control::FOpid_c_EnabledSubsystem_g_Init
+  (B_EnabledSubsystem_FOpid_co_d_T *localB)
+{
+  /* SystemInitialize for SignalConversion generated from: '<S86>/In1' */
+  memset(&localB->In1, 0, sizeof(SL_Bus_std_msgs_Float64));
+}
+
+/*
+ * Output and update for enable system:
+ *    '<S43>/Enabled Subsystem'
+ *    '<S44>/Enabled Subsystem'
+ *    '<S36>/Enabled Subsystem'
+ *    '<S37>/Enabled Subsystem'
+ */
+void FOpid_control::FOpid_contro_EnabledSubsystem_k(boolean_T rtu_Enable, const
+  SL_Bus_std_msgs_Float64 *rtu_In1, B_EnabledSubsystem_FOpid_co_d_T *localB)
 {
   /* Outputs for Enabled SubSystem: '<S43>/Enabled Subsystem' incorporates:
    *  EnablePort: '<S86>/Enable'
@@ -246,41 +281,6 @@ void FOpid_control::FOpid_control_EnabledSubsystem(boolean_T rtu_Enable, const
   }
 
   /* End of Outputs for SubSystem: '<S43>/Enabled Subsystem' */
-}
-
-/*
- * System initialize for enable system:
- *    '<S44>/Enabled Subsystem'
- *    '<S45>/Enabled Subsystem'
- *    '<S36>/Enabled Subsystem'
- *    '<S37>/Enabled Subsystem'
- */
-void FOpid_control::FOpid_c_EnabledSubsystem_g_Init
-  (B_EnabledSubsystem_FOpid_co_d_T *localB)
-{
-  /* SystemInitialize for SignalConversion generated from: '<S87>/In1' */
-  memset(&localB->In1, 0, sizeof(SL_Bus_std_msgs_Float64));
-}
-
-/*
- * Output and update for enable system:
- *    '<S44>/Enabled Subsystem'
- *    '<S45>/Enabled Subsystem'
- *    '<S36>/Enabled Subsystem'
- *    '<S37>/Enabled Subsystem'
- */
-void FOpid_control::FOpid_contro_EnabledSubsystem_k(boolean_T rtu_Enable, const
-  SL_Bus_std_msgs_Float64 *rtu_In1, B_EnabledSubsystem_FOpid_co_d_T *localB)
-{
-  /* Outputs for Enabled SubSystem: '<S44>/Enabled Subsystem' incorporates:
-   *  EnablePort: '<S87>/Enable'
-   */
-  if (rtu_Enable) {
-    /* SignalConversion generated from: '<S87>/In1' */
-    localB->In1 = *rtu_In1;
-  }
-
-  /* End of Outputs for SubSystem: '<S44>/Enabled Subsystem' */
 }
 
 void FOpid_control::FOpid_contr_Publisher_setupImpl(const
@@ -532,7 +532,7 @@ void FOpid_control::FOpid__Subscriber_setupImpl_iei(const
   static const char_T b_zeroDelimTopic[22] = "/setpoint/turbulencia";
   qos_profile = rmw_qos_profile_default;
 
-  /* Start for MATLABSystem: '<S46>/SourceBlock' */
+  /* Start for MATLABSystem: '<S45>/SourceBlock' */
   FOpid_control_B.deadline_p.sec = 0.0;
   FOpid_control_B.deadline_p.nsec = 0.0;
   lifespan.sec = 0.0;
@@ -546,7 +546,7 @@ void FOpid_control::FOpid__Subscriber_setupImpl_iei(const
                  liveliness_lease_duration, (bool)
                  obj->QOSAvoidROSNamespaceConventions);
   for (int32_T i = 0; i < 22; i++) {
-    /* Start for MATLABSystem: '<S46>/SourceBlock' */
+    /* Start for MATLABSystem: '<S45>/SourceBlock' */
     FOpid_control_B.b_zeroDelimTopic_b[i] = b_zeroDelimTopic[i];
   }
 
@@ -563,7 +563,7 @@ void FOpid_control::FOpid_cont_Subscriber_setupImpl(const
   static const char_T b_zeroDelimTopic[22] = "/setpoint/turbulencia";
   qos_profile = rmw_qos_profile_default;
 
-  /* Start for MATLABSystem: '<S43>/SourceBlock' */
+  /* Start for MATLABSystem: '<S42>/SourceBlock' */
   FOpid_control_B.deadline_n.sec = 0.0;
   FOpid_control_B.deadline_n.nsec = 0.0;
   lifespan.sec = 0.0;
@@ -577,7 +577,7 @@ void FOpid_control::FOpid_cont_Subscriber_setupImpl(const
                  liveliness_lease_duration, (bool)
                  obj->QOSAvoidROSNamespaceConventions);
   for (int32_T i = 0; i < 22; i++) {
-    /* Start for MATLABSystem: '<S43>/SourceBlock' */
+    /* Start for MATLABSystem: '<S42>/SourceBlock' */
     FOpid_control_B.b_zeroDelimTopic_cx[i] = b_zeroDelimTopic[i];
   }
 
@@ -594,7 +594,7 @@ void FOpid_control::FOpid_co_Subscriber_setupImpl_i(const
   static const char_T b_zeroDelimTopic_0[12] = "/olas/heave";
   qos_profile = rmw_qos_profile_default;
 
-  /* Start for MATLABSystem: '<S44>/SourceBlock' */
+  /* Start for MATLABSystem: '<S43>/SourceBlock' */
   FOpid_control_B.deadline_ld.sec = 0.0;
   FOpid_control_B.deadline_ld.nsec = 0.0;
   FOpid_control_B.lifespan_d.sec = 0.0;
@@ -608,7 +608,7 @@ void FOpid_control::FOpid_co_Subscriber_setupImpl_i(const
                  RMW_QOS_POLICY_LIVELINESS_AUTOMATIC, liveliness_lease_duration,
                  (bool)obj->QOSAvoidROSNamespaceConventions);
   for (int32_T i = 0; i < 12; i++) {
-    /* Start for MATLABSystem: '<S44>/SourceBlock' */
+    /* Start for MATLABSystem: '<S43>/SourceBlock' */
     b_zeroDelimTopic[i] = b_zeroDelimTopic_0[i];
   }
 
@@ -624,7 +624,7 @@ void FOpid_control::FOpid_c_Subscriber_setupImpl_ie(const
   static const char_T b_zeroDelimTopic[17] = "/olas/pitch_rate";
   qos_profile = rmw_qos_profile_default;
 
-  /* Start for MATLABSystem: '<S45>/SourceBlock' */
+  /* Start for MATLABSystem: '<S44>/SourceBlock' */
   FOpid_control_B.deadline_l.sec = 0.0;
   FOpid_control_B.deadline_l.nsec = 0.0;
   lifespan.sec = 0.0;
@@ -638,7 +638,7 @@ void FOpid_control::FOpid_c_Subscriber_setupImpl_ie(const
                  liveliness_lease_duration, (bool)
                  obj->QOSAvoidROSNamespaceConventions);
   for (int32_T i = 0; i < 17; i++) {
-    /* Start for MATLABSystem: '<S45>/SourceBlock' */
+    /* Start for MATLABSystem: '<S44>/SourceBlock' */
     FOpid_control_B.b_zeroDelimTopic_cv[i] = b_zeroDelimTopic[i];
   }
 
@@ -794,7 +794,7 @@ real_T rt_powd_snf(real_T u0, real_T u1)
 void FOpid_control::step()
 {
   /* local block i/o variables */
-  SL_Bus_std_msgs_Float64 rtb_SourceBlock_o2_d;
+  SL_Bus_std_msgs_Float64 rtb_SourceBlock_o2_k;
   SL_Bus_std_msgs_Bool rtb_SourceBlock_o2_j;
   SL_Bus_std_msgs_Bool rtb_SourceBlock_o2_dd;
   if (rtmIsMajorTimeStep((&FOpid_control_M))) {
@@ -825,6 +825,7 @@ void FOpid_control::step()
     int8_T rtPrevAction;
     boolean_T serverAvailableOnTime;
     boolean_T tmp_0;
+    ZCEventType zcEvent;
     static const uint8_T b[15] = { 101U, 107U, 114U, 97U, 110U, 111U, 112U, 108U,
       97U, 110U, 111U, 45U, 105U, 109U, 117U };
 
@@ -836,69 +837,18 @@ void FOpid_control::step()
     /* BusAssignment: '<Root>/Bus Assignment-IMU' */
     memset(&FOpid_control_B.BusAssignmentIMU, 0, sizeof(SL_Bus_sensor_msgs_Imu));
 
-    /* RelationalOperator: '<S39>/Compare' incorporates:
-     *  Constant: '<S39>/Constant'
-     */
-    FOpid_control_B.Compare = (FOpid_control_X.Integrator_CSTATE[11] >= 0.05);
-
-    /* Outputs for Enabled SubSystem: '<S48>/Hrgw' incorporates:
-     *  EnablePort: '<S61>/Enable'
-     */
-    /* Outputs for Enabled SubSystem: '<S48>/Hqgw' incorporates:
-     *  EnablePort: '<S60>/Enable'
-     */
-    /* Outputs for Enabled SubSystem: '<S48>/Hpgw' incorporates:
-     *  EnablePort: '<S59>/Enable'
-     */
-    /* Outputs for Enabled SubSystem: '<S49>/Hwgw(s)' incorporates:
-     *  EnablePort: '<S64>/Enable'
-     */
-    /* Outputs for Enabled SubSystem: '<S49>/Hvgw(s)' incorporates:
-     *  EnablePort: '<S63>/Enable'
-     */
-    tmp_0 = (rtmIsMajorTimeStep((&FOpid_control_M)) &&
-             (&FOpid_control_M)->Timing.TaskCounters.TID[1] == 0);
-
-    /* End of Outputs for SubSystem: '<S49>/Hvgw(s)' */
-    /* End of Outputs for SubSystem: '<S49>/Hwgw(s)' */
-    /* End of Outputs for SubSystem: '<S48>/Hpgw' */
-    /* End of Outputs for SubSystem: '<S48>/Hqgw' */
-    /* End of Outputs for SubSystem: '<S48>/Hrgw' */
-    if (tmp_0) {
-      /* MATLAB Function: '<S35>/MATLAB Function-reset' incorporates:
-       *  Memory: '<S35>/Memory2'
-       */
-      memcpy(&FOpid_control_B.IC[0], &FOpid_control_DW.Memory2_PreviousInput[0],
-             12U * sizeof(real_T));
-      FOpid_control_B.IC[2] = 0.0;
-      FOpid_control_B.IC[11] = 0.0;
-
-      /* InitialCondition: '<S35>/IC' */
-      if (FOpid_control_DW.IC_FirstOutputTime) {
-        FOpid_control_DW.IC_FirstOutputTime = false;
-
-        /* InitialCondition: '<S35>/IC' */
-        memcpy(&FOpid_control_B.IC[0], &FOpid_control_ConstP.pooled14[0], 12U *
-               sizeof(real_T));
-      }
-
-      /* End of InitialCondition: '<S35>/IC' */
-    }
-
-    /* Integrator: '<S35>/Integrator' incorporates:
-     *  InitialCondition: '<S35>/IC'
-     */
+    /* Integrator: '<S35>/Integrator' */
     if (rtsiIsModeUpdateTimeStep(&(&FOpid_control_M)->solverInfo)) {
-      serverAvailableOnTime = (((FOpid_control_PrevZCX.Integrator_Reset_ZCE ==
-        POS_ZCSIG) != FOpid_control_B.Compare) &&
-        (FOpid_control_PrevZCX.Integrator_Reset_ZCE != UNINITIALIZED_ZCSIG));
-      FOpid_control_PrevZCX.Integrator_Reset_ZCE = FOpid_control_B.Compare;
+      zcEvent = rt_ZCFcn(ANY_ZERO_CROSSING,
+                         &FOpid_control_PrevZCX.Integrator_Reset_ZCE,
+                         (0.0));
 
       /* evaluate zero-crossings and the level of the reset signal */
-      if (serverAvailableOnTime || FOpid_control_B.Compare ||
-          FOpid_control_DW.Integrator_DWORK1) {
-        memcpy(&FOpid_control_X.Integrator_CSTATE[0], &FOpid_control_B.IC[0],
-               12U * sizeof(real_T));
+      if (zcEvent != NO_ZCEVENT) {
+        for (i = 0; i < 12; i++) {
+          FOpid_control_X.Integrator_CSTATE[i] = -1.0;
+        }
+
         rtsiSetBlockStateForSolverChangedAtMajorStep(&(&FOpid_control_M)
           ->solverInfo, true);
         rtsiSetContTimeOutputInconsistentWithStateAtMajorStep(&(&FOpid_control_M)
@@ -950,6 +900,30 @@ void FOpid_control::step()
     FOpid_control_B.cosb = FOpid_control_B.cosb * FOpid_control_B.cosc *
       FOpid_control_B.sina - FOpid_control_B.cosa * FOpid_control_B.sinb *
       FOpid_control_B.sinc;
+
+    /* Outputs for Enabled SubSystem: '<S47>/Hrgw' incorporates:
+     *  EnablePort: '<S60>/Enable'
+     */
+    /* Outputs for Enabled SubSystem: '<S47>/Hqgw' incorporates:
+     *  EnablePort: '<S59>/Enable'
+     */
+    /* Outputs for Enabled SubSystem: '<S47>/Hpgw' incorporates:
+     *  EnablePort: '<S58>/Enable'
+     */
+    /* Outputs for Enabled SubSystem: '<S48>/Hwgw(s)' incorporates:
+     *  EnablePort: '<S63>/Enable'
+     */
+    /* Outputs for Enabled SubSystem: '<S48>/Hvgw(s)' incorporates:
+     *  EnablePort: '<S62>/Enable'
+     */
+    tmp_0 = (rtmIsMajorTimeStep((&FOpid_control_M)) &&
+             (&FOpid_control_M)->Timing.TaskCounters.TID[1] == 0);
+
+    /* End of Outputs for SubSystem: '<S48>/Hvgw(s)' */
+    /* End of Outputs for SubSystem: '<S48>/Hwgw(s)' */
+    /* End of Outputs for SubSystem: '<S47>/Hpgw' */
+    /* End of Outputs for SubSystem: '<S47>/Hqgw' */
+    /* End of Outputs for SubSystem: '<S47>/Hrgw' */
     if (tmp_0) {
       /* MATLAB Function: '<Root>/MATLAB Function-IMU2' */
       memset(&FOpid_control_B.stringOut_c[0], 0, sizeof(uint8_T) << 7U);
@@ -1202,11 +1176,11 @@ void FOpid_control::step()
     if (tmp_0) {
       /* MATLABSystem: '<S36>/SourceBlock' */
       FOpid_control_B.SourceBlock_o1_o = Sub_FOpid_control_435.getLatestMessage(
-        &rtb_SourceBlock_o2_d);
+        &FOpid_control_B.SourceBlock_o2_d);
 
       /* Outputs for Enabled SubSystem: '<S36>/Enabled Subsystem' */
       FOpid_contro_EnabledSubsystem_k(FOpid_control_B.SourceBlock_o1_o,
-        &rtb_SourceBlock_o2_d, &FOpid_control_B.EnabledSubsystem_b);
+        &FOpid_control_B.SourceBlock_o2_d, &FOpid_control_B.EnabledSubsystem_b);
 
       /* End of Outputs for SubSystem: '<S36>/Enabled Subsystem' */
 
@@ -1229,7 +1203,6 @@ void FOpid_control::step()
     FOpid_control_B.Sum2 = FOpid_control_B.Switch3 - FOpid_control_B.GainZ;
     if (tmp_0) {
       /* MATLAB Function: '<Root>/MATLAB Function - fopid_altura' incorporates:
-       *  Constant: '<Root>/Constant3'
        *  Constant: '<Root>/Constant4'
        *  Constant: '<Root>/Constant5'
        */
@@ -1242,19 +1215,18 @@ void FOpid_control::step()
          FOpid_control_DW.y5_e) * -1.572) + ((FOpid_control_DW.y4_g - 2.0 *
         FOpid_control_DW.y5_e) + FOpid_control_DW.y6_b) * 1.5174) +
         ((FOpid_control_DW.y5_e - 2.0 * FOpid_control_DW.y6_b) +
-         FOpid_control_DW.y7_mc) * -1.489464) * 1.1773992067262726 +
-        ((FOpid_control_B.Sum2 - FOpid_control_DW.e1_j) * 0.5 +
-         FOpid_control_DW.u_prev_i)) + (((((((2.0 * FOpid_control_DW.e2_i +
-        FOpid_control_DW.e1_j) + FOpid_control_DW.e3_c) * -0.6000000000000001 +
-        ((2.0 * FOpid_control_DW.e1_j + FOpid_control_B.Sum2) +
-         FOpid_control_DW.e2_i)) + ((2.0 * FOpid_control_DW.e3_c +
-        FOpid_control_DW.e2_i) + FOpid_control_DW.e4_p) * 0.18000000000000005) +
-        ((2.0 * FOpid_control_DW.e4_p + FOpid_control_DW.e3_c) +
-         FOpid_control_DW.e5_b) * -0.23600000000000004) + ((2.0 *
-        FOpid_control_DW.e5_b + FOpid_control_DW.e4_p) + FOpid_control_DW.e6_b) *
-        0.12540000000000004) + ((2.0 * FOpid_control_DW.e6_b +
-        FOpid_control_DW.e5_b) + FOpid_control_DW.e7_d) * -0.15664800000000004) *
-        0.0009802605560822353;
+         FOpid_control_DW.y7_mc) * -1.489464) * 0.0 + ((FOpid_control_B.Sum2 -
+        FOpid_control_DW.e1_j) + FOpid_control_DW.u_prev_i)) + (((((((2.0 *
+        FOpid_control_DW.e2_i + FOpid_control_DW.e1_j) + FOpid_control_DW.e3_c) *
+        -0.6000000000000001 + ((2.0 * FOpid_control_DW.e1_j +
+        FOpid_control_B.Sum2) + FOpid_control_DW.e2_i)) + ((2.0 *
+        FOpid_control_DW.e3_c + FOpid_control_DW.e2_i) + FOpid_control_DW.e4_p) *
+        0.18000000000000005) + ((2.0 * FOpid_control_DW.e4_p +
+        FOpid_control_DW.e3_c) + FOpid_control_DW.e5_b) * -0.23600000000000004)
+        + ((2.0 * FOpid_control_DW.e5_b + FOpid_control_DW.e4_p) +
+           FOpid_control_DW.e6_b) * 0.12540000000000004) + ((2.0 *
+        FOpid_control_DW.e6_b + FOpid_control_DW.e5_b) + FOpid_control_DW.e7_d) *
+        -0.15664800000000004) * 0.0019605211121644706;
       if (!(FOpid_control_B.u_l <= 0.2)) {
         FOpid_control_B.u_l = 0.2;
       }
@@ -1458,7 +1430,6 @@ void FOpid_control::step()
       FOpid_control_B.x[7];
     if (tmp_0) {
       /* MATLAB Function: '<Root>/MATLAB Function - fopid_pitch' incorporates:
-       *  Constant: '<Root>/Constant6'
        *  Constant: '<Root>/Constant7'
        *  Constant: '<Root>/Constant8'
        */
@@ -1472,8 +1443,8 @@ void FOpid_control::step()
         FOpid_control_DW.y5_c) + FOpid_control_DW.y6_k) * 1.5174) +
         ((FOpid_control_DW.y5_c - 2.0 * FOpid_control_DW.y6_k) +
          FOpid_control_DW.y7_l) * -1.489464) * -1.1773992067262726 +
-        ((FOpid_control_B.Sum1 - FOpid_control_DW.e1_g) * -0.7 +
-         FOpid_control_DW.u_prev_lm)) + (((((((2.0 * FOpid_control_DW.e2_o +
+        (FOpid_control_DW.u_prev_lm - (FOpid_control_B.Sum1 -
+        FOpid_control_DW.e1_g))) + (((((((2.0 * FOpid_control_DW.e2_o +
         FOpid_control_DW.e1_g) + FOpid_control_DW.e3_m) * -0.8 + ((2.0 *
         FOpid_control_DW.e1_g + FOpid_control_B.Sum1) + FOpid_control_DW.e2_o))
         + ((2.0 * FOpid_control_DW.e3_m + FOpid_control_DW.e2_o) +
@@ -1631,7 +1602,7 @@ void FOpid_control::step()
     /* End of MATLABSystem: '<S6>/ServiceCaller' */
     /* End of Outputs for SubSystem: '<Root>/Call Service' */
 
-    /* UnitConversion: '<S50>/Unit Conversion' */
+    /* UnitConversion: '<S49>/Unit Conversion' */
     /* Unit Conversion - from: m to: ft
        Expression: output = (3.28084*input) + (0) */
     FOpid_control_B.Gain2 = 3.280839895013123 * FOpid_control_B.x[11];
@@ -1657,7 +1628,7 @@ void FOpid_control::step()
 
     /* MATLAB Function: '<S35>/MATLAB Function - MODEL' incorporates:
      *  Memory: '<S35>/Memory'
-     *  SignalConversion generated from: '<S41>/ SFunction '
+     *  SignalConversion generated from: '<S40>/ SFunction '
      */
     if (FOpid_control_B.u_d <= 0.3490658503988659) {
       FOpid_control_B.u1 = FOpid_control_B.u_d;
@@ -1686,7 +1657,7 @@ void FOpid_control::step()
     /* MATLAB Function: '<S35>/MATLAB Function - MODEL' incorporates:
      *  Memory: '<S35>/Memory'
      *  Memory: '<S35>/Memory1'
-     *  SignalConversion generated from: '<S41>/ SFunction '
+     *  SignalConversion generated from: '<S40>/ SFunction '
      */
     FOpid_control_B.Gain3_o = FOpid_control_B.x[2] + FOpid_control_B.Memory[2];
     FOpid_control_B.u_l = sqrt((FOpid_control_B.dv1[0] * FOpid_control_B.dv1[0]
@@ -2011,15 +1982,15 @@ void FOpid_control::step()
     FOpid_control_B.XDOT[36] = FOpid_control_B.FE_b;
     FOpid_control_B.XDOT[39] = FOpid_control_B.FA_b_idx_2;
 
-    /* UnitConversion: '<S56>/Unit Conversion' incorporates:
+    /* UnitConversion: '<S55>/Unit Conversion' incorporates:
      *  MATLAB Function: '<S35>/MATLAB Function - MODEL'
      */
     /* Unit Conversion - from: m/s to: ft/s
        Expression: output = (3.28084*input) + (0) */
     FOpid_control_B.u_l *= 3.280839895013123;
 
-    /* Saturate: '<S83>/Limit Function 10ft to 1000ft' incorporates:
-     *  Saturate: '<S66>/Limit Height h<1000ft'
+    /* Saturate: '<S82>/Limit Function 10ft to 1000ft' incorporates:
+     *  Saturate: '<S65>/Limit Height h<1000ft'
      */
     if (FOpid_control_B.Gain2 > 1000.0) {
       FOpid_control_B.Gain3_o = 1000.0;
@@ -2038,21 +2009,21 @@ void FOpid_control::step()
       }
     }
 
-    /* End of Saturate: '<S83>/Limit Function 10ft to 1000ft' */
+    /* End of Saturate: '<S82>/Limit Function 10ft to 1000ft' */
 
-    /* Fcn: '<S83>/Low Altitude Scale Length' */
+    /* Fcn: '<S82>/Low Altitude Scale Length' */
     FOpid_control_B.rtb_CoordinateTransformation_bs = FOpid_control_B.Gain3_o /
       rt_powd_snf(0.000823 * FOpid_control_B.Gain3_o + 0.177, 1.2);
 
-    /* Product: '<S66>/sigma_ug, sigma_vg' incorporates:
-     *  Fcn: '<S66>/Low Altitude Intensity'
+    /* Product: '<S65>/sigma_ug, sigma_vg' incorporates:
+     *  Fcn: '<S65>/Low Altitude Intensity'
      */
     FOpid_control_B.sina = 1.0 / rt_powd_snf(0.000823 *
       FOpid_control_B.WhiteNoise_p + 0.177, 0.4) * FOpid_control_ConstB.sigma_wg;
 
-    /* Interpolation_n-D: '<S65>/Medium//High Altitude Intensity' incorporates:
-     *  PreLookup: '<S65>/PreLook-Up Index Search  (altitude)'
-     *  PreLookup: '<S65>/PreLook-Up Index Search  (prob of exceed)'
+    /* Interpolation_n-D: '<S64>/Medium//High Altitude Intensity' incorporates:
+     *  PreLookup: '<S64>/PreLook-Up Index Search  (altitude)'
+     *  PreLookup: '<S64>/PreLook-Up Index Search  (prob of exceed)'
      *  SecondOrderIntegrator: '<S29>/Integrator, Second-Order Limited'
      */
     FOpid_control_B.bpIndex[0] = plook_bincpa(FOpid_control_B.Gain2,
@@ -2067,57 +2038,57 @@ void FOpid_control::step()
       FOpid_control_B.Lv, FOpid_control_ConstP.MediumHighAltitudeIntensity_Tab,
       12U, FOpid_control_ConstP.MediumHighAltitudeIntensity_max);
     if (tmp_0) {
-      /* Product: '<S58>/Divide' incorporates:
-       *  Product: '<S58>/Product'
-       *  RandomNumber: '<S58>/White Noise'
+      /* Product: '<S57>/Divide' incorporates:
+       *  Product: '<S57>/Product'
+       *  RandomNumber: '<S57>/White Noise'
        */
       tmp_1 = _mm_mul_pd(_mm_loadu_pd(&FOpid_control_ConstB.Divide[0]),
                          _mm_loadu_pd(&FOpid_control_DW.NextOutput[0]));
 
-      /* Product: '<S58>/Product' */
+      /* Product: '<S57>/Product' */
       _mm_storeu_pd(&FOpid_control_B.Product[0], tmp_1);
 
-      /* Product: '<S58>/Divide' incorporates:
-       *  Product: '<S58>/Product'
-       *  RandomNumber: '<S58>/White Noise'
+      /* Product: '<S57>/Divide' incorporates:
+       *  Product: '<S57>/Product'
+       *  RandomNumber: '<S57>/White Noise'
        */
       tmp_1 = _mm_mul_pd(_mm_loadu_pd(&FOpid_control_ConstB.Divide[2]),
                          _mm_loadu_pd(&FOpid_control_DW.NextOutput[2]));
 
-      /* Product: '<S58>/Product' */
+      /* Product: '<S57>/Product' */
       _mm_storeu_pd(&FOpid_control_B.Product[2], tmp_1);
 
-      /* Outputs for Enabled SubSystem: '<S49>/Hugw(s)' incorporates:
-       *  EnablePort: '<S62>/Enable'
+      /* Outputs for Enabled SubSystem: '<S48>/Hugw(s)' incorporates:
+       *  EnablePort: '<S61>/Enable'
        */
       if (rtsiIsModeUpdateTimeStep(&(&FOpid_control_M)->solverInfo) &&
           !FOpid_control_DW.Hugws_MODE) {
         (void) memset(&(FOpid_control_XDis.ug_p_CSTATE), 0,
                       2*sizeof(boolean_T));
 
-        /* InitializeConditions for Integrator: '<S62>/ug_p' */
+        /* InitializeConditions for Integrator: '<S61>/ug_p' */
         FOpid_control_X.ug_p_CSTATE[0] = 0.0;
         FOpid_control_X.ug_p_CSTATE[1] = 0.0;
         FOpid_control_DW.Hugws_MODE = true;
       }
 
-      /* End of Outputs for SubSystem: '<S49>/Hugw(s)' */
+      /* End of Outputs for SubSystem: '<S48>/Hugw(s)' */
     }
 
-    /* Outputs for Enabled SubSystem: '<S49>/Hugw(s)' incorporates:
-     *  EnablePort: '<S62>/Enable'
+    /* Outputs for Enabled SubSystem: '<S48>/Hugw(s)' incorporates:
+     *  EnablePort: '<S61>/Enable'
      */
     if (FOpid_control_DW.Hugws_MODE) {
-      /* Product: '<S62>/Lug//V' */
+      /* Product: '<S61>/Lug//V' */
       FOpid_control_B.Lv[0] = FOpid_control_B.rtb_CoordinateTransformation_bs /
         FOpid_control_B.u_l;
       FOpid_control_B.Lv[1] = FOpid_control_ConstB.UnitConversion_c /
         FOpid_control_B.u_l;
 
-      /* Sqrt: '<S62>/sqrt' incorporates:
-       *  Gain: '<S62>/(2//pi)'
-       *  Integrator: '<S62>/ug_p'
-       *  Product: '<S62>/Lug//V1'
+      /* Sqrt: '<S61>/sqrt' incorporates:
+       *  Gain: '<S61>/(2//pi)'
+       *  Integrator: '<S61>/ug_p'
+       *  Product: '<S61>/Lug//V1'
        */
       tmp_1 = _mm_div_pd(_mm_sub_pd(_mm_mul_pd(_mm_set_pd(sqrt
         (0.6366197723675814 * FOpid_control_B.Lv[1]), sqrt(0.6366197723675814 *
@@ -2125,59 +2096,59 @@ void FOpid_control::step()
         _mm_loadu_pd(&FOpid_control_X.ug_p_CSTATE[0])), _mm_loadu_pd
                          (&FOpid_control_B.Lv[0]));
 
-      /* Product: '<S62>/w' */
+      /* Product: '<S61>/w' */
       _mm_storeu_pd(&FOpid_control_B.w_n[0], tmp_1);
 
-      /* Integrator: '<S62>/ug_p' incorporates:
-       *  Product: '<S62>/w1'
+      /* Integrator: '<S61>/ug_p' incorporates:
+       *  Product: '<S61>/w1'
        */
       tmp_1 = _mm_mul_pd(_mm_loadu_pd(&FOpid_control_X.ug_p_CSTATE[0]),
                          _mm_set_pd(FOpid_control_B.WhiteNoise_p,
         FOpid_control_B.sina));
 
-      /* Product: '<S62>/w1' */
+      /* Product: '<S61>/w1' */
       _mm_storeu_pd(&FOpid_control_B.w1_c[0], tmp_1);
     }
 
-    /* End of Outputs for SubSystem: '<S49>/Hugw(s)' */
+    /* End of Outputs for SubSystem: '<S48>/Hugw(s)' */
 
-    /* Gain: '<S55>/Lv' */
+    /* Gain: '<S54>/Lv' */
     FOpid_control_B.Lv[1] = FOpid_control_ConstB.UnitConversion_c;
 
-    /* Outputs for Enabled SubSystem: '<S49>/Hvgw(s)' incorporates:
-     *  EnablePort: '<S63>/Enable'
+    /* Outputs for Enabled SubSystem: '<S48>/Hvgw(s)' incorporates:
+     *  EnablePort: '<S62>/Enable'
      */
     if (tmp_0 && rtsiIsModeUpdateTimeStep(&(&FOpid_control_M)->solverInfo) &&
         !FOpid_control_DW.Hvgws_MODE) {
       (void) memset(&(FOpid_control_XDis.vg_p1_CSTATE), 0,
                     4*sizeof(boolean_T));
 
-      /* InitializeConditions for Integrator: '<S63>/vg_p1' */
+      /* InitializeConditions for Integrator: '<S62>/vg_p1' */
       FOpid_control_X.vg_p1_CSTATE[0] = 0.0;
 
-      /* InitializeConditions for Integrator: '<S63>/vgw_p2' */
+      /* InitializeConditions for Integrator: '<S62>/vgw_p2' */
       FOpid_control_X.vgw_p2_CSTATE[0] = 0.0;
 
-      /* InitializeConditions for Integrator: '<S63>/vg_p1' */
+      /* InitializeConditions for Integrator: '<S62>/vg_p1' */
       FOpid_control_X.vg_p1_CSTATE[1] = 0.0;
 
-      /* InitializeConditions for Integrator: '<S63>/vgw_p2' */
+      /* InitializeConditions for Integrator: '<S62>/vgw_p2' */
       FOpid_control_X.vgw_p2_CSTATE[1] = 0.0;
       FOpid_control_DW.Hvgws_MODE = true;
     }
 
     if (FOpid_control_DW.Hvgws_MODE) {
-      /* Product: '<S63>/Lvg//V' incorporates:
-       *  Gain: '<S55>/Lv'
+      /* Product: '<S62>/Lvg//V' incorporates:
+       *  Gain: '<S54>/Lv'
        */
       FOpid_control_B.rtb_CoordinateTransformation_bs /= FOpid_control_B.u_l;
 
-      /* Product: '<S63>/w' incorporates:
-       *  Gain: '<S63>/(1//pi)'
-       *  Integrator: '<S63>/vg_p1'
-       *  Product: '<S63>/Lug//V1'
-       *  Sqrt: '<S63>/sqrt'
-       *  Sum: '<S63>/Sum'
+      /* Product: '<S62>/w' incorporates:
+       *  Gain: '<S62>/(1//pi)'
+       *  Integrator: '<S62>/vg_p1'
+       *  Product: '<S62>/Lug//V1'
+       *  Sqrt: '<S62>/sqrt'
+       *  Sum: '<S62>/Sum'
        */
       FOpid_control_B.rtb_CoordinateTransformationC_n = (sqrt(0.3183098861837907
         * FOpid_control_B.rtb_CoordinateTransformation_bs) *
@@ -2185,28 +2156,28 @@ void FOpid_control::step()
         FOpid_control_B.rtb_CoordinateTransformation_bs;
       FOpid_control_B.w_g[0] = FOpid_control_B.rtb_CoordinateTransformationC_n;
 
-      /* Product: '<S63>/w ' incorporates:
-       *  Gain: '<S63>/sqrt(3)'
-       *  Integrator: '<S63>/vg_p1'
-       *  Integrator: '<S63>/vgw_p2'
-       *  Product: '<S63>/Lvg//V '
-       *  Sum: '<S63>/Sum1'
+      /* Product: '<S62>/w ' incorporates:
+       *  Gain: '<S62>/sqrt(3)'
+       *  Integrator: '<S62>/vg_p1'
+       *  Integrator: '<S62>/vgw_p2'
+       *  Product: '<S62>/Lvg//V '
+       *  Sum: '<S62>/Sum1'
        */
       FOpid_control_B.w_e[0] = (FOpid_control_B.rtb_CoordinateTransformationC_n *
         FOpid_control_B.rtb_CoordinateTransformation_bs * 1.7320508075688772 +
         (FOpid_control_X.vg_p1_CSTATE[0] - FOpid_control_X.vgw_p2_CSTATE[0])) /
         FOpid_control_B.rtb_CoordinateTransformation_bs;
 
-      /* Product: '<S63>/Lvg//V' */
+      /* Product: '<S62>/Lvg//V' */
       FOpid_control_B.rtb_CoordinateTransformation_bs = FOpid_control_B.Lv[1] /
         FOpid_control_B.u_l;
 
-      /* Product: '<S63>/w' incorporates:
-       *  Gain: '<S63>/(1//pi)'
-       *  Integrator: '<S63>/vg_p1'
-       *  Product: '<S63>/Lug//V1'
-       *  Sqrt: '<S63>/sqrt'
-       *  Sum: '<S63>/Sum'
+      /* Product: '<S62>/w' incorporates:
+       *  Gain: '<S62>/(1//pi)'
+       *  Integrator: '<S62>/vg_p1'
+       *  Product: '<S62>/Lug//V1'
+       *  Sqrt: '<S62>/sqrt'
+       *  Sum: '<S62>/Sum'
        */
       FOpid_control_B.rtb_CoordinateTransformationC_n = (sqrt(0.3183098861837907
         * FOpid_control_B.rtb_CoordinateTransformation_bs) *
@@ -2214,124 +2185,124 @@ void FOpid_control::step()
         FOpid_control_B.rtb_CoordinateTransformation_bs;
       FOpid_control_B.w_g[1] = FOpid_control_B.rtb_CoordinateTransformationC_n;
 
-      /* Product: '<S63>/w ' incorporates:
-       *  Gain: '<S63>/sqrt(3)'
-       *  Integrator: '<S63>/vg_p1'
-       *  Integrator: '<S63>/vgw_p2'
-       *  Product: '<S63>/Lvg//V '
-       *  Sum: '<S63>/Sum1'
+      /* Product: '<S62>/w ' incorporates:
+       *  Gain: '<S62>/sqrt(3)'
+       *  Integrator: '<S62>/vg_p1'
+       *  Integrator: '<S62>/vgw_p2'
+       *  Product: '<S62>/Lvg//V '
+       *  Sum: '<S62>/Sum1'
        */
       FOpid_control_B.w_e[1] = (FOpid_control_B.rtb_CoordinateTransformationC_n *
         FOpid_control_B.rtb_CoordinateTransformation_bs * 1.7320508075688772 +
         (FOpid_control_X.vg_p1_CSTATE[1] - FOpid_control_X.vgw_p2_CSTATE[1])) /
         FOpid_control_B.rtb_CoordinateTransformation_bs;
 
-      /* Product: '<S63>/w 1' incorporates:
-       *  Integrator: '<S63>/vgw_p2'
+      /* Product: '<S62>/w 1' incorporates:
+       *  Integrator: '<S62>/vgw_p2'
        */
       tmp_1 = _mm_mul_pd(_mm_set_pd(FOpid_control_B.WhiteNoise_p,
         FOpid_control_B.sina), _mm_loadu_pd(&FOpid_control_X.vgw_p2_CSTATE[0]));
 
-      /* Product: '<S63>/w 1' */
+      /* Product: '<S62>/w 1' */
       _mm_storeu_pd(&FOpid_control_B.w1[0], tmp_1);
     }
 
-    /* End of Outputs for SubSystem: '<S49>/Hvgw(s)' */
+    /* End of Outputs for SubSystem: '<S48>/Hvgw(s)' */
 
-    /* Gain: '<S55>/Lw' */
+    /* Gain: '<S54>/Lw' */
     FOpid_control_B.Lv[1] = FOpid_control_ConstB.UnitConversion_c;
 
-    /* Outputs for Enabled SubSystem: '<S49>/Hwgw(s)' incorporates:
-     *  EnablePort: '<S64>/Enable'
+    /* Outputs for Enabled SubSystem: '<S48>/Hwgw(s)' incorporates:
+     *  EnablePort: '<S63>/Enable'
      */
     if (tmp_0 && rtsiIsModeUpdateTimeStep(&(&FOpid_control_M)->solverInfo) &&
         !FOpid_control_DW.Hwgws_MODE) {
       (void) memset(&(FOpid_control_XDis.wg_p1_CSTATE), 0,
                     4*sizeof(boolean_T));
 
-      /* InitializeConditions for Integrator: '<S64>/wg_p1' */
+      /* InitializeConditions for Integrator: '<S63>/wg_p1' */
       FOpid_control_X.wg_p1_CSTATE[0] = 0.0;
 
-      /* InitializeConditions for Integrator: '<S64>/wg_p2' */
+      /* InitializeConditions for Integrator: '<S63>/wg_p2' */
       FOpid_control_X.wg_p2_CSTATE[0] = 0.0;
 
-      /* InitializeConditions for Integrator: '<S64>/wg_p1' */
+      /* InitializeConditions for Integrator: '<S63>/wg_p1' */
       FOpid_control_X.wg_p1_CSTATE[1] = 0.0;
 
-      /* InitializeConditions for Integrator: '<S64>/wg_p2' */
+      /* InitializeConditions for Integrator: '<S63>/wg_p2' */
       FOpid_control_X.wg_p2_CSTATE[1] = 0.0;
       FOpid_control_DW.Hwgws_MODE = true;
     }
 
     if (FOpid_control_DW.Hwgws_MODE) {
-      /* Product: '<S64>/Lwg//V' incorporates:
-       *  Gain: '<S55>/Lw'
+      /* Product: '<S63>/Lwg//V' incorporates:
+       *  Gain: '<S54>/Lw'
        */
       FOpid_control_B.sina = FOpid_control_B.Gain3_o / FOpid_control_B.u_l;
 
-      /* Product: '<S64>/w' incorporates:
-       *  Gain: '<S64>/1//pi'
-       *  Integrator: '<S64>/wg_p1'
-       *  Product: '<S64>/Lug//V1'
-       *  Sqrt: '<S64>/sqrt1'
-       *  Sum: '<S64>/Sum'
+      /* Product: '<S63>/w' incorporates:
+       *  Gain: '<S63>/1//pi'
+       *  Integrator: '<S63>/wg_p1'
+       *  Product: '<S63>/Lug//V1'
+       *  Sqrt: '<S63>/sqrt1'
+       *  Sum: '<S63>/Sum'
        */
       FOpid_control_B.rtb_CoordinateTransformation_bs = (sqrt(0.3183098861837907
         * FOpid_control_B.sina) * FOpid_control_B.Product[2] -
         FOpid_control_X.wg_p1_CSTATE[0]) / FOpid_control_B.sina;
       FOpid_control_B.w[0] = FOpid_control_B.rtb_CoordinateTransformation_bs;
 
-      /* Product: '<S64>/w ' incorporates:
-       *  Integrator: '<S64>/wg_p1'
-       *  Integrator: '<S64>/wg_p2'
-       *  Product: '<S64>/Lwg//V'
-       *  Product: '<S64>/Lwg//V '
-       *  Sum: '<S64>/Sum1'
+      /* Product: '<S63>/w ' incorporates:
+       *  Integrator: '<S63>/wg_p1'
+       *  Integrator: '<S63>/wg_p2'
+       *  Product: '<S63>/Lwg//V'
+       *  Product: '<S63>/Lwg//V '
+       *  Sum: '<S63>/Sum1'
        */
       FOpid_control_B.w_a[0] = (FOpid_control_B.rtb_CoordinateTransformation_bs *
         FOpid_control_ConstB.sqrt_a * FOpid_control_B.sina +
         (FOpid_control_X.wg_p1_CSTATE[0] - FOpid_control_X.wg_p2_CSTATE[0])) /
         FOpid_control_B.sina;
 
-      /* Product: '<S64>/Lwg//V' */
+      /* Product: '<S63>/Lwg//V' */
       FOpid_control_B.sina = FOpid_control_B.Lv[1] / FOpid_control_B.u_l;
 
-      /* Product: '<S64>/w' incorporates:
-       *  Gain: '<S64>/1//pi'
-       *  Integrator: '<S64>/wg_p1'
-       *  Product: '<S64>/Lug//V1'
-       *  Sqrt: '<S64>/sqrt1'
-       *  Sum: '<S64>/Sum'
+      /* Product: '<S63>/w' incorporates:
+       *  Gain: '<S63>/1//pi'
+       *  Integrator: '<S63>/wg_p1'
+       *  Product: '<S63>/Lug//V1'
+       *  Sqrt: '<S63>/sqrt1'
+       *  Sum: '<S63>/Sum'
        */
       FOpid_control_B.rtb_CoordinateTransformation_bs = (sqrt(0.3183098861837907
         * FOpid_control_B.sina) * FOpid_control_B.Product[2] -
         FOpid_control_X.wg_p1_CSTATE[1]) / FOpid_control_B.sina;
       FOpid_control_B.w[1] = FOpid_control_B.rtb_CoordinateTransformation_bs;
 
-      /* Product: '<S64>/w ' incorporates:
-       *  Integrator: '<S64>/wg_p1'
-       *  Integrator: '<S64>/wg_p2'
-       *  Product: '<S64>/Lwg//V'
-       *  Product: '<S64>/Lwg//V '
-       *  Sum: '<S64>/Sum1'
+      /* Product: '<S63>/w ' incorporates:
+       *  Integrator: '<S63>/wg_p1'
+       *  Integrator: '<S63>/wg_p2'
+       *  Product: '<S63>/Lwg//V'
+       *  Product: '<S63>/Lwg//V '
+       *  Sum: '<S63>/Sum1'
        */
       FOpid_control_B.w_a[1] = (FOpid_control_B.rtb_CoordinateTransformation_bs *
         FOpid_control_ConstB.sqrt_a * FOpid_control_B.sina +
         (FOpid_control_X.wg_p1_CSTATE[1] - FOpid_control_X.wg_p2_CSTATE[1])) /
         FOpid_control_B.sina;
 
-      /* Product: '<S64>/Lwg//V 1' incorporates:
-       *  Integrator: '<S64>/wg_p2'
+      /* Product: '<S63>/Lwg//V 1' incorporates:
+       *  Integrator: '<S63>/wg_p2'
        */
       tmp_1 = _mm_mul_pd(_mm_set_pd(FOpid_control_B.WhiteNoise_p,
         FOpid_control_ConstB.sigma_wg), _mm_loadu_pd
                          (&FOpid_control_X.wg_p2_CSTATE[0]));
 
-      /* Product: '<S64>/Lwg//V 1' */
+      /* Product: '<S63>/Lwg//V 1' */
       _mm_storeu_pd(&FOpid_control_B.LwgV1[0], tmp_1);
     }
 
-    /* End of Outputs for SubSystem: '<S49>/Hwgw(s)' */
+    /* End of Outputs for SubSystem: '<S48>/Hwgw(s)' */
 
     /* Angle2Dcm: '<S35>/Rotation Angles to Direction Cosine Matrix' */
     FOpid_control_B.sina = cos(FOpid_control_B.x[6]);
@@ -2395,18 +2366,18 @@ void FOpid_control::step()
     FOpid_control_B.RotationAnglestoDirectionCo[8] = (FOpid_control_B.sinb * 0.0
       + FOpid_control_B.cosc * 0.0) + FOpid_control_B.sinc;
 
-    /* If: '<S54>/if Height < Max low altitude  elseif Height > Min isotropic altitude ' incorporates:
-     *  Constant: '<S75>/max_height_low'
-     *  Product: '<S75>/Product1'
-     *  Product: '<S80>/Product1'
-     *  Product: '<S80>/Product2'
-     *  Product: '<S82>/Product1'
-     *  Product: '<S82>/Product2'
-     *  Sum: '<S75>/Sum1'
-     *  Sum: '<S75>/Sum2'
-     *  Sum: '<S75>/Sum3'
-     *  Sum: '<S80>/Sum'
-     *  Sum: '<S82>/Sum'
+    /* If: '<S53>/if Height < Max low altitude  elseif Height > Min isotropic altitude ' incorporates:
+     *  Constant: '<S74>/max_height_low'
+     *  Product: '<S74>/Product1'
+     *  Product: '<S79>/Product1'
+     *  Product: '<S79>/Product2'
+     *  Product: '<S81>/Product1'
+     *  Product: '<S81>/Product2'
+     *  Sum: '<S74>/Sum1'
+     *  Sum: '<S74>/Sum2'
+     *  Sum: '<S74>/Sum3'
+     *  Sum: '<S79>/Sum'
+     *  Sum: '<S81>/Sum'
      */
     rtPrevAction = FOpid_control_DW.ifHeightMaxlowaltitudeelseifHei;
     if (rtsiIsModeUpdateTimeStep(&(&FOpid_control_M)->solverInfo)) {
@@ -2430,14 +2401,14 @@ void FOpid_control::step()
 
     switch (rtAction) {
      case 0:
-      /* Outputs for IfAction SubSystem: '<S54>/Low altitude  velocities' incorporates:
-       *  ActionPort: '<S76>/Action Port'
+      /* Outputs for IfAction SubSystem: '<S53>/Low altitude  velocities' incorporates:
+       *  ActionPort: '<S75>/Action Port'
        */
-      /* SignalConversion generated from: '<S81>/Vector Concatenate' */
+      /* SignalConversion generated from: '<S80>/Vector Concatenate' */
       FOpid_control_B.Product_k[2] = FOpid_control_B.LwgV1[0];
 
-      /* Trigonometry: '<S82>/Trigonometric Function' incorporates:
-       *  UnitConversion: '<S47>/Unit Conversion'
+      /* Trigonometry: '<S81>/Trigonometric Function' incorporates:
+       *  UnitConversion: '<S46>/Unit Conversion'
        */
       FOpid_control_B.sina = sin(FOpid_control_ConstB.UnitConversion);
       FOpid_control_B.rtb_CoordinateTransformation_bs = cos
@@ -2450,13 +2421,13 @@ void FOpid_control::step()
                     _mm_set_pd(FOpid_control_B.rtb_CoordinateTransformation_bs,
         FOpid_control_B.w1[0])), _mm_set_pd(1.0, -1.0))));
 
-      /* Product: '<S81>/Product' incorporates:
+      /* Product: '<S80>/Product' incorporates:
        *  Angle2Dcm: '<S35>/Rotation Angles to Direction Cosine Matrix'
-       *  Concatenate: '<S81>/Vector Concatenate'
-       *  Product: '<S82>/Product1'
-       *  Product: '<S82>/Product2'
-       *  Reshape: '<S81>/Reshape1'
-       *  Sum: '<S82>/Sum'
+       *  Concatenate: '<S80>/Vector Concatenate'
+       *  Product: '<S81>/Product1'
+       *  Product: '<S81>/Product2'
+       *  Reshape: '<S80>/Reshape1'
+       *  Sum: '<S81>/Sum'
        */
       FOpid_control_B.sina = 0.0;
       FOpid_control_B.rtb_CoordinateTransformation_bs = 0.0;
@@ -2479,28 +2450,28 @@ void FOpid_control::step()
       FOpid_control_B.wbe_b[1] = FOpid_control_B.rtb_CoordinateTransformation_bs;
       FOpid_control_B.wbe_b[0] = FOpid_control_B.sina;
 
-      /* End of Product: '<S81>/Product' */
-      /* End of Outputs for SubSystem: '<S54>/Low altitude  velocities' */
+      /* End of Product: '<S80>/Product' */
+      /* End of Outputs for SubSystem: '<S53>/Low altitude  velocities' */
       break;
 
      case 1:
-      /* Outputs for IfAction SubSystem: '<S54>/Medium//High  altitude velocities' incorporates:
-       *  ActionPort: '<S77>/Action Port'
+      /* Outputs for IfAction SubSystem: '<S53>/Medium//High  altitude velocities' incorporates:
+       *  ActionPort: '<S76>/Action Port'
        */
-      /* Gain: '<S77>/Gain' */
+      /* Gain: '<S76>/Gain' */
       FOpid_control_B.wbe_b[0] = FOpid_control_B.w1_c[1];
       FOpid_control_B.wbe_b[1] = FOpid_control_B.w1[1];
       FOpid_control_B.wbe_b[2] = FOpid_control_B.LwgV1[1];
 
-      /* End of Outputs for SubSystem: '<S54>/Medium//High  altitude velocities' */
+      /* End of Outputs for SubSystem: '<S53>/Medium//High  altitude velocities' */
       break;
 
      default:
-      /* Outputs for IfAction SubSystem: '<S54>/Interpolate  velocities' incorporates:
-       *  ActionPort: '<S75>/Action Port'
+      /* Outputs for IfAction SubSystem: '<S53>/Interpolate  velocities' incorporates:
+       *  ActionPort: '<S74>/Action Port'
        */
-      /* Trigonometry: '<S80>/Trigonometric Function' incorporates:
-       *  UnitConversion: '<S47>/Unit Conversion'
+      /* Trigonometry: '<S79>/Trigonometric Function' incorporates:
+       *  UnitConversion: '<S46>/Unit Conversion'
        */
       FOpid_control_B.sina = sin(FOpid_control_ConstB.UnitConversion);
       FOpid_control_B.rtb_CoordinateTransformation_bs = cos
@@ -2513,16 +2484,16 @@ void FOpid_control::step()
                     _mm_set_pd(FOpid_control_B.rtb_CoordinateTransformation_bs,
         FOpid_control_B.w1[0])), _mm_set_pd(1.0, -1.0))));
 
-      /* SignalConversion generated from: '<S79>/Vector Concatenate' incorporates:
-       *  Product: '<S80>/Product1'
-       *  Product: '<S80>/Product2'
-       *  Sum: '<S80>/Sum'
+      /* SignalConversion generated from: '<S78>/Vector Concatenate' incorporates:
+       *  Product: '<S79>/Product1'
+       *  Product: '<S79>/Product2'
+       *  Sum: '<S79>/Sum'
        */
       FOpid_control_B.wbe_b[2] = FOpid_control_B.LwgV1[0];
 
-      /* Product: '<S79>/Product' incorporates:
+      /* Product: '<S78>/Product' incorporates:
        *  Angle2Dcm: '<S35>/Rotation Angles to Direction Cosine Matrix'
-       *  Concatenate: '<S79>/Vector Concatenate'
+       *  Concatenate: '<S78>/Vector Concatenate'
        */
       FOpid_control_B.sina = 0.0;
       FOpid_control_B.rtb_CoordinateTransformation_bs = 0.0;
@@ -2553,39 +2524,39 @@ void FOpid_control::step()
         (FOpid_control_ConstB.Sum)), _mm_loadu_pd(&FOpid_control_B.Product_k[0]));
       _mm_storeu_pd(&FOpid_control_B.wbe_b[0], tmp_1);
 
-      /* Sum: '<S75>/Sum3' incorporates:
-       *  Constant: '<S75>/max_height_low'
-       *  Product: '<S75>/Product1'
-       *  Product: '<S79>/Product'
-       *  Sum: '<S75>/Sum1'
-       *  Sum: '<S75>/Sum2'
+      /* Sum: '<S74>/Sum3' incorporates:
+       *  Constant: '<S74>/max_height_low'
+       *  Product: '<S74>/Product1'
+       *  Product: '<S78>/Product'
+       *  Sum: '<S74>/Sum1'
+       *  Sum: '<S74>/Sum2'
        */
       FOpid_control_B.wbe_b[2] = (FOpid_control_B.LwgV1[1] -
         FOpid_control_B.rtb_CoordinateTransformationC_n) *
         (FOpid_control_B.Gain2 - 1000.0) / FOpid_control_ConstB.Sum +
         FOpid_control_B.rtb_CoordinateTransformationC_n;
 
-      /* End of Outputs for SubSystem: '<S54>/Interpolate  velocities' */
+      /* End of Outputs for SubSystem: '<S53>/Interpolate  velocities' */
       break;
     }
 
-    /* End of If: '<S54>/if Height < Max low altitude  elseif Height > Min isotropic altitude ' */
+    /* End of If: '<S53>/if Height < Max low altitude  elseif Height > Min isotropic altitude ' */
     /* Unit Conversion - from: ft/s to: m/s
        Expression: output = (0.3048*input) + (0) */
     if (tmp_0) {
-      /* MATLABSystem: '<S46>/SourceBlock' */
+      /* MATLABSystem: '<S45>/SourceBlock' */
       FOpid_control_B.SourceBlock_o1_h = Sub_FOpid_control_417.getLatestMessage(
         &rtb_SourceBlock_o2_j);
 
-      /* Outputs for Enabled SubSystem: '<S46>/Enabled Subsystem' */
+      /* Outputs for Enabled SubSystem: '<S45>/Enabled Subsystem' */
       FOpid_control_EnabledSubsystem(FOpid_control_B.SourceBlock_o1_h,
         &rtb_SourceBlock_o2_j, &FOpid_control_B.EnabledSubsystem_pt);
 
-      /* End of Outputs for SubSystem: '<S46>/Enabled Subsystem' */
+      /* End of Outputs for SubSystem: '<S45>/Enabled Subsystem' */
     }
 
     /* Switch: '<S35>/Switch' incorporates:
-     *  UnitConversion: '<S40>/Unit Conversion'
+     *  UnitConversion: '<S39>/Unit Conversion'
      */
     if (FOpid_control_B.EnabledSubsystem_pt.In1.data) {
       tmp_1 = _mm_mul_pd(_mm_set1_pd(0.3048), _mm_loadu_pd
@@ -2593,7 +2564,7 @@ void FOpid_control::step()
       _mm_storeu_pd(&FOpid_control_B.Switch[0], tmp_1);
 
       /* Switch: '<S35>/Switch' incorporates:
-       *  UnitConversion: '<S40>/Unit Conversion'
+       *  UnitConversion: '<S39>/Unit Conversion'
        */
       FOpid_control_B.Switch[2] = 0.3048 * FOpid_control_B.wbe_b[2];
     } else {
@@ -2607,44 +2578,44 @@ void FOpid_control::step()
 
     /* End of Switch: '<S35>/Switch' */
 
-    /* Outputs for Enabled SubSystem: '<S48>/Hpgw' incorporates:
-     *  EnablePort: '<S59>/Enable'
+    /* Outputs for Enabled SubSystem: '<S47>/Hpgw' incorporates:
+     *  EnablePort: '<S58>/Enable'
      */
     if (tmp_0 && rtsiIsModeUpdateTimeStep(&(&FOpid_control_M)->solverInfo) &&
         !FOpid_control_DW.Hpgw_MODE) {
       (void) memset(&(FOpid_control_XDis.pgw_p_CSTATE), 0,
                     2*sizeof(boolean_T));
 
-      /* InitializeConditions for Integrator: '<S59>/pgw_p' */
+      /* InitializeConditions for Integrator: '<S58>/pgw_p' */
       FOpid_control_X.pgw_p_CSTATE[0] = 0.0;
       FOpid_control_X.pgw_p_CSTATE[1] = 0.0;
       FOpid_control_DW.Hpgw_MODE = true;
     }
 
     if (FOpid_control_DW.Hpgw_MODE) {
-      /* Fcn: '<S59>/sqrt(0.8//V)' */
+      /* Fcn: '<S58>/sqrt(0.8//V)' */
       FOpid_control_B.sina = sqrt(0.8 / FOpid_control_B.u_l);
 
-      /* Product: '<S59>/w3' */
+      /* Product: '<S58>/w3' */
       FOpid_control_B.rtb_CoordinateTransformation_bs = FOpid_control_B.u_l *
         FOpid_control_ConstB.w4;
 
-      /* Product: '<S59>/w' incorporates:
-       *  Fcn: '<S59>/sqrt(0.8//V)'
-       *  Gain: '<S55>/Lw'
-       *  Integrator: '<S59>/pgw_p'
-       *  Math: '<S59>/L^1//3'
-       *  Product: '<S59>/Lug//V1'
-       *  Product: '<S59>/w1'
-       *  Product: '<S59>/w2'
-       *  Sum: '<S59>/Sum'
+      /* Product: '<S58>/w' incorporates:
+       *  Fcn: '<S58>/sqrt(0.8//V)'
+       *  Gain: '<S54>/Lw'
+       *  Integrator: '<S58>/pgw_p'
+       *  Math: '<S58>/L^1//3'
+       *  Product: '<S58>/Lug//V1'
+       *  Product: '<S58>/w1'
+       *  Product: '<S58>/w2'
+       *  Sum: '<S58>/Sum'
        */
       FOpid_control_B.w_o[0] = (FOpid_control_B.sina / rt_powd_snf
         (FOpid_control_B.Gain3_o, 0.3333333333333333) * FOpid_control_ConstB.u16
         * FOpid_control_B.Product[3] - FOpid_control_X.pgw_p_CSTATE[0]) *
         FOpid_control_B.rtb_CoordinateTransformation_bs;
 
-      /* Math: '<S59>/L^1//3' */
+      /* Math: '<S58>/L^1//3' */
       if (FOpid_control_B.Lv[1] < 0.0) {
         FOpid_control_B.q_aero = -rt_powd_snf(-FOpid_control_B.Lv[1],
           0.3333333333333333);
@@ -2653,98 +2624,98 @@ void FOpid_control::step()
           0.3333333333333333);
       }
 
-      /* Product: '<S59>/w' incorporates:
-       *  Fcn: '<S59>/sqrt(0.8//V)'
-       *  Integrator: '<S59>/pgw_p'
-       *  Product: '<S59>/Lug//V1'
-       *  Product: '<S59>/w1'
-       *  Product: '<S59>/w2'
-       *  Sum: '<S59>/Sum'
+      /* Product: '<S58>/w' incorporates:
+       *  Fcn: '<S58>/sqrt(0.8//V)'
+       *  Integrator: '<S58>/pgw_p'
+       *  Product: '<S58>/Lug//V1'
+       *  Product: '<S58>/w1'
+       *  Product: '<S58>/w2'
+       *  Sum: '<S58>/Sum'
        */
       FOpid_control_B.w_o[1] = (FOpid_control_B.sina / FOpid_control_B.q_aero *
         FOpid_control_ConstB.u16 * FOpid_control_B.Product[3] -
         FOpid_control_X.pgw_p_CSTATE[1]) *
         FOpid_control_B.rtb_CoordinateTransformation_bs;
 
-      /* Product: '<S59>/sigma_w' incorporates:
-       *  Integrator: '<S59>/pgw_p'
+      /* Product: '<S58>/sigma_w' incorporates:
+       *  Integrator: '<S58>/pgw_p'
        */
       tmp_1 = _mm_mul_pd(_mm_set_pd(FOpid_control_B.WhiteNoise_p,
         FOpid_control_ConstB.sigma_wg), _mm_loadu_pd
                          (&FOpid_control_X.pgw_p_CSTATE[0]));
 
-      /* Product: '<S59>/sigma_w' */
+      /* Product: '<S58>/sigma_w' */
       _mm_storeu_pd(&FOpid_control_B.sigma_w[0], tmp_1);
     }
 
-    /* End of Outputs for SubSystem: '<S48>/Hpgw' */
+    /* End of Outputs for SubSystem: '<S47>/Hpgw' */
 
-    /* Outputs for Enabled SubSystem: '<S48>/Hqgw' incorporates:
-     *  EnablePort: '<S60>/Enable'
+    /* Outputs for Enabled SubSystem: '<S47>/Hqgw' incorporates:
+     *  EnablePort: '<S59>/Enable'
      */
     if (tmp_0 && rtsiIsModeUpdateTimeStep(&(&FOpid_control_M)->solverInfo) &&
         !FOpid_control_DW.Hqgw_MODE) {
       (void) memset(&(FOpid_control_XDis.qgw_p_CSTATE), 0,
                     2*sizeof(boolean_T));
 
-      /* InitializeConditions for Integrator: '<S60>/qgw_p' */
+      /* InitializeConditions for Integrator: '<S59>/qgw_p' */
       FOpid_control_X.qgw_p_CSTATE[0] = 0.0;
       FOpid_control_X.qgw_p_CSTATE[1] = 0.0;
       FOpid_control_DW.Hqgw_MODE = true;
     }
 
     if (FOpid_control_DW.Hqgw_MODE) {
-      /* Gain: '<S60>/pi//4' */
+      /* Gain: '<S59>/pi//4' */
       FOpid_control_B.Gain3_o = 0.7853981633974483 * FOpid_control_B.u_l;
 
-      /* Product: '<S60>/w' incorporates:
-       *  Integrator: '<S60>/qgw_p'
-       *  Product: '<S60>/wg//V'
-       *  Sum: '<S60>/Sum'
+      /* Product: '<S59>/w' incorporates:
+       *  Integrator: '<S59>/qgw_p'
+       *  Product: '<S59>/wg//V'
+       *  Sum: '<S59>/Sum'
        */
       FOpid_control_B.WhiteNoise_p = (FOpid_control_B.LwgV1[0] /
         FOpid_control_B.u_l - FOpid_control_X.qgw_p_CSTATE[0]) *
         (FOpid_control_B.Gain3_o / FOpid_control_ConstB.UnitConversion_n);
       FOpid_control_B.w_e0[0] = FOpid_control_B.WhiteNoise_p;
 
-      /* UnaryMinus: '<S60>/Unary Minus' */
+      /* UnaryMinus: '<S59>/Unary Minus' */
       FOpid_control_B.UnaryMinus[0] = -FOpid_control_B.WhiteNoise_p;
 
-      /* Product: '<S60>/w' incorporates:
-       *  Integrator: '<S60>/qgw_p'
-       *  Product: '<S60>/wg//V'
-       *  Sum: '<S60>/Sum'
+      /* Product: '<S59>/w' incorporates:
+       *  Integrator: '<S59>/qgw_p'
+       *  Product: '<S59>/wg//V'
+       *  Sum: '<S59>/Sum'
        */
       FOpid_control_B.WhiteNoise_p = (FOpid_control_B.LwgV1[1] /
         FOpid_control_B.u_l - FOpid_control_X.qgw_p_CSTATE[1]) *
         (FOpid_control_B.Gain3_o / FOpid_control_ConstB.UnitConversion_n);
       FOpid_control_B.w_e0[1] = FOpid_control_B.WhiteNoise_p;
 
-      /* UnaryMinus: '<S60>/Unary Minus' */
+      /* UnaryMinus: '<S59>/Unary Minus' */
       FOpid_control_B.UnaryMinus[1] = -FOpid_control_B.WhiteNoise_p;
     }
 
-    /* End of Outputs for SubSystem: '<S48>/Hqgw' */
+    /* End of Outputs for SubSystem: '<S47>/Hqgw' */
 
-    /* Outputs for Enabled SubSystem: '<S48>/Hrgw' incorporates:
-     *  EnablePort: '<S61>/Enable'
+    /* Outputs for Enabled SubSystem: '<S47>/Hrgw' incorporates:
+     *  EnablePort: '<S60>/Enable'
      */
     if (tmp_0 && rtsiIsModeUpdateTimeStep(&(&FOpid_control_M)->solverInfo) &&
         !FOpid_control_DW.Hrgw_MODE) {
       (void) memset(&(FOpid_control_XDis.rgw_p_CSTATE), 0,
                     2*sizeof(boolean_T));
 
-      /* InitializeConditions for Integrator: '<S61>/rgw_p' */
+      /* InitializeConditions for Integrator: '<S60>/rgw_p' */
       FOpid_control_X.rgw_p_CSTATE[0] = 0.0;
       FOpid_control_X.rgw_p_CSTATE[1] = 0.0;
       FOpid_control_DW.Hrgw_MODE = true;
     }
 
     if (FOpid_control_DW.Hrgw_MODE) {
-      /* Product: '<S61>/vg//V' incorporates:
-       *  Gain: '<S61>/pi//3'
-       *  Integrator: '<S61>/rgw_p'
-       *  Product: '<S61>/w'
+      /* Product: '<S60>/vg//V' incorporates:
+       *  Gain: '<S60>/pi//3'
+       *  Integrator: '<S60>/rgw_p'
+       *  Product: '<S60>/w'
        */
       tmp_1 = _mm_mul_pd(_mm_sub_pd(_mm_div_pd(_mm_loadu_pd(&FOpid_control_B.w1
         [0]), _mm_set1_pd(FOpid_control_B.u_l)), _mm_loadu_pd
@@ -2752,24 +2723,24 @@ void FOpid_control::step()
         (1.0471975511965976 * FOpid_control_B.u_l), _mm_set1_pd
         (FOpid_control_ConstB.UnitConversion_n)));
 
-      /* Product: '<S61>/w' */
+      /* Product: '<S60>/w' */
       _mm_storeu_pd(&FOpid_control_B.w_d[0], tmp_1);
     }
 
-    /* End of Outputs for SubSystem: '<S48>/Hrgw' */
+    /* End of Outputs for SubSystem: '<S47>/Hrgw' */
 
-    /* If: '<S53>/if Height < Max low altitude  elseif Height > Min isotropic altitude ' incorporates:
-     *  Constant: '<S67>/max_height_low'
-     *  Product: '<S67>/Product1'
-     *  Product: '<S72>/Product1'
-     *  Product: '<S72>/Product2'
-     *  Product: '<S74>/Product1'
-     *  Product: '<S74>/Product2'
-     *  Sum: '<S67>/Sum1'
-     *  Sum: '<S67>/Sum2'
-     *  Sum: '<S67>/Sum3'
-     *  Sum: '<S72>/Sum'
-     *  Sum: '<S74>/Sum'
+    /* If: '<S52>/if Height < Max low altitude  elseif Height > Min isotropic altitude ' incorporates:
+     *  Constant: '<S66>/max_height_low'
+     *  Product: '<S66>/Product1'
+     *  Product: '<S71>/Product1'
+     *  Product: '<S71>/Product2'
+     *  Product: '<S73>/Product1'
+     *  Product: '<S73>/Product2'
+     *  Sum: '<S66>/Sum1'
+     *  Sum: '<S66>/Sum2'
+     *  Sum: '<S66>/Sum3'
+     *  Sum: '<S71>/Sum'
+     *  Sum: '<S73>/Sum'
      */
     rtPrevAction = FOpid_control_DW.ifHeightMaxlowaltitudeelseifH_a;
     if (rtsiIsModeUpdateTimeStep(&(&FOpid_control_M)->solverInfo)) {
@@ -2793,14 +2764,14 @@ void FOpid_control::step()
 
     switch (rtAction) {
      case 0:
-      /* Outputs for IfAction SubSystem: '<S53>/Low altitude  rates' incorporates:
-       *  ActionPort: '<S68>/Action Port'
+      /* Outputs for IfAction SubSystem: '<S52>/Low altitude  rates' incorporates:
+       *  ActionPort: '<S67>/Action Port'
        */
-      /* SignalConversion generated from: '<S73>/Vector Concatenate' */
+      /* SignalConversion generated from: '<S72>/Vector Concatenate' */
       FOpid_control_B.Product_k[2] = FOpid_control_B.w_d[0];
 
-      /* Trigonometry: '<S74>/Trigonometric Function1' incorporates:
-       *  UnitConversion: '<S47>/Unit Conversion'
+      /* Trigonometry: '<S73>/Trigonometric Function1' incorporates:
+       *  UnitConversion: '<S46>/Unit Conversion'
        */
       FOpid_control_B.Gain2 = sin(FOpid_control_ConstB.UnitConversion);
       FOpid_control_B.u_l = cos(FOpid_control_ConstB.UnitConversion);
@@ -2811,13 +2782,13 @@ void FOpid_control::step()
         FOpid_control_B.Gain2), _mm_set_pd(FOpid_control_B.u_l,
         FOpid_control_B.UnaryMinus[0])), _mm_set_pd(1.0, -1.0))));
 
-      /* Product: '<S73>/Product' incorporates:
+      /* Product: '<S72>/Product' incorporates:
        *  Angle2Dcm: '<S35>/Rotation Angles to Direction Cosine Matrix'
-       *  Concatenate: '<S73>/Vector Concatenate'
-       *  Product: '<S74>/Product1'
-       *  Product: '<S74>/Product2'
-       *  Reshape: '<S73>/Reshape1'
-       *  Sum: '<S74>/Sum'
+       *  Concatenate: '<S72>/Vector Concatenate'
+       *  Product: '<S73>/Product1'
+       *  Product: '<S73>/Product2'
+       *  Reshape: '<S72>/Reshape1'
+       *  Sum: '<S73>/Sum'
        */
       FOpid_control_B.sina = 0.0;
       FOpid_control_B.rtb_CoordinateTransformation_bs = 0.0;
@@ -2840,28 +2811,28 @@ void FOpid_control::step()
       FOpid_control_B.wbe_b[1] = FOpid_control_B.rtb_CoordinateTransformation_bs;
       FOpid_control_B.wbe_b[0] = FOpid_control_B.sina;
 
-      /* End of Product: '<S73>/Product' */
-      /* End of Outputs for SubSystem: '<S53>/Low altitude  rates' */
+      /* End of Product: '<S72>/Product' */
+      /* End of Outputs for SubSystem: '<S52>/Low altitude  rates' */
       break;
 
      case 1:
-      /* Outputs for IfAction SubSystem: '<S53>/Medium//High  altitude rates' incorporates:
-       *  ActionPort: '<S69>/Action Port'
+      /* Outputs for IfAction SubSystem: '<S52>/Medium//High  altitude rates' incorporates:
+       *  ActionPort: '<S68>/Action Port'
        */
-      /* Gain: '<S69>/Gain' */
+      /* Gain: '<S68>/Gain' */
       FOpid_control_B.wbe_b[0] = FOpid_control_B.sigma_w[1];
       FOpid_control_B.wbe_b[1] = FOpid_control_B.UnaryMinus[1];
       FOpid_control_B.wbe_b[2] = FOpid_control_B.w_d[1];
 
-      /* End of Outputs for SubSystem: '<S53>/Medium//High  altitude rates' */
+      /* End of Outputs for SubSystem: '<S52>/Medium//High  altitude rates' */
       break;
 
      default:
-      /* Outputs for IfAction SubSystem: '<S53>/Interpolate  rates' incorporates:
-       *  ActionPort: '<S67>/Action Port'
+      /* Outputs for IfAction SubSystem: '<S52>/Interpolate  rates' incorporates:
+       *  ActionPort: '<S66>/Action Port'
        */
-      /* Trigonometry: '<S72>/Trigonometric Function' incorporates:
-       *  UnitConversion: '<S47>/Unit Conversion'
+      /* Trigonometry: '<S71>/Trigonometric Function' incorporates:
+       *  UnitConversion: '<S46>/Unit Conversion'
        */
       FOpid_control_B.u_l = sin(FOpid_control_ConstB.UnitConversion);
       FOpid_control_B.Gain3_o = cos(FOpid_control_ConstB.UnitConversion);
@@ -2872,16 +2843,16 @@ void FOpid_control::step()
         FOpid_control_B.u_l), _mm_set_pd(FOpid_control_B.Gain3_o,
         FOpid_control_B.UnaryMinus[0])), _mm_set_pd(1.0, -1.0))));
 
-      /* SignalConversion generated from: '<S71>/Vector Concatenate' incorporates:
-       *  Product: '<S72>/Product1'
-       *  Product: '<S72>/Product2'
-       *  Sum: '<S72>/Sum'
+      /* SignalConversion generated from: '<S70>/Vector Concatenate' incorporates:
+       *  Product: '<S71>/Product1'
+       *  Product: '<S71>/Product2'
+       *  Sum: '<S71>/Sum'
        */
       FOpid_control_B.wbe_b[2] = FOpid_control_B.w_d[0];
 
-      /* Product: '<S71>/Product' incorporates:
+      /* Product: '<S70>/Product' incorporates:
        *  Angle2Dcm: '<S35>/Rotation Angles to Direction Cosine Matrix'
-       *  Concatenate: '<S71>/Vector Concatenate'
+       *  Concatenate: '<S70>/Vector Concatenate'
        */
       FOpid_control_B.sina = 0.0;
       FOpid_control_B.rtb_CoordinateTransformation_bs = 0.0;
@@ -2912,33 +2883,33 @@ void FOpid_control::step()
         (FOpid_control_ConstB.Sum_a)), _mm_loadu_pd(&FOpid_control_B.Product_k[0]));
       _mm_storeu_pd(&FOpid_control_B.wbe_b[0], tmp_1);
 
-      /* Sum: '<S67>/Sum3' incorporates:
-       *  Constant: '<S67>/max_height_low'
-       *  Product: '<S67>/Product1'
-       *  Product: '<S71>/Product'
-       *  Sum: '<S67>/Sum1'
-       *  Sum: '<S67>/Sum2'
+      /* Sum: '<S66>/Sum3' incorporates:
+       *  Constant: '<S66>/max_height_low'
+       *  Product: '<S66>/Product1'
+       *  Product: '<S70>/Product'
+       *  Sum: '<S66>/Sum1'
+       *  Sum: '<S66>/Sum2'
        */
       FOpid_control_B.wbe_b[2] = (FOpid_control_B.w_d[1] -
         FOpid_control_B.rtb_CoordinateTransformationC_n) *
         (FOpid_control_B.Gain2 - 1000.0) / FOpid_control_ConstB.Sum_a +
         FOpid_control_B.rtb_CoordinateTransformationC_n;
 
-      /* End of Outputs for SubSystem: '<S53>/Interpolate  rates' */
+      /* End of Outputs for SubSystem: '<S52>/Interpolate  rates' */
       break;
     }
 
-    /* End of If: '<S53>/if Height < Max low altitude  elseif Height > Min isotropic altitude ' */
+    /* End of If: '<S52>/if Height < Max low altitude  elseif Height > Min isotropic altitude ' */
     if (tmp_0) {
-      /* MATLABSystem: '<S43>/SourceBlock' */
+      /* MATLABSystem: '<S42>/SourceBlock' */
       FOpid_control_B.SourceBlock_o1_k = Sub_FOpid_control_423.getLatestMessage(
         &rtb_SourceBlock_o2_dd);
 
-      /* Outputs for Enabled SubSystem: '<S43>/Enabled Subsystem' */
+      /* Outputs for Enabled SubSystem: '<S42>/Enabled Subsystem' */
       FOpid_control_EnabledSubsystem(FOpid_control_B.SourceBlock_o1_k,
         &rtb_SourceBlock_o2_dd, &FOpid_control_B.EnabledSubsystem);
 
-      /* End of Outputs for SubSystem: '<S43>/Enabled Subsystem' */
+      /* End of Outputs for SubSystem: '<S42>/Enabled Subsystem' */
     }
 
     /* Switch: '<S35>/Switch1' */
@@ -2958,15 +2929,15 @@ void FOpid_control::step()
 
     /* End of Switch: '<S35>/Switch1' */
     if (tmp_0) {
-      /* MATLABSystem: '<S44>/SourceBlock' */
+      /* MATLABSystem: '<S43>/SourceBlock' */
       FOpid_control_B.SourceBlock_o1_c = Sub_FOpid_control_443.getLatestMessage(
         &FOpid_control_B.SourceBlock_o2_p);
 
-      /* Outputs for Enabled SubSystem: '<S44>/Enabled Subsystem' */
+      /* Outputs for Enabled SubSystem: '<S43>/Enabled Subsystem' */
       FOpid_contro_EnabledSubsystem_k(FOpid_control_B.SourceBlock_o1_c,
         &FOpid_control_B.SourceBlock_o2_p, &FOpid_control_B.EnabledSubsystem_k);
 
-      /* End of Outputs for SubSystem: '<S44>/Enabled Subsystem' */
+      /* End of Outputs for SubSystem: '<S43>/Enabled Subsystem' */
     }
 
     /* Switch: '<S35>/Switch2' */
@@ -2991,15 +2962,15 @@ void FOpid_control::step()
       /* Gain: '<S38>/Output' */
       FOpid_control_B.Output = 10.0 * FOpid_control_B.WhiteNoise_p;
 
-      /* MATLABSystem: '<S45>/SourceBlock' */
+      /* MATLABSystem: '<S44>/SourceBlock' */
       FOpid_control_B.SourceBlock_o1_d = Sub_FOpid_control_445.getLatestMessage(
-        &FOpid_control_B.SourceBlock_o2_k);
+        &rtb_SourceBlock_o2_k);
 
-      /* Outputs for Enabled SubSystem: '<S45>/Enabled Subsystem' */
+      /* Outputs for Enabled SubSystem: '<S44>/Enabled Subsystem' */
       FOpid_contro_EnabledSubsystem_k(FOpid_control_B.SourceBlock_o1_d,
-        &FOpid_control_B.SourceBlock_o2_k, &FOpid_control_B.EnabledSubsystem_p);
+        &rtb_SourceBlock_o2_k, &FOpid_control_B.EnabledSubsystem_p);
 
-      /* End of Outputs for SubSystem: '<S45>/Enabled Subsystem' */
+      /* End of Outputs for SubSystem: '<S44>/Enabled Subsystem' */
     }
 
     /* Switch: '<S35>/Switch3' */
@@ -3951,18 +3922,9 @@ void FOpid_control::step()
   }
 
   if (rtmIsMajorTimeStep((&FOpid_control_M))) {
-    int32_T i;
-
-    /* Update for Integrator: '<S35>/Integrator' */
-    FOpid_control_DW.Integrator_DWORK1 = false;
+    int32_T uMode;
     if (rtmIsMajorTimeStep((&FOpid_control_M)) &&
         (&FOpid_control_M)->Timing.TaskCounters.TID[1] == 0) {
-      /* Update for Memory: '<S35>/Memory2' incorporates:
-       *  Integrator: '<S35>/Integrator'
-       */
-      memcpy(&FOpid_control_DW.Memory2_PreviousInput[0], &FOpid_control_B.x[0],
-             12U * sizeof(real_T));
-
       /* Update for UnitDelay: '<Root>/Unit Delay3' */
       FOpid_control_DW.UnitDelay3_DSTATE = FOpid_control_B.Switch3;
 
@@ -3999,7 +3961,7 @@ void FOpid_control::step()
        */
       FOpid_control_DW.Memory1_PreviousInput[2] = FOpid_control_B.SumOLA1[2];
 
-      /* Update for RandomNumber: '<S58>/White Noise' */
+      /* Update for RandomNumber: '<S57>/White Noise' */
       FOpid_control_DW.NextOutput[0] = rt_nrand_Upu32_Yd_f_pw_snf
         (&FOpid_control_DW.RandSeed[0]);
       FOpid_control_DW.NextOutput[1] = rt_nrand_Upu32_Yd_f_pw_snf
@@ -4015,18 +3977,18 @@ void FOpid_control::step()
     }
 
     /* Update for SecondOrderIntegrator: '<S25>/Integrator, Second-Order Limited' */
-    i = FOpid_control_DW.IntegratorSecondOrderLimited_MO;
+    uMode = FOpid_control_DW.IntegratorSecondOrderLimited_MO;
     if ((((FOpid_control_DW.IntegratorSecondOrderLimited_MO == 1) ||
           (FOpid_control_DW.IntegratorSecondOrderLimited_MO == 3)) &&
          (FOpid_control_B.Sum2_j > 0.0)) ||
         (((FOpid_control_DW.IntegratorSecondOrderLimited_MO == 2) ||
           (FOpid_control_DW.IntegratorSecondOrderLimited_MO == 4)) &&
          (FOpid_control_B.Sum2_j < 0.0))) {
-      i = 0;
+      uMode = 0;
     }
 
-    if (FOpid_control_DW.IntegratorSecondOrderLimited_MO != i) {
-      FOpid_control_DW.IntegratorSecondOrderLimited_MO = i;
+    if (FOpid_control_DW.IntegratorSecondOrderLimited_MO != uMode) {
+      FOpid_control_DW.IntegratorSecondOrderLimited_MO = uMode;
       rtsiSetBlockStateForSolverChangedAtMajorStep(&(&FOpid_control_M)
         ->solverInfo, true);
     }
@@ -4034,18 +3996,18 @@ void FOpid_control::step()
     /* End of Update for SecondOrderIntegrator: '<S25>/Integrator, Second-Order Limited' */
 
     /* Update for SecondOrderIntegrator: '<S26>/Integrator, Second-Order Limited' */
-    i = FOpid_control_DW.IntegratorSecondOrderLimited__h;
+    uMode = FOpid_control_DW.IntegratorSecondOrderLimited__h;
     if ((((FOpid_control_DW.IntegratorSecondOrderLimited__h == 1) ||
           (FOpid_control_DW.IntegratorSecondOrderLimited__h == 3)) &&
          (FOpid_control_B.Sum2_f > 0.0)) ||
         (((FOpid_control_DW.IntegratorSecondOrderLimited__h == 2) ||
           (FOpid_control_DW.IntegratorSecondOrderLimited__h == 4)) &&
          (FOpid_control_B.Sum2_f < 0.0))) {
-      i = 0;
+      uMode = 0;
     }
 
-    if (FOpid_control_DW.IntegratorSecondOrderLimited__h != i) {
-      FOpid_control_DW.IntegratorSecondOrderLimited__h = i;
+    if (FOpid_control_DW.IntegratorSecondOrderLimited__h != uMode) {
+      FOpid_control_DW.IntegratorSecondOrderLimited__h = uMode;
       rtsiSetBlockStateForSolverChangedAtMajorStep(&(&FOpid_control_M)
         ->solverInfo, true);
     }
@@ -4053,18 +4015,18 @@ void FOpid_control::step()
     /* End of Update for SecondOrderIntegrator: '<S26>/Integrator, Second-Order Limited' */
 
     /* Update for SecondOrderIntegrator: '<S27>/Integrator, Second-Order Limited' */
-    i = FOpid_control_DW.IntegratorSecondOrderLimited__b;
+    uMode = FOpid_control_DW.IntegratorSecondOrderLimited__b;
     if ((((FOpid_control_DW.IntegratorSecondOrderLimited__b == 1) ||
           (FOpid_control_DW.IntegratorSecondOrderLimited__b == 3)) &&
          (FOpid_control_B.Sum2_b > 0.0)) ||
         (((FOpid_control_DW.IntegratorSecondOrderLimited__b == 2) ||
           (FOpid_control_DW.IntegratorSecondOrderLimited__b == 4)) &&
          (FOpid_control_B.Sum2_b < 0.0))) {
-      i = 0;
+      uMode = 0;
     }
 
-    if (FOpid_control_DW.IntegratorSecondOrderLimited__b != i) {
-      FOpid_control_DW.IntegratorSecondOrderLimited__b = i;
+    if (FOpid_control_DW.IntegratorSecondOrderLimited__b != uMode) {
+      FOpid_control_DW.IntegratorSecondOrderLimited__b = uMode;
       rtsiSetBlockStateForSolverChangedAtMajorStep(&(&FOpid_control_M)
         ->solverInfo, true);
     }
@@ -4072,18 +4034,18 @@ void FOpid_control::step()
     /* End of Update for SecondOrderIntegrator: '<S27>/Integrator, Second-Order Limited' */
 
     /* Update for SecondOrderIntegrator: '<S28>/Integrator, Second-Order Limited' */
-    i = FOpid_control_DW.IntegratorSecondOrderLimited__o;
+    uMode = FOpid_control_DW.IntegratorSecondOrderLimited__o;
     if ((((FOpid_control_DW.IntegratorSecondOrderLimited__o == 1) ||
           (FOpid_control_DW.IntegratorSecondOrderLimited__o == 3)) &&
          (FOpid_control_B.Sum2_jg > 0.0)) ||
         (((FOpid_control_DW.IntegratorSecondOrderLimited__o == 2) ||
           (FOpid_control_DW.IntegratorSecondOrderLimited__o == 4)) &&
          (FOpid_control_B.Sum2_jg < 0.0))) {
-      i = 0;
+      uMode = 0;
     }
 
-    if (FOpid_control_DW.IntegratorSecondOrderLimited__o != i) {
-      FOpid_control_DW.IntegratorSecondOrderLimited__o = i;
+    if (FOpid_control_DW.IntegratorSecondOrderLimited__o != uMode) {
+      FOpid_control_DW.IntegratorSecondOrderLimited__o = uMode;
       rtsiSetBlockStateForSolverChangedAtMajorStep(&(&FOpid_control_M)
         ->solverInfo, true);
     }
@@ -4091,18 +4053,18 @@ void FOpid_control::step()
     /* End of Update for SecondOrderIntegrator: '<S28>/Integrator, Second-Order Limited' */
 
     /* Update for SecondOrderIntegrator: '<S29>/Integrator, Second-Order Limited' */
-    i = FOpid_control_DW.IntegratorSecondOrderLimited_h4;
+    uMode = FOpid_control_DW.IntegratorSecondOrderLimited_h4;
     if ((((FOpid_control_DW.IntegratorSecondOrderLimited_h4 == 1) ||
           (FOpid_control_DW.IntegratorSecondOrderLimited_h4 == 3)) &&
          (FOpid_control_B.Sum2_ba > 0.0)) ||
         (((FOpid_control_DW.IntegratorSecondOrderLimited_h4 == 2) ||
           (FOpid_control_DW.IntegratorSecondOrderLimited_h4 == 4)) &&
          (FOpid_control_B.Sum2_ba < 0.0))) {
-      i = 0;
+      uMode = 0;
     }
 
-    if (FOpid_control_DW.IntegratorSecondOrderLimited_h4 != i) {
-      FOpid_control_DW.IntegratorSecondOrderLimited_h4 = i;
+    if (FOpid_control_DW.IntegratorSecondOrderLimited_h4 != uMode) {
+      FOpid_control_DW.IntegratorSecondOrderLimited_h4 = uMode;
       rtsiSetBlockStateForSolverChangedAtMajorStep(&(&FOpid_control_M)
         ->solverInfo, true);
     }
@@ -4167,19 +4129,12 @@ void FOpid_control::FOpid_control_derivatives()
   _rtXdot = ((XDot_FOpid_control_T *) (&FOpid_control_M)->derivs);
 
   /* Derivatives for Integrator: '<S35>/Integrator' */
-  if (!FOpid_control_B.Compare) {
-    memcpy(&_rtXdot->Integrator_CSTATE[0], &FOpid_control_B.XDOT[0], 12U *
-           sizeof(real_T));
-  } else {
-    /* level reset is active */
-    memset(&_rtXdot->Integrator_CSTATE[0], 0, 12U * sizeof(real_T));
-  }
+  memcpy(&_rtXdot->Integrator_CSTATE[0], &FOpid_control_B.XDOT[0], 12U * sizeof
+         (real_T));
 
-  /* End of Derivatives for Integrator: '<S35>/Integrator' */
-
-  /* Derivatives for Enabled SubSystem: '<S49>/Hugw(s)' */
+  /* Derivatives for Enabled SubSystem: '<S48>/Hugw(s)' */
   if (FOpid_control_DW.Hugws_MODE) {
-    /* Derivatives for Integrator: '<S62>/ug_p' */
+    /* Derivatives for Integrator: '<S61>/ug_p' */
     _rtXdot->ug_p_CSTATE[0] = FOpid_control_B.w_n[0];
     _rtXdot->ug_p_CSTATE[1] = FOpid_control_B.w_n[1];
   } else {
@@ -4194,20 +4149,20 @@ void FOpid_control::FOpid_control_derivatives()
     }
   }
 
-  /* End of Derivatives for SubSystem: '<S49>/Hugw(s)' */
+  /* End of Derivatives for SubSystem: '<S48>/Hugw(s)' */
 
-  /* Derivatives for Enabled SubSystem: '<S49>/Hvgw(s)' */
+  /* Derivatives for Enabled SubSystem: '<S48>/Hvgw(s)' */
   if (FOpid_control_DW.Hvgws_MODE) {
-    /* Derivatives for Integrator: '<S63>/vg_p1' */
+    /* Derivatives for Integrator: '<S62>/vg_p1' */
     _rtXdot->vg_p1_CSTATE[0] = FOpid_control_B.w_g[0];
 
-    /* Derivatives for Integrator: '<S63>/vgw_p2' */
+    /* Derivatives for Integrator: '<S62>/vgw_p2' */
     _rtXdot->vgw_p2_CSTATE[0] = FOpid_control_B.w_e[0];
 
-    /* Derivatives for Integrator: '<S63>/vg_p1' */
+    /* Derivatives for Integrator: '<S62>/vg_p1' */
     _rtXdot->vg_p1_CSTATE[1] = FOpid_control_B.w_g[1];
 
-    /* Derivatives for Integrator: '<S63>/vgw_p2' */
+    /* Derivatives for Integrator: '<S62>/vgw_p2' */
     _rtXdot->vgw_p2_CSTATE[1] = FOpid_control_B.w_e[1];
   } else {
     {
@@ -4221,20 +4176,20 @@ void FOpid_control::FOpid_control_derivatives()
     }
   }
 
-  /* End of Derivatives for SubSystem: '<S49>/Hvgw(s)' */
+  /* End of Derivatives for SubSystem: '<S48>/Hvgw(s)' */
 
-  /* Derivatives for Enabled SubSystem: '<S49>/Hwgw(s)' */
+  /* Derivatives for Enabled SubSystem: '<S48>/Hwgw(s)' */
   if (FOpid_control_DW.Hwgws_MODE) {
-    /* Derivatives for Integrator: '<S64>/wg_p1' */
+    /* Derivatives for Integrator: '<S63>/wg_p1' */
     _rtXdot->wg_p1_CSTATE[0] = FOpid_control_B.w[0];
 
-    /* Derivatives for Integrator: '<S64>/wg_p2' */
+    /* Derivatives for Integrator: '<S63>/wg_p2' */
     _rtXdot->wg_p2_CSTATE[0] = FOpid_control_B.w_a[0];
 
-    /* Derivatives for Integrator: '<S64>/wg_p1' */
+    /* Derivatives for Integrator: '<S63>/wg_p1' */
     _rtXdot->wg_p1_CSTATE[1] = FOpid_control_B.w[1];
 
-    /* Derivatives for Integrator: '<S64>/wg_p2' */
+    /* Derivatives for Integrator: '<S63>/wg_p2' */
     _rtXdot->wg_p2_CSTATE[1] = FOpid_control_B.w_a[1];
   } else {
     {
@@ -4248,11 +4203,11 @@ void FOpid_control::FOpid_control_derivatives()
     }
   }
 
-  /* End of Derivatives for SubSystem: '<S49>/Hwgw(s)' */
+  /* End of Derivatives for SubSystem: '<S48>/Hwgw(s)' */
 
-  /* Derivatives for Enabled SubSystem: '<S48>/Hpgw' */
+  /* Derivatives for Enabled SubSystem: '<S47>/Hpgw' */
   if (FOpid_control_DW.Hpgw_MODE) {
-    /* Derivatives for Integrator: '<S59>/pgw_p' */
+    /* Derivatives for Integrator: '<S58>/pgw_p' */
     _rtXdot->pgw_p_CSTATE[0] = FOpid_control_B.w_o[0];
     _rtXdot->pgw_p_CSTATE[1] = FOpid_control_B.w_o[1];
   } else {
@@ -4267,11 +4222,11 @@ void FOpid_control::FOpid_control_derivatives()
     }
   }
 
-  /* End of Derivatives for SubSystem: '<S48>/Hpgw' */
+  /* End of Derivatives for SubSystem: '<S47>/Hpgw' */
 
-  /* Derivatives for Enabled SubSystem: '<S48>/Hqgw' */
+  /* Derivatives for Enabled SubSystem: '<S47>/Hqgw' */
   if (FOpid_control_DW.Hqgw_MODE) {
-    /* Derivatives for Integrator: '<S60>/qgw_p' */
+    /* Derivatives for Integrator: '<S59>/qgw_p' */
     _rtXdot->qgw_p_CSTATE[0] = FOpid_control_B.w_e0[0];
     _rtXdot->qgw_p_CSTATE[1] = FOpid_control_B.w_e0[1];
   } else {
@@ -4286,11 +4241,11 @@ void FOpid_control::FOpid_control_derivatives()
     }
   }
 
-  /* End of Derivatives for SubSystem: '<S48>/Hqgw' */
+  /* End of Derivatives for SubSystem: '<S47>/Hqgw' */
 
-  /* Derivatives for Enabled SubSystem: '<S48>/Hrgw' */
+  /* Derivatives for Enabled SubSystem: '<S47>/Hrgw' */
   if (FOpid_control_DW.Hrgw_MODE) {
-    /* Derivatives for Integrator: '<S61>/rgw_p' */
+    /* Derivatives for Integrator: '<S60>/rgw_p' */
     _rtXdot->rgw_p_CSTATE[0] = FOpid_control_B.w_d[0];
     _rtXdot->rgw_p_CSTATE[1] = FOpid_control_B.w_d[1];
   } else {
@@ -4305,7 +4260,7 @@ void FOpid_control::FOpid_control_derivatives()
     }
   }
 
-  /* End of Derivatives for SubSystem: '<S48>/Hrgw' */
+  /* End of Derivatives for SubSystem: '<S47>/Hrgw' */
 
   /* Derivatives for TransferFcn: '<S35>/Transfer Fcn' */
   _rtXdot->TransferFcn_CSTATE[0] = 0.0;
@@ -4551,13 +4506,6 @@ void FOpid_control::initialize()
     int32_T i;
     static const char_T b_zeroDelimTopic[18] = "/ekranoplano/odom";
 
-    /* Start for InitialCondition: '<S35>/IC' */
-    memcpy(&FOpid_control_B.IC[0], &FOpid_control_ConstP.pooled14[0], 12U *
-           sizeof(real_T));
-
-    /* Start for InitialCondition: '<S35>/IC' */
-    FOpid_control_DW.IC_FirstOutputTime = true;
-
     /* Start for MATLABSystem: '<Root>/Coordinate Transformation Conversion' */
     FOpid_control_DW.objisempty_d = true;
     FOpid_control_DW.obj_c.isInitialized = 1;
@@ -4638,28 +4586,28 @@ void FOpid_control::initialize()
 
     /* End of Start for SubSystem: '<Root>/Call Service' */
 
-    /* Start for Enabled SubSystem: '<S49>/Hugw(s)' */
+    /* Start for Enabled SubSystem: '<S48>/Hugw(s)' */
     (void) memset(&(FOpid_control_XDis.ug_p_CSTATE), 1,
                   2*sizeof(boolean_T));
 
-    /* End of Start for SubSystem: '<S49>/Hugw(s)' */
+    /* End of Start for SubSystem: '<S48>/Hugw(s)' */
 
-    /* Start for Enabled SubSystem: '<S49>/Hvgw(s)' */
+    /* Start for Enabled SubSystem: '<S48>/Hvgw(s)' */
     (void) memset(&(FOpid_control_XDis.vg_p1_CSTATE), 1,
                   4*sizeof(boolean_T));
 
-    /* End of Start for SubSystem: '<S49>/Hvgw(s)' */
+    /* End of Start for SubSystem: '<S48>/Hvgw(s)' */
 
-    /* Start for Enabled SubSystem: '<S49>/Hwgw(s)' */
+    /* Start for Enabled SubSystem: '<S48>/Hwgw(s)' */
     (void) memset(&(FOpid_control_XDis.wg_p1_CSTATE), 1,
                   4*sizeof(boolean_T));
 
-    /* End of Start for SubSystem: '<S49>/Hwgw(s)' */
+    /* End of Start for SubSystem: '<S48>/Hwgw(s)' */
 
-    /* Start for If: '<S54>/if Height < Max low altitude  elseif Height > Min isotropic altitude ' */
+    /* Start for If: '<S53>/if Height < Max low altitude  elseif Height > Min isotropic altitude ' */
     FOpid_control_DW.ifHeightMaxlowaltitudeelseifHei = -1;
 
-    /* Start for MATLABSystem: '<S46>/SourceBlock' */
+    /* Start for MATLABSystem: '<S45>/SourceBlock' */
     FOpid_control_DW.obj_h.QOSAvoidROSNamespaceConventions = false;
     FOpid_control_DW.obj_h.matlabCodegenIsDeleted = false;
     FOpid_control_DW.objisempty_a = true;
@@ -4668,28 +4616,28 @@ void FOpid_control::initialize()
     FOpid__Subscriber_setupImpl_iei(&FOpid_control_DW.obj_h);
     FOpid_control_DW.obj_h.isSetupComplete = true;
 
-    /* Start for Enabled SubSystem: '<S48>/Hpgw' */
+    /* Start for Enabled SubSystem: '<S47>/Hpgw' */
     (void) memset(&(FOpid_control_XDis.pgw_p_CSTATE), 1,
                   2*sizeof(boolean_T));
 
-    /* End of Start for SubSystem: '<S48>/Hpgw' */
+    /* End of Start for SubSystem: '<S47>/Hpgw' */
 
-    /* Start for Enabled SubSystem: '<S48>/Hqgw' */
+    /* Start for Enabled SubSystem: '<S47>/Hqgw' */
     (void) memset(&(FOpid_control_XDis.qgw_p_CSTATE), 1,
                   2*sizeof(boolean_T));
 
-    /* End of Start for SubSystem: '<S48>/Hqgw' */
+    /* End of Start for SubSystem: '<S47>/Hqgw' */
 
-    /* Start for Enabled SubSystem: '<S48>/Hrgw' */
+    /* Start for Enabled SubSystem: '<S47>/Hrgw' */
     (void) memset(&(FOpid_control_XDis.rgw_p_CSTATE), 1,
                   2*sizeof(boolean_T));
 
-    /* End of Start for SubSystem: '<S48>/Hrgw' */
+    /* End of Start for SubSystem: '<S47>/Hrgw' */
 
-    /* Start for If: '<S53>/if Height < Max low altitude  elseif Height > Min isotropic altitude ' */
+    /* Start for If: '<S52>/if Height < Max low altitude  elseif Height > Min isotropic altitude ' */
     FOpid_control_DW.ifHeightMaxlowaltitudeelseifH_a = -1;
 
-    /* Start for MATLABSystem: '<S43>/SourceBlock' */
+    /* Start for MATLABSystem: '<S42>/SourceBlock' */
     FOpid_control_DW.obj_h4.QOSAvoidROSNamespaceConventions = false;
     FOpid_control_DW.obj_h4.matlabCodegenIsDeleted = false;
     FOpid_control_DW.objisempty_c = true;
@@ -4698,7 +4646,7 @@ void FOpid_control::initialize()
     FOpid_cont_Subscriber_setupImpl(&FOpid_control_DW.obj_h4);
     FOpid_control_DW.obj_h4.isSetupComplete = true;
 
-    /* Start for MATLABSystem: '<S44>/SourceBlock' */
+    /* Start for MATLABSystem: '<S43>/SourceBlock' */
     FOpid_control_DW.obj_hy.QOSAvoidROSNamespaceConventions = false;
     FOpid_control_DW.obj_hy.matlabCodegenIsDeleted = false;
     FOpid_control_DW.objisempty_l = true;
@@ -4707,7 +4655,7 @@ void FOpid_control::initialize()
     FOpid_co_Subscriber_setupImpl_i(&FOpid_control_DW.obj_hy);
     FOpid_control_DW.obj_hy.isSetupComplete = true;
 
-    /* Start for MATLABSystem: '<S45>/SourceBlock' */
+    /* Start for MATLABSystem: '<S44>/SourceBlock' */
     FOpid_control_DW.obj_p.QOSAvoidROSNamespaceConventions = false;
     FOpid_control_DW.obj_p.matlabCodegenIsDeleted = false;
     FOpid_control_DW.objisempty_e = true;
@@ -4719,190 +4667,191 @@ void FOpid_control::initialize()
 
   FOpid_control_PrevZCX.Integrator_Reset_ZCE = UNINITIALIZED_ZCSIG;
 
-  /* InitializeConditions for Memory: '<S35>/Memory2' */
-  memcpy(&FOpid_control_DW.Memory2_PreviousInput[0],
-         &FOpid_control_ConstP.pooled14[0], 12U * sizeof(real_T));
+  {
+    int32_T i;
 
-  /* InitializeConditions for Integrator: '<S35>/Integrator' */
-  if (rtmIsFirstInitCond((&FOpid_control_M))) {
-    FOpid_control_X.Integrator_CSTATE[0] = 0.1;
-    memset(&FOpid_control_X.Integrator_CSTATE[1], 0, 10U * sizeof(real_T));
-    FOpid_control_X.Integrator_CSTATE[11] = -0.1;
-  }
+    /* InitializeConditions for Integrator: '<S35>/Integrator' */
+    for (i = 0; i < 12; i++) {
+      FOpid_control_X.Integrator_CSTATE[i] = -1.0;
+    }
 
-  FOpid_control_DW.Integrator_DWORK1 = true;
+    if (!rtmIsFirstInitCond((&FOpid_control_M))) {
+      rtsiSetContTimeOutputInconsistentWithStateAtMajorStep(&(&FOpid_control_M
+        )->solverInfo, true);
+    }
 
-  /* End of InitializeConditions for Integrator: '<S35>/Integrator' */
+    /* End of InitializeConditions for Integrator: '<S35>/Integrator' */
 
-  /* InitializeConditions for UnitDelay: '<Root>/Unit Delay3' */
-  FOpid_control_DW.UnitDelay3_DSTATE = 0.8;
+    /* InitializeConditions for UnitDelay: '<Root>/Unit Delay3' */
+    FOpid_control_DW.UnitDelay3_DSTATE = 0.8;
 
-  /* InitializeConditions for RandomNumber: '<S58>/White Noise' */
-  FOpid_control_DW.RandSeed[0] = 1529675776U;
-  FOpid_control_DW.NextOutput[0] = rt_nrand_Upu32_Yd_f_pw_snf
-    (&FOpid_control_DW.RandSeed[0]);
-  FOpid_control_DW.RandSeed[1] = 1529741312U;
-  FOpid_control_DW.NextOutput[1] = rt_nrand_Upu32_Yd_f_pw_snf
-    (&FOpid_control_DW.RandSeed[1]);
-  FOpid_control_DW.RandSeed[2] = 1529806848U;
-  FOpid_control_DW.NextOutput[2] = rt_nrand_Upu32_Yd_f_pw_snf
-    (&FOpid_control_DW.RandSeed[2]);
-  FOpid_control_DW.RandSeed[3] = 1529872384U;
-  FOpid_control_DW.NextOutput[3] = rt_nrand_Upu32_Yd_f_pw_snf
-    (&FOpid_control_DW.RandSeed[3]);
+    /* InitializeConditions for RandomNumber: '<S57>/White Noise' */
+    FOpid_control_DW.RandSeed[0] = 1529675776U;
+    FOpid_control_DW.NextOutput[0] = rt_nrand_Upu32_Yd_f_pw_snf
+      (&FOpid_control_DW.RandSeed[0]);
+    FOpid_control_DW.RandSeed[1] = 1529741312U;
+    FOpid_control_DW.NextOutput[1] = rt_nrand_Upu32_Yd_f_pw_snf
+      (&FOpid_control_DW.RandSeed[1]);
+    FOpid_control_DW.RandSeed[2] = 1529806848U;
+    FOpid_control_DW.NextOutput[2] = rt_nrand_Upu32_Yd_f_pw_snf
+      (&FOpid_control_DW.RandSeed[2]);
+    FOpid_control_DW.RandSeed[3] = 1529872384U;
+    FOpid_control_DW.NextOutput[3] = rt_nrand_Upu32_Yd_f_pw_snf
+      (&FOpid_control_DW.RandSeed[3]);
 
-  /* InitializeConditions for TransferFcn: '<S35>/Transfer Fcn' */
-  FOpid_control_X.TransferFcn_CSTATE[0] = 0.0;
-  FOpid_control_X.TransferFcn_CSTATE[1] = 0.0;
+    /* InitializeConditions for TransferFcn: '<S35>/Transfer Fcn' */
+    FOpid_control_X.TransferFcn_CSTATE[0] = 0.0;
+    FOpid_control_X.TransferFcn_CSTATE[1] = 0.0;
 
-  /* InitializeConditions for RandomNumber: '<S38>/White Noise' */
-  FOpid_control_DW.RandSeed_a = 1529675776U;
-  FOpid_control_DW.NextOutput_k = rt_nrand_Upu32_Yd_f_pw_snf
-    (&FOpid_control_DW.RandSeed_a);
+    /* InitializeConditions for RandomNumber: '<S38>/White Noise' */
+    FOpid_control_DW.RandSeed_a = 1529675776U;
+    FOpid_control_DW.NextOutput_k = rt_nrand_Upu32_Yd_f_pw_snf
+      (&FOpid_control_DW.RandSeed_a);
 
-  /* InitializeConditions for TransferFcn: '<S35>/Transfer Fcn1' */
-  FOpid_control_X.TransferFcn1_CSTATE = 0.0;
+    /* InitializeConditions for TransferFcn: '<S35>/Transfer Fcn1' */
+    FOpid_control_X.TransferFcn1_CSTATE = 0.0;
 
-  /* InitializeConditions for Integrator: '<S35>/Integrator1' */
-  FOpid_control_X.Integrator1_CSTATE = 0.0;
+    /* InitializeConditions for Integrator: '<S35>/Integrator1' */
+    FOpid_control_X.Integrator1_CSTATE = 0.0;
 
-  /* InitializeConditions for SecondOrderIntegrator: '<S25>/Integrator, Second-Order Limited' */
-  FOpid_control_X.IntegratorSecondOrderLimited_CS[0] = 0.0;
-  FOpid_control_X.IntegratorSecondOrderLimited_CS[1] = 0.0;
+    /* InitializeConditions for SecondOrderIntegrator: '<S25>/Integrator, Second-Order Limited' */
+    FOpid_control_X.IntegratorSecondOrderLimited_CS[0] = 0.0;
+    FOpid_control_X.IntegratorSecondOrderLimited_CS[1] = 0.0;
 
-  /* InitializeConditions for SecondOrderIntegrator: '<S26>/Integrator, Second-Order Limited' */
-  FOpid_control_X.IntegratorSecondOrderLimited__n[0] = 0.0;
-  FOpid_control_X.IntegratorSecondOrderLimited__n[1] = 0.0;
+    /* InitializeConditions for SecondOrderIntegrator: '<S26>/Integrator, Second-Order Limited' */
+    FOpid_control_X.IntegratorSecondOrderLimited__n[0] = 0.0;
+    FOpid_control_X.IntegratorSecondOrderLimited__n[1] = 0.0;
 
-  /* InitializeConditions for SecondOrderIntegrator: '<S27>/Integrator, Second-Order Limited' */
-  FOpid_control_X.IntegratorSecondOrderLimited__a[0] = 0.0;
-  FOpid_control_X.IntegratorSecondOrderLimited__a[1] = 0.0;
+    /* InitializeConditions for SecondOrderIntegrator: '<S27>/Integrator, Second-Order Limited' */
+    FOpid_control_X.IntegratorSecondOrderLimited__a[0] = 0.0;
+    FOpid_control_X.IntegratorSecondOrderLimited__a[1] = 0.0;
 
-  /* InitializeConditions for SecondOrderIntegrator: '<S28>/Integrator, Second-Order Limited' */
-  FOpid_control_X.IntegratorSecondOrderLimited__i[0] = 0.0;
-  FOpid_control_X.IntegratorSecondOrderLimited__i[1] = 0.0;
+    /* InitializeConditions for SecondOrderIntegrator: '<S28>/Integrator, Second-Order Limited' */
+    FOpid_control_X.IntegratorSecondOrderLimited__i[0] = 0.0;
+    FOpid_control_X.IntegratorSecondOrderLimited__i[1] = 0.0;
 
-  /* InitializeConditions for SecondOrderIntegrator: '<S29>/Integrator, Second-Order Limited' */
-  FOpid_control_X.IntegratorSecondOrderLimited__f[0] = 0.0;
-  FOpid_control_X.IntegratorSecondOrderLimited__f[1] = 0.0;
+    /* InitializeConditions for SecondOrderIntegrator: '<S29>/Integrator, Second-Order Limited' */
+    FOpid_control_X.IntegratorSecondOrderLimited__f[0] = 0.0;
+    FOpid_control_X.IntegratorSecondOrderLimited__f[1] = 0.0;
 
-  /* SystemInitialize for Enabled SubSystem: '<S36>/Enabled Subsystem' */
-  FOpid_c_EnabledSubsystem_g_Init(&FOpid_control_B.EnabledSubsystem_b);
+    /* SystemInitialize for Enabled SubSystem: '<S36>/Enabled Subsystem' */
+    FOpid_c_EnabledSubsystem_g_Init(&FOpid_control_B.EnabledSubsystem_b);
 
-  /* End of SystemInitialize for SubSystem: '<S36>/Enabled Subsystem' */
+    /* End of SystemInitialize for SubSystem: '<S36>/Enabled Subsystem' */
 
-  /* SystemInitialize for Enabled SubSystem: '<S37>/Enabled Subsystem' */
-  FOpid_c_EnabledSubsystem_g_Init(&FOpid_control_B.EnabledSubsystem_a);
+    /* SystemInitialize for Enabled SubSystem: '<S37>/Enabled Subsystem' */
+    FOpid_c_EnabledSubsystem_g_Init(&FOpid_control_B.EnabledSubsystem_a);
 
-  /* End of SystemInitialize for SubSystem: '<S37>/Enabled Subsystem' */
+    /* End of SystemInitialize for SubSystem: '<S37>/Enabled Subsystem' */
 
-  /* SystemInitialize for Enabled SubSystem: '<S49>/Hugw(s)' */
-  /* InitializeConditions for Integrator: '<S62>/ug_p' */
-  FOpid_control_X.ug_p_CSTATE[0] = 0.0;
+    /* SystemInitialize for Enabled SubSystem: '<S48>/Hugw(s)' */
+    /* InitializeConditions for Integrator: '<S61>/ug_p' */
+    FOpid_control_X.ug_p_CSTATE[0] = 0.0;
 
-  /* End of SystemInitialize for SubSystem: '<S49>/Hugw(s)' */
+    /* End of SystemInitialize for SubSystem: '<S48>/Hugw(s)' */
 
-  /* SystemInitialize for Enabled SubSystem: '<S49>/Hvgw(s)' */
-  /* InitializeConditions for Integrator: '<S63>/vg_p1' */
-  FOpid_control_X.vg_p1_CSTATE[0] = 0.0;
+    /* SystemInitialize for Enabled SubSystem: '<S48>/Hvgw(s)' */
+    /* InitializeConditions for Integrator: '<S62>/vg_p1' */
+    FOpid_control_X.vg_p1_CSTATE[0] = 0.0;
 
-  /* InitializeConditions for Integrator: '<S63>/vgw_p2' */
-  FOpid_control_X.vgw_p2_CSTATE[0] = 0.0;
+    /* InitializeConditions for Integrator: '<S62>/vgw_p2' */
+    FOpid_control_X.vgw_p2_CSTATE[0] = 0.0;
 
-  /* End of SystemInitialize for SubSystem: '<S49>/Hvgw(s)' */
+    /* End of SystemInitialize for SubSystem: '<S48>/Hvgw(s)' */
 
-  /* SystemInitialize for Enabled SubSystem: '<S49>/Hwgw(s)' */
-  /* InitializeConditions for Integrator: '<S64>/wg_p1' */
-  FOpid_control_X.wg_p1_CSTATE[0] = 0.0;
+    /* SystemInitialize for Enabled SubSystem: '<S48>/Hwgw(s)' */
+    /* InitializeConditions for Integrator: '<S63>/wg_p1' */
+    FOpid_control_X.wg_p1_CSTATE[0] = 0.0;
 
-  /* InitializeConditions for Integrator: '<S64>/wg_p2' */
-  FOpid_control_X.wg_p2_CSTATE[0] = 0.0;
+    /* InitializeConditions for Integrator: '<S63>/wg_p2' */
+    FOpid_control_X.wg_p2_CSTATE[0] = 0.0;
 
-  /* End of SystemInitialize for SubSystem: '<S49>/Hwgw(s)' */
+    /* End of SystemInitialize for SubSystem: '<S48>/Hwgw(s)' */
 
-  /* SystemInitialize for Enabled SubSystem: '<S49>/Hugw(s)' */
-  /* InitializeConditions for Integrator: '<S62>/ug_p' */
-  FOpid_control_X.ug_p_CSTATE[1] = 0.0;
+    /* SystemInitialize for Enabled SubSystem: '<S48>/Hugw(s)' */
+    /* InitializeConditions for Integrator: '<S61>/ug_p' */
+    FOpid_control_X.ug_p_CSTATE[1] = 0.0;
 
-  /* End of SystemInitialize for SubSystem: '<S49>/Hugw(s)' */
+    /* End of SystemInitialize for SubSystem: '<S48>/Hugw(s)' */
 
-  /* SystemInitialize for Enabled SubSystem: '<S49>/Hvgw(s)' */
-  /* InitializeConditions for Integrator: '<S63>/vg_p1' */
-  FOpid_control_X.vg_p1_CSTATE[1] = 0.0;
+    /* SystemInitialize for Enabled SubSystem: '<S48>/Hvgw(s)' */
+    /* InitializeConditions for Integrator: '<S62>/vg_p1' */
+    FOpid_control_X.vg_p1_CSTATE[1] = 0.0;
 
-  /* InitializeConditions for Integrator: '<S63>/vgw_p2' */
-  FOpid_control_X.vgw_p2_CSTATE[1] = 0.0;
+    /* InitializeConditions for Integrator: '<S62>/vgw_p2' */
+    FOpid_control_X.vgw_p2_CSTATE[1] = 0.0;
 
-  /* End of SystemInitialize for SubSystem: '<S49>/Hvgw(s)' */
+    /* End of SystemInitialize for SubSystem: '<S48>/Hvgw(s)' */
 
-  /* SystemInitialize for Enabled SubSystem: '<S49>/Hwgw(s)' */
-  /* InitializeConditions for Integrator: '<S64>/wg_p1' */
-  FOpid_control_X.wg_p1_CSTATE[1] = 0.0;
+    /* SystemInitialize for Enabled SubSystem: '<S48>/Hwgw(s)' */
+    /* InitializeConditions for Integrator: '<S63>/wg_p1' */
+    FOpid_control_X.wg_p1_CSTATE[1] = 0.0;
 
-  /* InitializeConditions for Integrator: '<S64>/wg_p2' */
-  FOpid_control_X.wg_p2_CSTATE[1] = 0.0;
+    /* InitializeConditions for Integrator: '<S63>/wg_p2' */
+    FOpid_control_X.wg_p2_CSTATE[1] = 0.0;
 
-  /* End of SystemInitialize for SubSystem: '<S49>/Hwgw(s)' */
+    /* End of SystemInitialize for SubSystem: '<S48>/Hwgw(s)' */
 
-  /* SystemInitialize for Enabled SubSystem: '<S46>/Enabled Subsystem' */
-  FOpid_con_EnabledSubsystem_Init(&FOpid_control_B.EnabledSubsystem_pt);
+    /* SystemInitialize for Enabled SubSystem: '<S45>/Enabled Subsystem' */
+    FOpid_con_EnabledSubsystem_Init(&FOpid_control_B.EnabledSubsystem_pt);
 
-  /* End of SystemInitialize for SubSystem: '<S46>/Enabled Subsystem' */
+    /* End of SystemInitialize for SubSystem: '<S45>/Enabled Subsystem' */
 
-  /* SystemInitialize for Enabled SubSystem: '<S48>/Hpgw' */
-  /* InitializeConditions for Integrator: '<S59>/pgw_p' */
-  FOpid_control_X.pgw_p_CSTATE[0] = 0.0;
+    /* SystemInitialize for Enabled SubSystem: '<S47>/Hpgw' */
+    /* InitializeConditions for Integrator: '<S58>/pgw_p' */
+    FOpid_control_X.pgw_p_CSTATE[0] = 0.0;
 
-  /* End of SystemInitialize for SubSystem: '<S48>/Hpgw' */
+    /* End of SystemInitialize for SubSystem: '<S47>/Hpgw' */
 
-  /* SystemInitialize for Enabled SubSystem: '<S48>/Hqgw' */
-  /* InitializeConditions for Integrator: '<S60>/qgw_p' */
-  FOpid_control_X.qgw_p_CSTATE[0] = 0.0;
+    /* SystemInitialize for Enabled SubSystem: '<S47>/Hqgw' */
+    /* InitializeConditions for Integrator: '<S59>/qgw_p' */
+    FOpid_control_X.qgw_p_CSTATE[0] = 0.0;
 
-  /* End of SystemInitialize for SubSystem: '<S48>/Hqgw' */
+    /* End of SystemInitialize for SubSystem: '<S47>/Hqgw' */
 
-  /* SystemInitialize for Enabled SubSystem: '<S48>/Hrgw' */
-  /* InitializeConditions for Integrator: '<S61>/rgw_p' */
-  FOpid_control_X.rgw_p_CSTATE[0] = 0.0;
+    /* SystemInitialize for Enabled SubSystem: '<S47>/Hrgw' */
+    /* InitializeConditions for Integrator: '<S60>/rgw_p' */
+    FOpid_control_X.rgw_p_CSTATE[0] = 0.0;
 
-  /* End of SystemInitialize for SubSystem: '<S48>/Hrgw' */
+    /* End of SystemInitialize for SubSystem: '<S47>/Hrgw' */
 
-  /* SystemInitialize for Enabled SubSystem: '<S48>/Hpgw' */
-  /* InitializeConditions for Integrator: '<S59>/pgw_p' */
-  FOpid_control_X.pgw_p_CSTATE[1] = 0.0;
+    /* SystemInitialize for Enabled SubSystem: '<S47>/Hpgw' */
+    /* InitializeConditions for Integrator: '<S58>/pgw_p' */
+    FOpid_control_X.pgw_p_CSTATE[1] = 0.0;
 
-  /* End of SystemInitialize for SubSystem: '<S48>/Hpgw' */
+    /* End of SystemInitialize for SubSystem: '<S47>/Hpgw' */
 
-  /* SystemInitialize for Enabled SubSystem: '<S48>/Hqgw' */
-  /* InitializeConditions for Integrator: '<S60>/qgw_p' */
-  FOpid_control_X.qgw_p_CSTATE[1] = 0.0;
+    /* SystemInitialize for Enabled SubSystem: '<S47>/Hqgw' */
+    /* InitializeConditions for Integrator: '<S59>/qgw_p' */
+    FOpid_control_X.qgw_p_CSTATE[1] = 0.0;
 
-  /* End of SystemInitialize for SubSystem: '<S48>/Hqgw' */
+    /* End of SystemInitialize for SubSystem: '<S47>/Hqgw' */
 
-  /* SystemInitialize for Enabled SubSystem: '<S48>/Hrgw' */
-  /* InitializeConditions for Integrator: '<S61>/rgw_p' */
-  FOpid_control_X.rgw_p_CSTATE[1] = 0.0;
+    /* SystemInitialize for Enabled SubSystem: '<S47>/Hrgw' */
+    /* InitializeConditions for Integrator: '<S60>/rgw_p' */
+    FOpid_control_X.rgw_p_CSTATE[1] = 0.0;
 
-  /* End of SystemInitialize for SubSystem: '<S48>/Hrgw' */
+    /* End of SystemInitialize for SubSystem: '<S47>/Hrgw' */
 
-  /* SystemInitialize for Enabled SubSystem: '<S43>/Enabled Subsystem' */
-  FOpid_con_EnabledSubsystem_Init(&FOpid_control_B.EnabledSubsystem);
+    /* SystemInitialize for Enabled SubSystem: '<S42>/Enabled Subsystem' */
+    FOpid_con_EnabledSubsystem_Init(&FOpid_control_B.EnabledSubsystem);
 
-  /* End of SystemInitialize for SubSystem: '<S43>/Enabled Subsystem' */
+    /* End of SystemInitialize for SubSystem: '<S42>/Enabled Subsystem' */
 
-  /* SystemInitialize for Enabled SubSystem: '<S44>/Enabled Subsystem' */
-  FOpid_c_EnabledSubsystem_g_Init(&FOpid_control_B.EnabledSubsystem_k);
+    /* SystemInitialize for Enabled SubSystem: '<S43>/Enabled Subsystem' */
+    FOpid_c_EnabledSubsystem_g_Init(&FOpid_control_B.EnabledSubsystem_k);
 
-  /* End of SystemInitialize for SubSystem: '<S44>/Enabled Subsystem' */
+    /* End of SystemInitialize for SubSystem: '<S43>/Enabled Subsystem' */
 
-  /* SystemInitialize for Enabled SubSystem: '<S45>/Enabled Subsystem' */
-  FOpid_c_EnabledSubsystem_g_Init(&FOpid_control_B.EnabledSubsystem_p);
+    /* SystemInitialize for Enabled SubSystem: '<S44>/Enabled Subsystem' */
+    FOpid_c_EnabledSubsystem_g_Init(&FOpid_control_B.EnabledSubsystem_p);
 
-  /* End of SystemInitialize for SubSystem: '<S45>/Enabled Subsystem' */
+    /* End of SystemInitialize for SubSystem: '<S44>/Enabled Subsystem' */
 
-  /* set "at time zero" to false */
-  if (rtmIsFirstInitCond((&FOpid_control_M))) {
-    rtmSetFirstInitCond((&FOpid_control_M), 0);
+    /* set "at time zero" to false */
+    if (rtmIsFirstInitCond((&FOpid_control_M))) {
+      rtmSetFirstInitCond((&FOpid_control_M), 0);
+    }
   }
 }
 
@@ -4988,7 +4937,7 @@ void FOpid_control::terminate()
   /* End of Terminate for MATLABSystem: '<S6>/ServiceCaller' */
   /* End of Terminate for SubSystem: '<Root>/Call Service' */
 
-  /* Terminate for MATLABSystem: '<S46>/SourceBlock' */
+  /* Terminate for MATLABSystem: '<S45>/SourceBlock' */
   if (!FOpid_control_DW.obj_h.matlabCodegenIsDeleted) {
     FOpid_control_DW.obj_h.matlabCodegenIsDeleted = true;
     if ((FOpid_control_DW.obj_h.isInitialized == 1) &&
@@ -4997,9 +4946,9 @@ void FOpid_control::terminate()
     }
   }
 
-  /* End of Terminate for MATLABSystem: '<S46>/SourceBlock' */
+  /* End of Terminate for MATLABSystem: '<S45>/SourceBlock' */
 
-  /* Terminate for MATLABSystem: '<S43>/SourceBlock' */
+  /* Terminate for MATLABSystem: '<S42>/SourceBlock' */
   if (!FOpid_control_DW.obj_h4.matlabCodegenIsDeleted) {
     FOpid_control_DW.obj_h4.matlabCodegenIsDeleted = true;
     if ((FOpid_control_DW.obj_h4.isInitialized == 1) &&
@@ -5008,9 +4957,9 @@ void FOpid_control::terminate()
     }
   }
 
-  /* End of Terminate for MATLABSystem: '<S43>/SourceBlock' */
+  /* End of Terminate for MATLABSystem: '<S42>/SourceBlock' */
 
-  /* Terminate for MATLABSystem: '<S44>/SourceBlock' */
+  /* Terminate for MATLABSystem: '<S43>/SourceBlock' */
   if (!FOpid_control_DW.obj_hy.matlabCodegenIsDeleted) {
     FOpid_control_DW.obj_hy.matlabCodegenIsDeleted = true;
     if ((FOpid_control_DW.obj_hy.isInitialized == 1) &&
@@ -5019,9 +4968,9 @@ void FOpid_control::terminate()
     }
   }
 
-  /* End of Terminate for MATLABSystem: '<S44>/SourceBlock' */
+  /* End of Terminate for MATLABSystem: '<S43>/SourceBlock' */
 
-  /* Terminate for MATLABSystem: '<S45>/SourceBlock' */
+  /* Terminate for MATLABSystem: '<S44>/SourceBlock' */
   if (!FOpid_control_DW.obj_p.matlabCodegenIsDeleted) {
     FOpid_control_DW.obj_p.matlabCodegenIsDeleted = true;
     if ((FOpid_control_DW.obj_p.isInitialized == 1) &&
@@ -5030,7 +4979,7 @@ void FOpid_control::terminate()
     }
   }
 
-  /* End of Terminate for MATLABSystem: '<S45>/SourceBlock' */
+  /* End of Terminate for MATLABSystem: '<S44>/SourceBlock' */
 }
 
 /* Constructor */

@@ -4,9 +4,9 @@
 //
 // Code generated for Simulink model 'FOpid_control'.
 //
-// Model version                  : 13.61
+// Model version                  : 13.62
 // Simulink Coder version         : 26.1 (R2026a) 20-Nov-2025
-// C/C++ source code generated on : Wed Aug 19 13:11:09 2026
+// C/C++ source code generated on : Tue Sep 01 18:34:35 2026
 //
 #ifndef _ROS2_MATLAB_NODEINTERFACE_
 #define _ROS2_MATLAB_NODEINTERFACE_

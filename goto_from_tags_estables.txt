@@ -50,6 +50,7 @@
 [GOTO] FOpid_control/SUBSYSTEM_MODEL/Goto25  ->  Tag: SUMOLA
 [GOTO] FOpid_control/SUBSYSTEM_MODEL/Goto26  ->  Tag: STATE_TURBU
 [GOTO] FOpid_control/SUBSYSTEM_MODEL/Goto27  ->  Tag: v_wind
+[GOTO] FOpid_control/SUBSYSTEM_MODEL/Goto28  ->  Tag: Fz_boya
 [GOTO] FOpid_control/SUBSYSTEM_MODEL/Goto3  ->  Tag: b
 [GOTO] FOpid_control/SUBSYSTEM_MODEL/Goto4  ->  Tag: WAV
 [GOTO] FOpid_control/SUBSYSTEM_MODEL/Goto5  ->  Tag: WAV2

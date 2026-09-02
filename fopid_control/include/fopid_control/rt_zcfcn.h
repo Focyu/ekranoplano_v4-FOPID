@@ -1,14 +1,14 @@
 /*
- * rtGetInf.h
+ * rt_zcfcn.h
  *
  * Trial License - for use to evaluate programs for possible purchase as
  * an end-user only.
  *
  * Code generation for model "FOpid_control".
  *
- * Model version              : 13.61
+ * Model version              : 13.62
  * Simulink Coder version : 26.1 (R2026a) 20-Nov-2025
- * C++ source code generated on : Wed Aug 19 13:10:53 2026
+ * C++ source code generated on : Tue Sep  1 18:34:30 2026
  *
  * Target selection: ert.tlc
  * Note: GRT includes extra infrastructure and instrumentation for prototyping
@@ -17,16 +17,9 @@
  * Validation result: Not run
  */
 
-#ifndef RTGETINF_H_
-#define RTGETINF_H_
-
-extern "C"
-{
-
-#include "rt_nonfinite.h"
-
-}
-
+#ifndef RT_ZCFCN_H_
+#define RT_ZCFCN_H_
+#include "zero_crossing_types.h"
 #include "rtwtypes.h"
 #ifdef __cplusplus
 
@@ -35,14 +28,12 @@ extern "C"
 
 #endif
 
-  extern real_T rtGetInf(void);
-  extern real32_T rtGetInfF(void);
-  extern real_T rtGetMinusInf(void);
-  extern real32_T rtGetMinusInfF(void);
+  extern ZCEventType rt_ZCFcn(ZCDirection zcDir, ZCSigState *prevZc, real_T
+    currValue);
 
 #ifdef __cplusplus
 
 }                                      /* extern "C" */
 
 #endif
-#endif                                 /* RTGETINF_H_ */
+#endif                                 /* RT_ZCFCN_H_ */

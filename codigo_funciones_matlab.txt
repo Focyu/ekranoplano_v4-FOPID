@@ -1,7 +1,7 @@
 ==========================================================
 REPORTE DE CÓDIGO INTERNO - MATLAB FUNCTIONS
 Modelo: FOpid_control
-Fecha: 19-Aug-2026 13:36:26
+Fecha: 01-Sep-2026 18:35:32
 ==========================================================
 
 ----------------------------------------------------------
@@ -1533,40 +1533,49 @@ end
 ----------------------------------------------------------
 BLOQUE [20]: FOpid_control/SUBSYSTEM_MODEL/MATLAB Function-reset
 ----------------------------------------------------------
-% function x_reset = fcn(x, h_suelo)
-function x_reset = fcn(x)
-    x_reset = x;
-    x_reset(3) = 0.0;   % congela w (velocidad vertical)
-    x_reset(12) = 0.0;   % fija z_NED = 0 (superficie del agua)
+% BLOQUE 1: FLOTABILIDAD CONTINUA (sustituye a "MATLAB Function-reset")
+% ============================================================
+function [Fz_boya, x_reset] = fcn_flotabilidad(x, h_max, k_boya, c_boya)
+%#codegen
+% Fuerza de flotabilidad + amortiguamiento, activa solo cerca del agua.
+%
+% Entradas:
+%   x       : vector de 12 estados [u v w p q r phi theta psi x y z_NED]
+%   h_max   : altura límite superior de la "zona de flotación" (0.5 m)
+%   k_boya  : rigidez de la fuerza restauradora (N/m) - ajustar en pruebas
+%   c_boya  : amortiguamiento (N·s/m) - evita oscilaciones tipo resorte
+%
+% Salidas:
+%   Fz_boya : fuerza vertical [N] a SUMAR en Fbz/Fgz dentro del Model()
+%   x_reset : estado "limpio" opcional (solo para telemetría/anti-windup),
+%             NO se usa como reset duro del Integrator.
+%
+% Física:
+%   h_actual = -z_NED (convención NED: z negativo = altura positiva)
+%   Si 0 <= h_actual <= h_max:
+%       Fz_boya = -k_boya*(h_actual - h_ref) - c_boya*(-w)
+%       (like Arquimedes: entre más se "hunde" bajo h_ref, más empuja
+%        hacia arriba; el amortiguador frena el rebote para que no
+%        oscile indefinidamente)
+%   Si h_actual < 0 (penetró el agua): fuerza de empuje fuerte (piso duro suave)
+%   Si h_actual > h_max: sin fuerza de flotación (vuelo libre en efecto suelo)
+
+h_ref    = h_max/2;      % nivel de equilibrio deseado (~0.25 m)
+h_actual = -x(12);
+w        = x(3);         % velocidad vertical en ejes cuerpo (+ = bajando)
+
+x_reset = x;             % no se usa para reset; se deja igual
+
+if h_actual <= h_max
+    % Zona de flotación: resorte + amortiguador, sin discontinuidad
+    Fz_boya = -k_boya*(h_actual - h_ref) - c_boya*(-w);
+
+    % Limitador de seguridad: evita que la fuerza se dispare si
+    % h_actual se vuelve muy negativo por overshoot numérico
+    Fz_boya = max(min(Fz_boya, 3*k_boya*h_max), -3*k_boya*h_max);
+else
+    Fz_boya = 0.0;  % fuera de la zona de flotación, sin fuerza extra
 end
-% function x_reset = fcn(x, h_suelo)
-% #codegen
-% SUELO VIRTUAL — Simula la superficie del mar
-% Impide que el ekranoplano se hunda por debajo de h_suelo
-% 
-% Fisica simulada:
-%   - Si h <= h_suelo: clavar z_NED en -h_suelo (no en 0)
-%   - Matar SOLO la componente de bajada de w (choque inelastico)
-%   - Conservar w > 0 (rebote hacia arriba, fisicamente correcto)
-%   - No tocar velocidad horizontal u — el ekranoplano sigue navegando
-% 
-% x_reset = x;
-% 
-% Altura actual en metros (z_NED negativo = altura positiva en NED)
-% h_actual = -x(12);
-% 
-% if h_actual <= h_suelo
-%     1. Clavar la posicion vertical exactamente en la superficie
-%        z_NED = -h_suelo, NO en 0.0 (evita bucle de reset)
-%     x_reset(12) = -h_suelo;
-% 
-%     2. Choque inelastico con el mar:
-%        Solo matar w si esta bajando (w > 0 en convencion NED-body)
-%        Si w < 0 (ya rebota hacia arriba), conservar — es fisico
-%     if x(3) > 0.0
-%         x_reset(3) = 0.0;
-%     end
-% end
-% 
-% end
+
+end
 

@@ -204,9 +204,9 @@ FOpid_control/SUBSYSTEM_MODEL/Bus
 Selector2
 FOpid_control/SUBSYSTEM_MODEL/Bus
 Selector3
-FOpid_control/SUBSYSTEM_MODEL/Compare
-To Constant
 FOpid_control/SUBSYSTEM_MODEL/Constant
+FOpid_control/SUBSYSTEM_MODEL/Constant10
+FOpid_control/SUBSYSTEM_MODEL/Constant11
 FOpid_control/SUBSYSTEM_MODEL/Constant2
 FOpid_control/SUBSYSTEM_MODEL/Constant3
 FOpid_control/SUBSYSTEM_MODEL/Constant4
@@ -214,6 +214,7 @@ FOpid_control/SUBSYSTEM_MODEL/Constant5
 FOpid_control/SUBSYSTEM_MODEL/Constant6
 FOpid_control/SUBSYSTEM_MODEL/Constant7
 FOpid_control/SUBSYSTEM_MODEL/Constant8
+FOpid_control/SUBSYSTEM_MODEL/Constant9
 FOpid_control/SUBSYSTEM_MODEL/Demux
 FOpid_control/SUBSYSTEM_MODEL/Demux-MODEL
 FOpid_control/SUBSYSTEM_MODEL/Demux4
@@ -264,6 +265,7 @@ FOpid_control/SUBSYSTEM_MODEL/Goto24
 FOpid_control/SUBSYSTEM_MODEL/Goto25
 FOpid_control/SUBSYSTEM_MODEL/Goto26
 FOpid_control/SUBSYSTEM_MODEL/Goto27
+FOpid_control/SUBSYSTEM_MODEL/Goto28
 FOpid_control/SUBSYSTEM_MODEL/Goto3
 FOpid_control/SUBSYSTEM_MODEL/Goto4
 FOpid_control/SUBSYSTEM_MODEL/Goto5
@@ -291,7 +293,6 @@ Direction Cosine Matrix
 FOpid_control/SUBSYSTEM_MODEL/Scope-Turbulencias
 FOpid_control/SUBSYSTEM_MODEL/Scope4
 FOpid_control/SUBSYSTEM_MODEL/Scope5
-FOpid_control/SUBSYSTEM_MODEL/Selector
 FOpid_control/SUBSYSTEM_MODEL/Sqrt
 FOpid_control/SUBSYSTEM_MODEL/Square
 FOpid_control/SUBSYSTEM_MODEL/Square1

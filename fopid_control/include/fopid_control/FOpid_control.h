@@ -6,9 +6,9 @@
  *
  * Code generation for model "FOpid_control".
  *
- * Model version              : 13.61
+ * Model version              : 13.62
  * Simulink Coder version : 26.1 (R2026a) 20-Nov-2025
- * C++ source code generated on : Wed Aug 19 13:10:53 2026
+ * C++ source code generated on : Tue Sep  1 18:34:30 2026
  *
  * Target selection: ert.tlc
  * Note: GRT includes extra infrastructure and instrumentation for prototyping
@@ -33,6 +33,7 @@ extern "C"
 }
 
 #include <string.h>
+#include "rt_zcfcn.h"
 
 extern "C"
 {
@@ -178,14 +179,14 @@ struct B_MATLABFunctionned_to_PoseSt_T {
   uint8_T stringOut[128];      /* '<Root>/MATLAB Function-ned_to_PoseStamped' */
 };
 
-/* Block signals for system '<S43>/Enabled Subsystem' */
+/* Block signals for system '<S42>/Enabled Subsystem' */
 struct B_EnabledSubsystem_FOpid_cont_T {
-  SL_Bus_std_msgs_Bool In1;            /* '<S86>/In1' */
+  SL_Bus_std_msgs_Bool In1;            /* '<S85>/In1' */
 };
 
-/* Block signals for system '<S44>/Enabled Subsystem' */
+/* Block signals for system '<S43>/Enabled Subsystem' */
 struct B_EnabledSubsystem_FOpid_co_d_T {
-  SL_Bus_std_msgs_Float64 In1;         /* '<S87>/In1' */
+  SL_Bus_std_msgs_Float64 In1;         /* '<S86>/In1' */
 };
 
 /* Block signals (default storage) */
@@ -197,7 +198,6 @@ struct B_FOpid_control_T {
                                       /* '<Root>/Bus Assignment-PoseStaamped' */
   SL_Bus_geometry_msgs_TwistStamped BusAssignmentTwistStamped;
                                       /* '<Root>/Bus Assignment-TwistStamped' */
-  real_T IC[12];                       /* '<S35>/IC' */
   real_T x[12];                        /* '<S35>/Integrator' */
   real_T R[9];
   real_T RotationAnglestoDirectionCo[9];
@@ -206,10 +206,15 @@ struct B_FOpid_control_T {
   char_T b_zeroDelimTopic[26];
   char_T b_zeroDelimTopic_m[25];
   char_T b_zeroDelimTopic_c[25];
+  real_T Memory[3];                    /* '<S35>/Memory' */
+  real_T Memory1[3];                   /* '<S35>/Memory1' */
+  real_T Product[4];                   /* '<S57>/Product' */
+  real_T Switch[3];                    /* '<S35>/Switch' */
+  real_T Switch1[3];                   /* '<S35>/Switch1' */
   real_T wbe_b[3];
   real_T FE1_b[3];
   real_T F_b[3];
-  real_T Product_k[3];                 /* '<S79>/Product' */
+  real_T Product_k[3];                 /* '<S78>/Product' */
   real_T Dtot[3];
   char_T b_zeroDelimTopic_cx[22];
   char_T b_zeroDelimTopic_b[22];
@@ -230,7 +235,7 @@ struct B_FOpid_control_T {
   sJ4ih70VmKcvCeguWN0mNVF deadline_ld;
   sJ4ih70VmKcvCeguWN0mNVF lifespan_d;
   sJ4ih70VmKcvCeguWN0mNVF deadline_dy;
-  real_T Lv[2];                        /* '<S55>/Lv' */
+  real_T Lv[2];                        /* '<S54>/Lv' */
   real_T dv1[2];
   real_T GainZ;                        /* '<Root>/Gain-Z' */
   real_T Switch3;                      /* '<Root>/Switch3' */
@@ -242,11 +247,6 @@ struct B_FOpid_control_T {
   real_T RateLimitertheta_sp;          /* '<Root>/Rate Limiter-theta_sp' */
   real_T Sum1;                         /* '<Root>/Sum1' */
   real_T Sum3;                         /* '<Root>/Sum3' */
-  real_T Memory[3];                    /* '<S35>/Memory' */
-  real_T Memory1[3];                   /* '<S35>/Memory1' */
-  real_T Product[4];                   /* '<S58>/Product' */
-  real_T Switch[3];                    /* '<S35>/Switch' */
-  real_T Switch1[3];                   /* '<S35>/Switch1' */
   real_T Switch2_i;                    /* '<S35>/Switch2' */
   real_T Output;                       /* '<S38>/Output' */
   real_T Switch3_l;                    /* '<S35>/Switch3' */
@@ -263,19 +263,19 @@ struct B_FOpid_control_T {
   real_T Sum2_jg;                      /* '<S28>/Sum2' */
   real_T Sum2_ba;                      /* '<S29>/Sum2' */
   real_T XDOT[40];                     /* '<S35>/MATLAB Function - MODEL' */
-  real_T w[2];                         /* '<S64>/w' */
-  real_T w_a[2];                       /* '<S64>/w ' */
-  real_T LwgV1[2];                     /* '<S64>/Lwg//V 1' */
-  real_T w_g[2];                       /* '<S63>/w' */
-  real_T w_e[2];                       /* '<S63>/w ' */
-  real_T w1[2];                        /* '<S63>/w 1' */
-  real_T w_n[2];                       /* '<S62>/w' */
-  real_T w1_c[2];                      /* '<S62>/w1' */
-  real_T w_d[2];                       /* '<S61>/w' */
-  real_T w_e0[2];                      /* '<S60>/w' */
-  real_T UnaryMinus[2];                /* '<S60>/Unary Minus' */
-  real_T w_o[2];                       /* '<S59>/w' */
-  real_T sigma_w[2];                   /* '<S59>/sigma_w' */
+  real_T w[2];                         /* '<S63>/w' */
+  real_T w_a[2];                       /* '<S63>/w ' */
+  real_T LwgV1[2];                     /* '<S63>/Lwg//V 1' */
+  real_T w_g[2];                       /* '<S62>/w' */
+  real_T w_e[2];                       /* '<S62>/w ' */
+  real_T w1[2];                        /* '<S62>/w 1' */
+  real_T w_n[2];                       /* '<S61>/w' */
+  real_T w1_c[2];                      /* '<S61>/w1' */
+  real_T w_d[2];                       /* '<S60>/w' */
+  real_T w_e0[2];                      /* '<S59>/w' */
+  real_T UnaryMinus[2];                /* '<S59>/Unary Minus' */
+  real_T w_o[2];                       /* '<S58>/w' */
+  real_T sigma_w[2];                   /* '<S58>/sigma_w' */
   real_T u;                           /* '<Root>/MATLAB Function - fopid_yaw' */
   real_T u_b;                   /* '<Root>/MATLAB Function - fopid_velocidad' */
   real_T u_d;                        /* '<Root>/MATLAB Function - fopid_roll' */
@@ -317,9 +317,9 @@ struct B_FOpid_control_T {
   real_T FA_b_idx_2;
   real_T R_tmp;
   real_T R_tmp_l;
-  SL_Bus_std_msgs_Float64 SourceBlock_o2_k;/* '<S45>/SourceBlock' */
-  SL_Bus_std_msgs_Float64 SourceBlock_o2_p;/* '<S44>/SourceBlock' */
+  SL_Bus_std_msgs_Float64 SourceBlock_o2_d;/* '<S36>/SourceBlock' */
   SL_Bus_std_msgs_Float64 SourceBlock_o2;/* '<S37>/SourceBlock' */
+  SL_Bus_std_msgs_Float64 SourceBlock_o2_p;/* '<S43>/SourceBlock' */
   uint32_T bpIndex[2];
   uint32_T currentLen;                 /* '<Root>/MATLAB Function-Odometry1' */
   uint32_T receivedLen;                /* '<Root>/MATLAB Function-Odometry1' */
@@ -333,19 +333,18 @@ struct B_FOpid_control_T {
   uint8_T stringOut[128];              /* '<Root>/MATLAB Function-MODELO' */
   uint8_T stringOut_c[128];            /* '<Root>/MATLAB Function-IMU2' */
   uint8_T stringOut_b[128];            /* '<Root>/MATLAB Function' */
-  boolean_T Compare;                   /* '<S39>/Compare' */
   boolean_T SourceBlock_o1;            /* '<S37>/SourceBlock' */
   boolean_T SourceBlock_o1_o;          /* '<S36>/SourceBlock' */
-  boolean_T SourceBlock_o1_h;          /* '<S46>/SourceBlock' */
-  boolean_T SourceBlock_o1_d;          /* '<S45>/SourceBlock' */
-  boolean_T SourceBlock_o1_c;          /* '<S44>/SourceBlock' */
-  boolean_T SourceBlock_o1_k;          /* '<S43>/SourceBlock' */
+  boolean_T SourceBlock_o1_h;          /* '<S45>/SourceBlock' */
+  boolean_T SourceBlock_o1_d;          /* '<S44>/SourceBlock' */
+  boolean_T SourceBlock_o1_c;          /* '<S43>/SourceBlock' */
+  boolean_T SourceBlock_o1_k;          /* '<S42>/SourceBlock' */
   B_EnabledSubsystem_FOpid_co_d_T EnabledSubsystem_a;/* '<S37>/Enabled Subsystem' */
   B_EnabledSubsystem_FOpid_co_d_T EnabledSubsystem_b;/* '<S36>/Enabled Subsystem' */
-  B_EnabledSubsystem_FOpid_cont_T EnabledSubsystem_pt;/* '<S46>/Enabled Subsystem' */
-  B_EnabledSubsystem_FOpid_co_d_T EnabledSubsystem_p;/* '<S45>/Enabled Subsystem' */
-  B_EnabledSubsystem_FOpid_co_d_T EnabledSubsystem_k;/* '<S44>/Enabled Subsystem' */
-  B_EnabledSubsystem_FOpid_cont_T EnabledSubsystem;/* '<S43>/Enabled Subsystem' */
+  B_EnabledSubsystem_FOpid_cont_T EnabledSubsystem_pt;/* '<S45>/Enabled Subsystem' */
+  B_EnabledSubsystem_FOpid_co_d_T EnabledSubsystem_p;/* '<S44>/Enabled Subsystem' */
+  B_EnabledSubsystem_FOpid_co_d_T EnabledSubsystem_k;/* '<S43>/Enabled Subsystem' */
+  B_EnabledSubsystem_FOpid_cont_T EnabledSubsystem;/* '<S42>/Enabled Subsystem' */
   B_MATLABFunctionned_to_PoseSt_T sf_MATLABFunctionned_to_TwistSt;
                               /* '<Root>/MATLAB Function-ned_to_TwistStamped' */
   B_MATLABFunctionned_to_PoseSt_T sf_MATLABFunctionned_to_PoseS_b;
@@ -361,17 +360,16 @@ struct DW_FOpid_control_T {
   ros_slros2_internal_block_Pub_T obj_i;/* '<S30>/SinkBlock' */
   ros_slros2_internal_block_Sub_T obj_k;/* '<S37>/SourceBlock' */
   ros_slros2_internal_block_Sub_T obj_m;/* '<S36>/SourceBlock' */
-  ros_slros2_internal_block_Sub_T obj_h;/* '<S46>/SourceBlock' */
-  ros_slros2_internal_block_Sub_T obj_p;/* '<S45>/SourceBlock' */
-  ros_slros2_internal_block_Sub_T obj_hy;/* '<S44>/SourceBlock' */
-  ros_slros2_internal_block_Sub_T obj_h4;/* '<S43>/SourceBlock' */
+  ros_slros2_internal_block_Sub_T obj_h;/* '<S45>/SourceBlock' */
+  ros_slros2_internal_block_Sub_T obj_p;/* '<S44>/SourceBlock' */
+  ros_slros2_internal_block_Sub_T obj_hy;/* '<S43>/SourceBlock' */
+  ros_slros2_internal_block_Sub_T obj_h4;/* '<S42>/SourceBlock' */
   real_T UnitDelay3_DSTATE;            /* '<Root>/Unit Delay3' */
   real_T UnitDelay2_DSTATE;            /* '<Root>/Unit Delay2' */
-  real_T Memory2_PreviousInput[12];    /* '<S35>/Memory2' */
   real_T PrevY;                        /* '<Root>/Rate Limiter-theta_sp' */
   real_T Memory_PreviousInput[3];      /* '<S35>/Memory' */
   real_T Memory1_PreviousInput[3];     /* '<S35>/Memory1' */
-  real_T NextOutput[4];                /* '<S58>/White Noise' */
+  real_T NextOutput[4];                /* '<S57>/White Noise' */
   real_T NextOutput_k;                 /* '<S38>/White Noise' */
   real_T e1;                          /* '<Root>/MATLAB Function - fopid_yaw' */
   real_T e2;                          /* '<Root>/MATLAB Function - fopid_yaw' */
@@ -449,10 +447,10 @@ struct DW_FOpid_control_T {
   real_T y7_mc;                    /* '<Root>/MATLAB Function - fopid_altura' */
   real_T u_prev_i;                 /* '<Root>/MATLAB Function - fopid_altura' */
   uint32_T PreLookUpIndexSearchprobofexcee;
-                         /* '<S65>/PreLook-Up Index Search  (prob of exceed)' */
+                         /* '<S64>/PreLook-Up Index Search  (prob of exceed)' */
   uint32_T PreLookUpIndexSearchaltitude_DW;
-                               /* '<S65>/PreLook-Up Index Search  (altitude)' */
-  uint32_T RandSeed[4];                /* '<S58>/White Noise' */
+                               /* '<S64>/PreLook-Up Index Search  (altitude)' */
+  uint32_T RandSeed[4];                /* '<S57>/White Noise' */
   uint32_T RandSeed_a;                 /* '<S38>/White Noise' */
   robotics_slcore_internal_bloc_T obj_c;
                              /* '<Root>/Coordinate Transformation Conversion' */
@@ -467,11 +465,9 @@ struct DW_FOpid_control_T {
   int_T IntegratorSecondOrderLimited_h4;
                                   /* '<S29>/Integrator, Second-Order Limited' */
   int8_T ifHeightMaxlowaltitudeelseifHei;
-  /* '<S54>/if Height < Max low altitude  elseif Height > Min isotropic altitude ' */
-  int8_T ifHeightMaxlowaltitudeelseifH_a;
   /* '<S53>/if Height < Max low altitude  elseif Height > Min isotropic altitude ' */
-  boolean_T IC_FirstOutputTime;        /* '<S35>/IC' */
-  boolean_T Integrator_DWORK1;         /* '<S35>/Integrator' */
+  int8_T ifHeightMaxlowaltitudeelseifH_a;
+  /* '<S52>/if Height < Max low altitude  elseif Height > Min isotropic altitude ' */
   boolean_T IntegratorSecondOrderLimited_DW;
                                   /* '<S25>/Integrator, Second-Order Limited' */
   boolean_T IntegratorSecondOrderLimited__k;
@@ -484,10 +480,10 @@ struct DW_FOpid_control_T {
                                   /* '<S29>/Integrator, Second-Order Limited' */
   boolean_T objisempty;                /* '<S37>/SourceBlock' */
   boolean_T objisempty_g;              /* '<S36>/SourceBlock' */
-  boolean_T objisempty_a;              /* '<S46>/SourceBlock' */
-  boolean_T objisempty_e;              /* '<S45>/SourceBlock' */
-  boolean_T objisempty_l;              /* '<S44>/SourceBlock' */
-  boolean_T objisempty_c;              /* '<S43>/SourceBlock' */
+  boolean_T objisempty_a;              /* '<S45>/SourceBlock' */
+  boolean_T objisempty_e;              /* '<S44>/SourceBlock' */
+  boolean_T objisempty_l;              /* '<S43>/SourceBlock' */
+  boolean_T objisempty_c;              /* '<S42>/SourceBlock' */
   boolean_T objisempty_cr;             /* '<S33>/SinkBlock' */
   boolean_T objisempty_ld;             /* '<S32>/SinkBlock' */
   boolean_T objisempty_ev;             /* '<S31>/SinkBlock' */
@@ -498,12 +494,12 @@ struct DW_FOpid_control_T {
   boolean_T objisempty_f;              /* '<S6>/ServiceCaller' */
   e_robotics_core_internal_vali_T fctrlobj;
                              /* '<Root>/Coordinate Transformation Conversion' */
-  boolean_T Hwgws_MODE;                /* '<S49>/Hwgw(s)' */
-  boolean_T Hvgws_MODE;                /* '<S49>/Hvgw(s)' */
-  boolean_T Hugws_MODE;                /* '<S49>/Hugw(s)' */
-  boolean_T Hrgw_MODE;                 /* '<S48>/Hrgw' */
-  boolean_T Hqgw_MODE;                 /* '<S48>/Hqgw' */
-  boolean_T Hpgw_MODE;                 /* '<S48>/Hpgw' */
+  boolean_T Hwgws_MODE;                /* '<S48>/Hwgw(s)' */
+  boolean_T Hvgws_MODE;                /* '<S48>/Hvgw(s)' */
+  boolean_T Hugws_MODE;                /* '<S48>/Hugw(s)' */
+  boolean_T Hrgw_MODE;                 /* '<S47>/Hrgw' */
+  boolean_T Hqgw_MODE;                 /* '<S47>/Hqgw' */
+  boolean_T Hpgw_MODE;                 /* '<S47>/Hpgw' */
 };
 
 /* Continuous states (default storage) */
@@ -522,14 +518,14 @@ struct X_FOpid_control_T {
                                   /* '<S28>/Integrator, Second-Order Limited' */
   real_T IntegratorSecondOrderLimited__f[2];
                                   /* '<S29>/Integrator, Second-Order Limited' */
-  real_T wg_p1_CSTATE[2];              /* '<S64>/wg_p1' */
-  real_T wg_p2_CSTATE[2];              /* '<S64>/wg_p2' */
-  real_T vg_p1_CSTATE[2];              /* '<S63>/vg_p1' */
-  real_T vgw_p2_CSTATE[2];             /* '<S63>/vgw_p2' */
-  real_T ug_p_CSTATE[2];               /* '<S62>/ug_p' */
-  real_T rgw_p_CSTATE[2];              /* '<S61>/rgw_p' */
-  real_T qgw_p_CSTATE[2];              /* '<S60>/qgw_p' */
-  real_T pgw_p_CSTATE[2];              /* '<S59>/pgw_p' */
+  real_T wg_p1_CSTATE[2];              /* '<S63>/wg_p1' */
+  real_T wg_p2_CSTATE[2];              /* '<S63>/wg_p2' */
+  real_T vg_p1_CSTATE[2];              /* '<S62>/vg_p1' */
+  real_T vgw_p2_CSTATE[2];             /* '<S62>/vgw_p2' */
+  real_T ug_p_CSTATE[2];               /* '<S61>/ug_p' */
+  real_T rgw_p_CSTATE[2];              /* '<S60>/rgw_p' */
+  real_T qgw_p_CSTATE[2];              /* '<S59>/qgw_p' */
+  real_T pgw_p_CSTATE[2];              /* '<S58>/pgw_p' */
 };
 
 /* State derivatives (default storage) */
@@ -548,14 +544,14 @@ struct XDot_FOpid_control_T {
                                   /* '<S28>/Integrator, Second-Order Limited' */
   real_T IntegratorSecondOrderLimited__f[2];
                                   /* '<S29>/Integrator, Second-Order Limited' */
-  real_T wg_p1_CSTATE[2];              /* '<S64>/wg_p1' */
-  real_T wg_p2_CSTATE[2];              /* '<S64>/wg_p2' */
-  real_T vg_p1_CSTATE[2];              /* '<S63>/vg_p1' */
-  real_T vgw_p2_CSTATE[2];             /* '<S63>/vgw_p2' */
-  real_T ug_p_CSTATE[2];               /* '<S62>/ug_p' */
-  real_T rgw_p_CSTATE[2];              /* '<S61>/rgw_p' */
-  real_T qgw_p_CSTATE[2];              /* '<S60>/qgw_p' */
-  real_T pgw_p_CSTATE[2];              /* '<S59>/pgw_p' */
+  real_T wg_p1_CSTATE[2];              /* '<S63>/wg_p1' */
+  real_T wg_p2_CSTATE[2];              /* '<S63>/wg_p2' */
+  real_T vg_p1_CSTATE[2];              /* '<S62>/vg_p1' */
+  real_T vgw_p2_CSTATE[2];             /* '<S62>/vgw_p2' */
+  real_T ug_p_CSTATE[2];               /* '<S61>/ug_p' */
+  real_T rgw_p_CSTATE[2];              /* '<S60>/rgw_p' */
+  real_T qgw_p_CSTATE[2];              /* '<S59>/qgw_p' */
+  real_T pgw_p_CSTATE[2];              /* '<S58>/pgw_p' */
 };
 
 /* State disabled  */
@@ -574,14 +570,14 @@ struct XDis_FOpid_control_T {
                                   /* '<S28>/Integrator, Second-Order Limited' */
   boolean_T IntegratorSecondOrderLimited__f[2];
                                   /* '<S29>/Integrator, Second-Order Limited' */
-  boolean_T wg_p1_CSTATE[2];           /* '<S64>/wg_p1' */
-  boolean_T wg_p2_CSTATE[2];           /* '<S64>/wg_p2' */
-  boolean_T vg_p1_CSTATE[2];           /* '<S63>/vg_p1' */
-  boolean_T vgw_p2_CSTATE[2];          /* '<S63>/vgw_p2' */
-  boolean_T ug_p_CSTATE[2];            /* '<S62>/ug_p' */
-  boolean_T rgw_p_CSTATE[2];           /* '<S61>/rgw_p' */
-  boolean_T qgw_p_CSTATE[2];           /* '<S60>/qgw_p' */
-  boolean_T pgw_p_CSTATE[2];           /* '<S59>/pgw_p' */
+  boolean_T wg_p1_CSTATE[2];           /* '<S63>/wg_p1' */
+  boolean_T wg_p2_CSTATE[2];           /* '<S63>/wg_p2' */
+  boolean_T vg_p1_CSTATE[2];           /* '<S62>/vg_p1' */
+  boolean_T vgw_p2_CSTATE[2];          /* '<S62>/vgw_p2' */
+  boolean_T ug_p_CSTATE[2];            /* '<S61>/ug_p' */
+  boolean_T rgw_p_CSTATE[2];           /* '<S60>/rgw_p' */
+  boolean_T qgw_p_CSTATE[2];           /* '<S59>/qgw_p' */
+  boolean_T pgw_p_CSTATE[2];           /* '<S58>/pgw_p' */
 };
 
 /* Zero-crossing (trigger) state */
@@ -591,33 +587,33 @@ struct PrevZCX_FOpid_control_T {
 
 /* Invariant block signals (default storage) */
 struct ConstB_FOpid_control_T {
-  real_T UnitConversion;               /* '<S47>/Unit Conversion' */
-  real_T UnitConversion_k;             /* '<S57>/Unit Conversion' */
-  real_T sigma_wg;                     /* '<S66>/sigma_wg ' */
-  real_T UnitConversion_n;             /* '<S51>/Unit Conversion' */
-  real_T UnitConversion_c;             /* '<S85>/Unit Conversion' */
+  real_T UnitConversion;               /* '<S46>/Unit Conversion' */
+  real_T UnitConversion_k;             /* '<S56>/Unit Conversion' */
+  real_T sigma_wg;                     /* '<S65>/sigma_wg ' */
+  real_T UnitConversion_n;             /* '<S50>/Unit Conversion' */
+  real_T UnitConversion_c;             /* '<S84>/Unit Conversion' */
   real_T PreLookUpIndexSearchprobofe;
-                         /* '<S65>/PreLook-Up Index Search  (prob of exceed)' */
+                         /* '<S64>/PreLook-Up Index Search  (prob of exceed)' */
   real_T constBlockForifHeightMaxlow;
   real_T constBlockForifHeightMaxl_e;
   real_T constBlockForifHeightMaxl_l;
   real_T constBlockForifHeightMax_eh;
-  real_T Sqrt[4];                      /* '<S58>/Sqrt' */
-  real_T Sqrt1;                        /* '<S58>/Sqrt1' */
-  real_T Divide[4];                    /* '<S58>/Divide' */
+  real_T Sqrt[4];                      /* '<S57>/Sqrt' */
+  real_T Sqrt1;                        /* '<S57>/Sqrt1' */
+  real_T Divide[4];                    /* '<S57>/Divide' */
   real_T motorspeed;                   /* '<S35>/Gain2' */
   real_T Demandlimits;                 /* '<S25>/Demand limits' */
   real_T Demandlimits_c;               /* '<S26>/Demand limits' */
   real_T Demandlimits_n;               /* '<S27>/Demand limits' */
   real_T Demandlimits_g;               /* '<S28>/Demand limits' */
   real_T Demandlimits_p;               /* '<S29>/Demand limits' */
-  real_T Sum;                          /* '<S75>/Sum' */
-  real_T Sum_a;                        /* '<S67>/Sum' */
-  real_T sqrt_a;                       /* '<S64>/sqrt' */
-  real_T w4;                           /* '<S59>/w4' */
-  real_T u16;                          /* '<S59>/u^1//6' */
+  real_T Sum;                          /* '<S74>/Sum' */
+  real_T Sum_a;                        /* '<S66>/Sum' */
+  real_T sqrt_a;                       /* '<S63>/sqrt' */
+  real_T w4;                           /* '<S58>/w4' */
+  real_T u16;                          /* '<S58>/u^1//6' */
   uint32_T PreLookUpIndexSearchprobo_g;
-                         /* '<S65>/PreLook-Up Index Search  (prob of exceed)' */
+                         /* '<S64>/PreLook-Up Index Search  (prob of exceed)' */
 };
 
 #ifndef ODE4_INTG
@@ -633,25 +629,18 @@ struct ODE4_IntgData {
 
 /* Constant parameters (default storage) */
 struct ConstP_FOpid_control_T {
-  /* Pooled Parameter (Expression: x_nom)
-   * Referenced by:
-   *   '<S35>/IC'
-   *   '<S35>/Memory2'
-   */
-  real_T pooled14[12];
-
   /* Expression: h_vec
-   * Referenced by: '<S65>/PreLook-Up Index Search  (altitude)'
+   * Referenced by: '<S64>/PreLook-Up Index Search  (altitude)'
    */
   real_T PreLookUpIndexSearchaltitude_Br[12];
 
   /* Expression: sigma_vec'
-   * Referenced by: '<S65>/Medium//High Altitude Intensity'
+   * Referenced by: '<S64>/Medium//High Altitude Intensity'
    */
   real_T MediumHighAltitudeIntensity_Tab[84];
 
   /* Computed Parameter: MediumHighAltitudeIntensity_max
-   * Referenced by: '<S65>/Medium//High Altitude Intensity'
+   * Referenced by: '<S64>/Medium//High Altitude Intensity'
    */
   uint32_T MediumHighAltitudeIntensity_max[2];
 };
@@ -761,13 +750,13 @@ class FOpid_control
   static void MATLABFunctionned_to_PoseStampe(B_MATLABFunctionned_to_PoseSt_T
     *localB);
 
-  /* private member function(s) for subsystem '<S43>/Enabled Subsystem'*/
+  /* private member function(s) for subsystem '<S42>/Enabled Subsystem'*/
   static void FOpid_con_EnabledSubsystem_Init(B_EnabledSubsystem_FOpid_cont_T
     *localB);
   static void FOpid_control_EnabledSubsystem(boolean_T rtu_Enable, const
     SL_Bus_std_msgs_Bool *rtu_In1, B_EnabledSubsystem_FOpid_cont_T *localB);
 
-  /* private member function(s) for subsystem '<S44>/Enabled Subsystem'*/
+  /* private member function(s) for subsystem '<S43>/Enabled Subsystem'*/
   static void FOpid_c_EnabledSubsystem_g_Init(B_EnabledSubsystem_FOpid_co_d_T
     *localB);
   static void FOpid_contro_EnabledSubsystem_k(boolean_T rtu_Enable, const
@@ -817,6 +806,7 @@ extern volatile boolean_T runModel;
  *
  * Block '<Root>/Display' : Unused code path elimination
  * Block '<S35>/Gain4' : Unused code path elimination
+ * Block '<S35>/IC' : Unused code path elimination
  * Block '<Root>/Gain1' : Eliminated nontunable gain of 1
  * Block '<Root>/Gain5' : Eliminated nontunable gain of 1
  * Block '<Root>/Manual Switch' : Eliminated due to constant selection input
@@ -825,18 +815,18 @@ extern volatile boolean_T runModel;
  * Block '<S27>/wn^2' : Eliminated nontunable gain of 1
  * Block '<S28>/wn^2' : Eliminated nontunable gain of 1
  * Block '<S29>/wn^2' : Eliminated nontunable gain of 1
- * Block '<S40>/Cast' : Eliminate redundant data type conversion
- * Block '<S40>/Cast To Double' : Eliminate redundant data type conversion
- * Block '<S40>/Cast To Double1' : Eliminate redundant data type conversion
- * Block '<S40>/Cast To Double2' : Eliminate redundant data type conversion
- * Block '<S40>/Cast To Double3' : Eliminate redundant data type conversion
- * Block '<S40>/Cast To Double4' : Eliminate redundant data type conversion
- * Block '<S71>/Reshape' : Reshape block reduction
- * Block '<S71>/Reshape1' : Reshape block reduction
- * Block '<S73>/Reshape' : Reshape block reduction
- * Block '<S79>/Reshape' : Reshape block reduction
- * Block '<S79>/Reshape1' : Reshape block reduction
- * Block '<S81>/Reshape' : Reshape block reduction
+ * Block '<S39>/Cast' : Eliminate redundant data type conversion
+ * Block '<S39>/Cast To Double' : Eliminate redundant data type conversion
+ * Block '<S39>/Cast To Double1' : Eliminate redundant data type conversion
+ * Block '<S39>/Cast To Double2' : Eliminate redundant data type conversion
+ * Block '<S39>/Cast To Double3' : Eliminate redundant data type conversion
+ * Block '<S39>/Cast To Double4' : Eliminate redundant data type conversion
+ * Block '<S70>/Reshape' : Reshape block reduction
+ * Block '<S70>/Reshape1' : Reshape block reduction
+ * Block '<S72>/Reshape' : Reshape block reduction
+ * Block '<S78>/Reshape' : Reshape block reduction
+ * Block '<S78>/Reshape1' : Reshape block reduction
+ * Block '<S80>/Reshape' : Reshape block reduction
  * Block '<S34>/Clock' : Unused code path elimination
  * Block '<S34>/Constant' : Unused code path elimination
  * Block '<S34>/Constant1' : Unused code path elimination
@@ -900,58 +890,57 @@ extern volatile boolean_T runModel;
  * '<S36>'  : 'FOpid_control/Subscribe-ALTURA'
  * '<S37>'  : 'FOpid_control/Subscribe-YAW'
  * '<S38>'  : 'FOpid_control/SUBSYSTEM_MODEL/Band-Limited White Noise'
- * '<S39>'  : 'FOpid_control/SUBSYSTEM_MODEL/Compare To Constant'
- * '<S40>'  : 'FOpid_control/SUBSYSTEM_MODEL/Dryden Wind Turbulence Model  (Continuous (-q +r))'
- * '<S41>'  : 'FOpid_control/SUBSYSTEM_MODEL/MATLAB Function - MODEL'
- * '<S42>'  : 'FOpid_control/SUBSYSTEM_MODEL/MATLAB Function-reset'
- * '<S43>'  : 'FOpid_control/SUBSYSTEM_MODEL/Subscribe1_TURBULENCIA1'
- * '<S44>'  : 'FOpid_control/SUBSYSTEM_MODEL/Subscribe_HEAVE'
- * '<S45>'  : 'FOpid_control/SUBSYSTEM_MODEL/Subscribe_RATE'
- * '<S46>'  : 'FOpid_control/SUBSYSTEM_MODEL/Subscribe_TURBULENCIA'
- * '<S47>'  : 'FOpid_control/SUBSYSTEM_MODEL/Dryden Wind Turbulence Model  (Continuous (-q +r))/Angle Conversion'
- * '<S48>'  : 'FOpid_control/SUBSYSTEM_MODEL/Dryden Wind Turbulence Model  (Continuous (-q +r))/Filters on angular rates'
- * '<S49>'  : 'FOpid_control/SUBSYSTEM_MODEL/Dryden Wind Turbulence Model  (Continuous (-q +r))/Filters on velocities'
- * '<S50>'  : 'FOpid_control/SUBSYSTEM_MODEL/Dryden Wind Turbulence Model  (Continuous (-q +r))/Length Conversion'
- * '<S51>'  : 'FOpid_control/SUBSYSTEM_MODEL/Dryden Wind Turbulence Model  (Continuous (-q +r))/Length Conversion1'
- * '<S52>'  : 'FOpid_control/SUBSYSTEM_MODEL/Dryden Wind Turbulence Model  (Continuous (-q +r))/RMS turbulence  intensities'
- * '<S53>'  : 'FOpid_control/SUBSYSTEM_MODEL/Dryden Wind Turbulence Model  (Continuous (-q +r))/Select angular rates'
- * '<S54>'  : 'FOpid_control/SUBSYSTEM_MODEL/Dryden Wind Turbulence Model  (Continuous (-q +r))/Select velocities'
- * '<S55>'  : 'FOpid_control/SUBSYSTEM_MODEL/Dryden Wind Turbulence Model  (Continuous (-q +r))/Turbulence scale lengths'
- * '<S56>'  : 'FOpid_control/SUBSYSTEM_MODEL/Dryden Wind Turbulence Model  (Continuous (-q +r))/Velocity Conversion'
- * '<S57>'  : 'FOpid_control/SUBSYSTEM_MODEL/Dryden Wind Turbulence Model  (Continuous (-q +r))/Velocity Conversion2'
- * '<S58>'  : 'FOpid_control/SUBSYSTEM_MODEL/Dryden Wind Turbulence Model  (Continuous (-q +r))/White Noise'
- * '<S59>'  : 'FOpid_control/SUBSYSTEM_MODEL/Dryden Wind Turbulence Model  (Continuous (-q +r))/Filters on angular rates/Hpgw'
- * '<S60>'  : 'FOpid_control/SUBSYSTEM_MODEL/Dryden Wind Turbulence Model  (Continuous (-q +r))/Filters on angular rates/Hqgw'
- * '<S61>'  : 'FOpid_control/SUBSYSTEM_MODEL/Dryden Wind Turbulence Model  (Continuous (-q +r))/Filters on angular rates/Hrgw'
- * '<S62>'  : 'FOpid_control/SUBSYSTEM_MODEL/Dryden Wind Turbulence Model  (Continuous (-q +r))/Filters on velocities/Hugw(s)'
- * '<S63>'  : 'FOpid_control/SUBSYSTEM_MODEL/Dryden Wind Turbulence Model  (Continuous (-q +r))/Filters on velocities/Hvgw(s)'
- * '<S64>'  : 'FOpid_control/SUBSYSTEM_MODEL/Dryden Wind Turbulence Model  (Continuous (-q +r))/Filters on velocities/Hwgw(s)'
- * '<S65>'  : 'FOpid_control/SUBSYSTEM_MODEL/Dryden Wind Turbulence Model  (Continuous (-q +r))/RMS turbulence  intensities/High Altitude Intensity'
- * '<S66>'  : 'FOpid_control/SUBSYSTEM_MODEL/Dryden Wind Turbulence Model  (Continuous (-q +r))/RMS turbulence  intensities/Low Altitude Intensity'
- * '<S67>'  : 'FOpid_control/SUBSYSTEM_MODEL/Dryden Wind Turbulence Model  (Continuous (-q +r))/Select angular rates/Interpolate  rates'
- * '<S68>'  : 'FOpid_control/SUBSYSTEM_MODEL/Dryden Wind Turbulence Model  (Continuous (-q +r))/Select angular rates/Low altitude  rates'
- * '<S69>'  : 'FOpid_control/SUBSYSTEM_MODEL/Dryden Wind Turbulence Model  (Continuous (-q +r))/Select angular rates/Medium//High  altitude rates'
- * '<S70>'  : 'FOpid_control/SUBSYSTEM_MODEL/Dryden Wind Turbulence Model  (Continuous (-q +r))/Select angular rates/Merge Subsystems'
- * '<S71>'  : 'FOpid_control/SUBSYSTEM_MODEL/Dryden Wind Turbulence Model  (Continuous (-q +r))/Select angular rates/Interpolate  rates/wind to body transformation'
- * '<S72>'  : 'FOpid_control/SUBSYSTEM_MODEL/Dryden Wind Turbulence Model  (Continuous (-q +r))/Select angular rates/Interpolate  rates/wind to body transformation/convert to earth coords'
- * '<S73>'  : 'FOpid_control/SUBSYSTEM_MODEL/Dryden Wind Turbulence Model  (Continuous (-q +r))/Select angular rates/Low altitude  rates/wind to body transformation'
- * '<S74>'  : 'FOpid_control/SUBSYSTEM_MODEL/Dryden Wind Turbulence Model  (Continuous (-q +r))/Select angular rates/Low altitude  rates/wind to body transformation/convert to earth coords'
- * '<S75>'  : 'FOpid_control/SUBSYSTEM_MODEL/Dryden Wind Turbulence Model  (Continuous (-q +r))/Select velocities/Interpolate  velocities'
- * '<S76>'  : 'FOpid_control/SUBSYSTEM_MODEL/Dryden Wind Turbulence Model  (Continuous (-q +r))/Select velocities/Low altitude  velocities'
- * '<S77>'  : 'FOpid_control/SUBSYSTEM_MODEL/Dryden Wind Turbulence Model  (Continuous (-q +r))/Select velocities/Medium//High  altitude velocities'
- * '<S78>'  : 'FOpid_control/SUBSYSTEM_MODEL/Dryden Wind Turbulence Model  (Continuous (-q +r))/Select velocities/Merge Subsystems'
- * '<S79>'  : 'FOpid_control/SUBSYSTEM_MODEL/Dryden Wind Turbulence Model  (Continuous (-q +r))/Select velocities/Interpolate  velocities/wind to body transformation'
- * '<S80>'  : 'FOpid_control/SUBSYSTEM_MODEL/Dryden Wind Turbulence Model  (Continuous (-q +r))/Select velocities/Interpolate  velocities/wind to body transformation/convert to earth coords'
- * '<S81>'  : 'FOpid_control/SUBSYSTEM_MODEL/Dryden Wind Turbulence Model  (Continuous (-q +r))/Select velocities/Low altitude  velocities/wind to body transformation'
- * '<S82>'  : 'FOpid_control/SUBSYSTEM_MODEL/Dryden Wind Turbulence Model  (Continuous (-q +r))/Select velocities/Low altitude  velocities/wind to body transformation/convert to earth coords'
- * '<S83>'  : 'FOpid_control/SUBSYSTEM_MODEL/Dryden Wind Turbulence Model  (Continuous (-q +r))/Turbulence scale lengths/Low altitude scale length'
- * '<S84>'  : 'FOpid_control/SUBSYSTEM_MODEL/Dryden Wind Turbulence Model  (Continuous (-q +r))/Turbulence scale lengths/Medium//High altitude scale length'
- * '<S85>'  : 'FOpid_control/SUBSYSTEM_MODEL/Dryden Wind Turbulence Model  (Continuous (-q +r))/Turbulence scale lengths/Medium//High altitude scale length/Length Conversion'
- * '<S86>'  : 'FOpid_control/SUBSYSTEM_MODEL/Subscribe1_TURBULENCIA1/Enabled Subsystem'
- * '<S87>'  : 'FOpid_control/SUBSYSTEM_MODEL/Subscribe_HEAVE/Enabled Subsystem'
- * '<S88>'  : 'FOpid_control/SUBSYSTEM_MODEL/Subscribe_RATE/Enabled Subsystem'
- * '<S89>'  : 'FOpid_control/SUBSYSTEM_MODEL/Subscribe_TURBULENCIA/Enabled Subsystem'
- * '<S90>'  : 'FOpid_control/Subscribe-ALTURA/Enabled Subsystem'
- * '<S91>'  : 'FOpid_control/Subscribe-YAW/Enabled Subsystem'
+ * '<S39>'  : 'FOpid_control/SUBSYSTEM_MODEL/Dryden Wind Turbulence Model  (Continuous (-q +r))'
+ * '<S40>'  : 'FOpid_control/SUBSYSTEM_MODEL/MATLAB Function - MODEL'
+ * '<S41>'  : 'FOpid_control/SUBSYSTEM_MODEL/MATLAB Function-reset'
+ * '<S42>'  : 'FOpid_control/SUBSYSTEM_MODEL/Subscribe1_TURBULENCIA1'
+ * '<S43>'  : 'FOpid_control/SUBSYSTEM_MODEL/Subscribe_HEAVE'
+ * '<S44>'  : 'FOpid_control/SUBSYSTEM_MODEL/Subscribe_RATE'
+ * '<S45>'  : 'FOpid_control/SUBSYSTEM_MODEL/Subscribe_TURBULENCIA'
+ * '<S46>'  : 'FOpid_control/SUBSYSTEM_MODEL/Dryden Wind Turbulence Model  (Continuous (-q +r))/Angle Conversion'
+ * '<S47>'  : 'FOpid_control/SUBSYSTEM_MODEL/Dryden Wind Turbulence Model  (Continuous (-q +r))/Filters on angular rates'
+ * '<S48>'  : 'FOpid_control/SUBSYSTEM_MODEL/Dryden Wind Turbulence Model  (Continuous (-q +r))/Filters on velocities'
+ * '<S49>'  : 'FOpid_control/SUBSYSTEM_MODEL/Dryden Wind Turbulence Model  (Continuous (-q +r))/Length Conversion'
+ * '<S50>'  : 'FOpid_control/SUBSYSTEM_MODEL/Dryden Wind Turbulence Model  (Continuous (-q +r))/Length Conversion1'
+ * '<S51>'  : 'FOpid_control/SUBSYSTEM_MODEL/Dryden Wind Turbulence Model  (Continuous (-q +r))/RMS turbulence  intensities'
+ * '<S52>'  : 'FOpid_control/SUBSYSTEM_MODEL/Dryden Wind Turbulence Model  (Continuous (-q +r))/Select angular rates'
+ * '<S53>'  : 'FOpid_control/SUBSYSTEM_MODEL/Dryden Wind Turbulence Model  (Continuous (-q +r))/Select velocities'
+ * '<S54>'  : 'FOpid_control/SUBSYSTEM_MODEL/Dryden Wind Turbulence Model  (Continuous (-q +r))/Turbulence scale lengths'
+ * '<S55>'  : 'FOpid_control/SUBSYSTEM_MODEL/Dryden Wind Turbulence Model  (Continuous (-q +r))/Velocity Conversion'
+ * '<S56>'  : 'FOpid_control/SUBSYSTEM_MODEL/Dryden Wind Turbulence Model  (Continuous (-q +r))/Velocity Conversion2'
+ * '<S57>'  : 'FOpid_control/SUBSYSTEM_MODEL/Dryden Wind Turbulence Model  (Continuous (-q +r))/White Noise'
+ * '<S58>'  : 'FOpid_control/SUBSYSTEM_MODEL/Dryden Wind Turbulence Model  (Continuous (-q +r))/Filters on angular rates/Hpgw'
+ * '<S59>'  : 'FOpid_control/SUBSYSTEM_MODEL/Dryden Wind Turbulence Model  (Continuous (-q +r))/Filters on angular rates/Hqgw'
+ * '<S60>'  : 'FOpid_control/SUBSYSTEM_MODEL/Dryden Wind Turbulence Model  (Continuous (-q +r))/Filters on angular rates/Hrgw'
+ * '<S61>'  : 'FOpid_control/SUBSYSTEM_MODEL/Dryden Wind Turbulence Model  (Continuous (-q +r))/Filters on velocities/Hugw(s)'
+ * '<S62>'  : 'FOpid_control/SUBSYSTEM_MODEL/Dryden Wind Turbulence Model  (Continuous (-q +r))/Filters on velocities/Hvgw(s)'
+ * '<S63>'  : 'FOpid_control/SUBSYSTEM_MODEL/Dryden Wind Turbulence Model  (Continuous (-q +r))/Filters on velocities/Hwgw(s)'
+ * '<S64>'  : 'FOpid_control/SUBSYSTEM_MODEL/Dryden Wind Turbulence Model  (Continuous (-q +r))/RMS turbulence  intensities/High Altitude Intensity'
+ * '<S65>'  : 'FOpid_control/SUBSYSTEM_MODEL/Dryden Wind Turbulence Model  (Continuous (-q +r))/RMS turbulence  intensities/Low Altitude Intensity'
+ * '<S66>'  : 'FOpid_control/SUBSYSTEM_MODEL/Dryden Wind Turbulence Model  (Continuous (-q +r))/Select angular rates/Interpolate  rates'
+ * '<S67>'  : 'FOpid_control/SUBSYSTEM_MODEL/Dryden Wind Turbulence Model  (Continuous (-q +r))/Select angular rates/Low altitude  rates'
+ * '<S68>'  : 'FOpid_control/SUBSYSTEM_MODEL/Dryden Wind Turbulence Model  (Continuous (-q +r))/Select angular rates/Medium//High  altitude rates'
+ * '<S69>'  : 'FOpid_control/SUBSYSTEM_MODEL/Dryden Wind Turbulence Model  (Continuous (-q +r))/Select angular rates/Merge Subsystems'
+ * '<S70>'  : 'FOpid_control/SUBSYSTEM_MODEL/Dryden Wind Turbulence Model  (Continuous (-q +r))/Select angular rates/Interpolate  rates/wind to body transformation'
+ * '<S71>'  : 'FOpid_control/SUBSYSTEM_MODEL/Dryden Wind Turbulence Model  (Continuous (-q +r))/Select angular rates/Interpolate  rates/wind to body transformation/convert to earth coords'
+ * '<S72>'  : 'FOpid_control/SUBSYSTEM_MODEL/Dryden Wind Turbulence Model  (Continuous (-q +r))/Select angular rates/Low altitude  rates/wind to body transformation'
+ * '<S73>'  : 'FOpid_control/SUBSYSTEM_MODEL/Dryden Wind Turbulence Model  (Continuous (-q +r))/Select angular rates/Low altitude  rates/wind to body transformation/convert to earth coords'
+ * '<S74>'  : 'FOpid_control/SUBSYSTEM_MODEL/Dryden Wind Turbulence Model  (Continuous (-q +r))/Select velocities/Interpolate  velocities'
+ * '<S75>'  : 'FOpid_control/SUBSYSTEM_MODEL/Dryden Wind Turbulence Model  (Continuous (-q +r))/Select velocities/Low altitude  velocities'
+ * '<S76>'  : 'FOpid_control/SUBSYSTEM_MODEL/Dryden Wind Turbulence Model  (Continuous (-q +r))/Select velocities/Medium//High  altitude velocities'
+ * '<S77>'  : 'FOpid_control/SUBSYSTEM_MODEL/Dryden Wind Turbulence Model  (Continuous (-q +r))/Select velocities/Merge Subsystems'
+ * '<S78>'  : 'FOpid_control/SUBSYSTEM_MODEL/Dryden Wind Turbulence Model  (Continuous (-q +r))/Select velocities/Interpolate  velocities/wind to body transformation'
+ * '<S79>'  : 'FOpid_control/SUBSYSTEM_MODEL/Dryden Wind Turbulence Model  (Continuous (-q +r))/Select velocities/Interpolate  velocities/wind to body transformation/convert to earth coords'
+ * '<S80>'  : 'FOpid_control/SUBSYSTEM_MODEL/Dryden Wind Turbulence Model  (Continuous (-q +r))/Select velocities/Low altitude  velocities/wind to body transformation'
+ * '<S81>'  : 'FOpid_control/SUBSYSTEM_MODEL/Dryden Wind Turbulence Model  (Continuous (-q +r))/Select velocities/Low altitude  velocities/wind to body transformation/convert to earth coords'
+ * '<S82>'  : 'FOpid_control/SUBSYSTEM_MODEL/Dryden Wind Turbulence Model  (Continuous (-q +r))/Turbulence scale lengths/Low altitude scale length'
+ * '<S83>'  : 'FOpid_control/SUBSYSTEM_MODEL/Dryden Wind Turbulence Model  (Continuous (-q +r))/Turbulence scale lengths/Medium//High altitude scale length'
+ * '<S84>'  : 'FOpid_control/SUBSYSTEM_MODEL/Dryden Wind Turbulence Model  (Continuous (-q +r))/Turbulence scale lengths/Medium//High altitude scale length/Length Conversion'
+ * '<S85>'  : 'FOpid_control/SUBSYSTEM_MODEL/Subscribe1_TURBULENCIA1/Enabled Subsystem'
+ * '<S86>'  : 'FOpid_control/SUBSYSTEM_MODEL/Subscribe_HEAVE/Enabled Subsystem'
+ * '<S87>'  : 'FOpid_control/SUBSYSTEM_MODEL/Subscribe_RATE/Enabled Subsystem'
+ * '<S88>'  : 'FOpid_control/SUBSYSTEM_MODEL/Subscribe_TURBULENCIA/Enabled Subsystem'
+ * '<S89>'  : 'FOpid_control/Subscribe-ALTURA/Enabled Subsystem'
+ * '<S90>'  : 'FOpid_control/Subscribe-YAW/Enabled Subsystem'
  */
 #endif                                 /* FOPID_CONTROL_H_ */
