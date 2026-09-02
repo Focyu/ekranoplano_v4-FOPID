@@ -6,9 +6,9 @@
  *
  * Code generation for model "FOpid_control".
  *
- * Model version              : 13.62
+ * Model version              : 13.63
  * Simulink Coder version : 26.1 (R2026a) 20-Nov-2025
- * C++ source code generated on : Tue Sep  1 18:34:30 2026
+ * C++ source code generated on : Wed Sep  2 17:14:11 2026
  *
  * Target selection: ert.tlc
  * Note: GRT includes extra infrastructure and instrumentation for prototyping
@@ -93,6 +93,11 @@ const ConstB_FOpid_control_T FOpid_control_ConstB = {
 
 /* Constant parameters (default storage) */
 const ConstP_FOpid_control_T FOpid_control_ConstP = {
+  /* Expression: x_nom
+   * Referenced by: '<S35>/Memory2'
+   */
+  { 15.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, -1.5 },
+
   /* Expression: h_vec
    * Referenced by: '<S64>/PreLook-Up Index Search  (altitude)'
    */

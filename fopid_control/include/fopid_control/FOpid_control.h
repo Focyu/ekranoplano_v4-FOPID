@@ -6,9 +6,9 @@
  *
  * Code generation for model "FOpid_control".
  *
- * Model version              : 13.62
+ * Model version              : 13.63
  * Simulink Coder version : 26.1 (R2026a) 20-Nov-2025
- * C++ source code generated on : Tue Sep  1 18:34:30 2026
+ * C++ source code generated on : Wed Sep  2 17:14:11 2026
  *
  * Target selection: ert.tlc
  * Note: GRT includes extra infrastructure and instrumentation for prototyping
@@ -262,6 +262,7 @@ struct B_FOpid_control_T {
   real_T Sum2_b;                       /* '<S27>/Sum2' */
   real_T Sum2_jg;                      /* '<S28>/Sum2' */
   real_T Sum2_ba;                      /* '<S29>/Sum2' */
+  real_T Fz_boya;                      /* '<S35>/MATLAB Function-reset' */
   real_T XDOT[40];                     /* '<S35>/MATLAB Function - MODEL' */
   real_T w[2];                         /* '<S63>/w' */
   real_T w_a[2];                       /* '<S63>/w ' */
@@ -369,6 +370,7 @@ struct DW_FOpid_control_T {
   real_T PrevY;                        /* '<Root>/Rate Limiter-theta_sp' */
   real_T Memory_PreviousInput[3];      /* '<S35>/Memory' */
   real_T Memory1_PreviousInput[3];     /* '<S35>/Memory1' */
+  real_T Memory2_PreviousInput[12];    /* '<S35>/Memory2' */
   real_T NextOutput[4];                /* '<S57>/White Noise' */
   real_T NextOutput_k;                 /* '<S38>/White Noise' */
   real_T e1;                          /* '<Root>/MATLAB Function - fopid_yaw' */
@@ -629,6 +631,11 @@ struct ODE4_IntgData {
 
 /* Constant parameters (default storage) */
 struct ConstP_FOpid_control_T {
+  /* Expression: x_nom
+   * Referenced by: '<S35>/Memory2'
+   */
+  real_T Memory2_InitialCondition[12];
+
   /* Expression: h_vec
    * Referenced by: '<S64>/PreLook-Up Index Search  (altitude)'
    */
@@ -684,7 +691,6 @@ struct tag_RTM_FOpid_control_T {
     time_T stepSize0;
     uint32_T clockTick1;
     uint32_T clockTickH1;
-    boolean_T firstInitCondFlag;
     struct {
       uint8_T TID[2];
     } TaskCounters;
@@ -806,7 +812,6 @@ extern volatile boolean_T runModel;
  *
  * Block '<Root>/Display' : Unused code path elimination
  * Block '<S35>/Gain4' : Unused code path elimination
- * Block '<S35>/IC' : Unused code path elimination
  * Block '<Root>/Gain1' : Eliminated nontunable gain of 1
  * Block '<Root>/Gain5' : Eliminated nontunable gain of 1
  * Block '<Root>/Manual Switch' : Eliminated due to constant selection input

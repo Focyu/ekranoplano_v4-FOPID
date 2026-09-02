@@ -26,7 +26,7 @@ x_nom(3)  = 0;              % w [m/s]
 x_nom(8)  = 0;   % theta trimado (~1.5° con iw=1.5°)
 x_nom(10) = 0;              % x_NED
 x_nom(11) = 0;              % y_NED
-x_nom(12) = -0.50;         % z_NED (altura = 0.55 m)
+x_nom(12) = -1.50;         % z_NED (altura = 0.55 m)
 
 % Throttle inicial: calculado para equilibrar drag
 u_nom = zeros(5,1);

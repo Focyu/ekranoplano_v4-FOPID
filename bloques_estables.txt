@@ -237,6 +237,7 @@ FOpid_control/SUBSYSTEM_MODEL/From19
 FOpid_control/SUBSYSTEM_MODEL/From2
 FOpid_control/SUBSYSTEM_MODEL/From20
 FOpid_control/SUBSYSTEM_MODEL/From21
+FOpid_control/SUBSYSTEM_MODEL/From22
 FOpid_control/SUBSYSTEM_MODEL/From3
 FOpid_control/SUBSYSTEM_MODEL/From4
 FOpid_control/SUBSYSTEM_MODEL/From5
@@ -273,7 +274,6 @@ FOpid_control/SUBSYSTEM_MODEL/Goto6
 FOpid_control/SUBSYSTEM_MODEL/Goto7
 FOpid_control/SUBSYSTEM_MODEL/Goto8
 FOpid_control/SUBSYSTEM_MODEL/Goto9
-FOpid_control/SUBSYSTEM_MODEL/IC
 FOpid_control/SUBSYSTEM_MODEL/Integrator
 FOpid_control/SUBSYSTEM_MODEL/Integrator1
 FOpid_control/SUBSYSTEM_MODEL/MATLAB Function - MODEL

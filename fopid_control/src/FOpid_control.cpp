@@ -6,9 +6,9 @@
  *
  * Code generation for model "FOpid_control".
  *
- * Model version              : 13.62
+ * Model version              : 13.63
  * Simulink Coder version : 26.1 (R2026a) 20-Nov-2025
- * C++ source code generated on : Tue Sep  1 18:34:30 2026
+ * C++ source code generated on : Wed Sep  2 17:14:11 2026
  *
  * Target selection: ert.tlc
  * Note: GRT includes extra infrastructure and instrumentation for prototyping
@@ -834,9 +834,6 @@ void FOpid_control::step()
     static const uint8_T b_1[11] = { 101U, 107U, 114U, 97U, 110U, 111U, 112U,
       108U, 97U, 110U, 111U };
 
-    /* BusAssignment: '<Root>/Bus Assignment-IMU' */
-    memset(&FOpid_control_B.BusAssignmentIMU, 0, sizeof(SL_Bus_sensor_msgs_Imu));
-
     /* Integrator: '<S35>/Integrator' */
     if (rtsiIsModeUpdateTimeStep(&(&FOpid_control_M)->solverInfo)) {
       zcEvent = rt_ZCFcn(ANY_ZERO_CROSSING,
@@ -848,11 +845,6 @@ void FOpid_control::step()
         for (i = 0; i < 12; i++) {
           FOpid_control_X.Integrator_CSTATE[i] = -1.0;
         }
-
-        rtsiSetBlockStateForSolverChangedAtMajorStep(&(&FOpid_control_M)
-          ->solverInfo, true);
-        rtsiSetContTimeOutputInconsistentWithStateAtMajorStep(&(&FOpid_control_M)
-          ->solverInfo, true);
       }
     }
 
@@ -924,6 +916,9 @@ void FOpid_control::step()
     /* End of Outputs for SubSystem: '<S47>/Hpgw' */
     /* End of Outputs for SubSystem: '<S47>/Hqgw' */
     /* End of Outputs for SubSystem: '<S47>/Hrgw' */
+
+    /* BusAssignment: '<Root>/Bus Assignment-IMU' */
+    memset(&FOpid_control_B.BusAssignmentIMU, 0, sizeof(SL_Bus_sensor_msgs_Imu));
     if (tmp_0) {
       /* MATLAB Function: '<Root>/MATLAB Function-IMU2' */
       memset(&FOpid_control_B.stringOut_c[0], 0, sizeof(uint8_T) << 7U);
@@ -1624,6 +1619,29 @@ void FOpid_control::step()
 
       /* Memory: '<S35>/Memory1' */
       FOpid_control_B.Memory1[2] = FOpid_control_DW.Memory1_PreviousInput[2];
+
+      /* MATLAB Function: '<S35>/MATLAB Function-reset' incorporates:
+       *  Constant: '<S35>/Constant10'
+       *  Constant: '<S35>/Constant11'
+       *  Constant: '<S35>/Constant9'
+       *  Memory: '<S35>/Memory2'
+       */
+      if (-FOpid_control_DW.Memory2_PreviousInput[11] <= 0.5) {
+        FOpid_control_B.Fz_boya = (-FOpid_control_DW.Memory2_PreviousInput[11] -
+          0.25) * -588.6 - 41.59908652843233 *
+          -FOpid_control_DW.Memory2_PreviousInput[2];
+        if (!(FOpid_control_B.Fz_boya <= 882.9000000000001)) {
+          FOpid_control_B.Fz_boya = 882.9000000000001;
+        }
+
+        if (!(FOpid_control_B.Fz_boya >= -882.9000000000001)) {
+          FOpid_control_B.Fz_boya = -882.9000000000001;
+        }
+      } else {
+        FOpid_control_B.Fz_boya = 0.0;
+      }
+
+      /* End of MATLAB Function: '<S35>/MATLAB Function-reset' */
     }
 
     /* MATLAB Function: '<S35>/MATLAB Function - MODEL' incorporates:
@@ -1834,13 +1852,14 @@ void FOpid_control::step()
     FOpid_control_B.FE_b = FOpid_control_B.FE1_b[0] +
       FOpid_control_B.FE2_b_idx_0;
     FOpid_control_B.FE_b_idx_0 = FOpid_control_B.FE_b;
-    FOpid_control_B.F_b[0] = (FOpid_control_B.q_aero + FOpid_control_B.FE_b) +
-      FOpid_control_B.FA_b_idx_0;
-    FOpid_control_B.F_b[1] = FOpid_control_B.dv1[0] + FOpid_control_B.FA_b_idx_1;
+    FOpid_control_B.F_b[0] = ((FOpid_control_B.q_aero + FOpid_control_B.FE_b) +
+      FOpid_control_B.FA_b_idx_0) + FOpid_control_B.Fz_boya;
+    FOpid_control_B.F_b[1] = (FOpid_control_B.dv1[0] +
+      FOpid_control_B.FA_b_idx_1) + FOpid_control_B.Fz_boya;
     FOpid_control_B.FE_b = FOpid_control_B.FE1_b[2] +
       FOpid_control_B.FE2_b_idx_2;
-    FOpid_control_B.F_b[2] = (FOpid_control_B.dv1[1] + FOpid_control_B.FE_b) +
-      FOpid_control_B.FA_b_idx_2;
+    FOpid_control_B.F_b[2] = ((FOpid_control_B.dv1[1] + FOpid_control_B.FE_b) +
+      FOpid_control_B.FA_b_idx_2) + FOpid_control_B.Fz_boya;
     FOpid_control_B.L_dec = 0.6977 * FOpid_control_B.Q * 0.0649;
     FOpid_control_B.Mcg_b_idx_0 = (0.0834 * FOpid_control_B.FE1_b[2] + -0.0834 *
       FOpid_control_B.FE2_b_idx_2) + FOpid_control_B.L_dec * FOpid_control_B.Cl;
@@ -2045,7 +2064,9 @@ void FOpid_control::step()
       tmp_1 = _mm_mul_pd(_mm_loadu_pd(&FOpid_control_ConstB.Divide[0]),
                          _mm_loadu_pd(&FOpid_control_DW.NextOutput[0]));
 
-      /* Product: '<S57>/Product' */
+      /* RandomNumber: '<S57>/White Noise' incorporates:
+       *  Product: '<S57>/Product'
+       */
       _mm_storeu_pd(&FOpid_control_B.Product[0], tmp_1);
 
       /* Product: '<S57>/Divide' incorporates:
@@ -2055,7 +2076,9 @@ void FOpid_control::step()
       tmp_1 = _mm_mul_pd(_mm_loadu_pd(&FOpid_control_ConstB.Divide[2]),
                          _mm_loadu_pd(&FOpid_control_DW.NextOutput[2]));
 
-      /* Product: '<S57>/Product' */
+      /* RandomNumber: '<S57>/White Noise' incorporates:
+       *  Product: '<S57>/Product'
+       */
       _mm_storeu_pd(&FOpid_control_B.Product[2], tmp_1);
 
       /* Outputs for Enabled SubSystem: '<S48>/Hugw(s)' incorporates:
@@ -3922,7 +3945,7 @@ void FOpid_control::step()
   }
 
   if (rtmIsMajorTimeStep((&FOpid_control_M))) {
-    int32_T uMode;
+    int32_T i;
     if (rtmIsMajorTimeStep((&FOpid_control_M)) &&
         (&FOpid_control_M)->Timing.TaskCounters.TID[1] == 0) {
       /* Update for UnitDelay: '<Root>/Unit Delay3' */
@@ -3961,6 +3984,10 @@ void FOpid_control::step()
        */
       FOpid_control_DW.Memory1_PreviousInput[2] = FOpid_control_B.SumOLA1[2];
 
+      /* Update for Memory: '<S35>/Memory2' */
+      memcpy(&FOpid_control_DW.Memory2_PreviousInput[0], &FOpid_control_B.x[0],
+             12U * sizeof(real_T));
+
       /* Update for RandomNumber: '<S57>/White Noise' */
       FOpid_control_DW.NextOutput[0] = rt_nrand_Upu32_Yd_f_pw_snf
         (&FOpid_control_DW.RandSeed[0]);
@@ -3977,18 +4004,18 @@ void FOpid_control::step()
     }
 
     /* Update for SecondOrderIntegrator: '<S25>/Integrator, Second-Order Limited' */
-    uMode = FOpid_control_DW.IntegratorSecondOrderLimited_MO;
+    i = FOpid_control_DW.IntegratorSecondOrderLimited_MO;
     if ((((FOpid_control_DW.IntegratorSecondOrderLimited_MO == 1) ||
           (FOpid_control_DW.IntegratorSecondOrderLimited_MO == 3)) &&
          (FOpid_control_B.Sum2_j > 0.0)) ||
         (((FOpid_control_DW.IntegratorSecondOrderLimited_MO == 2) ||
           (FOpid_control_DW.IntegratorSecondOrderLimited_MO == 4)) &&
          (FOpid_control_B.Sum2_j < 0.0))) {
-      uMode = 0;
+      i = 0;
     }
 
-    if (FOpid_control_DW.IntegratorSecondOrderLimited_MO != uMode) {
-      FOpid_control_DW.IntegratorSecondOrderLimited_MO = uMode;
+    if (FOpid_control_DW.IntegratorSecondOrderLimited_MO != i) {
+      FOpid_control_DW.IntegratorSecondOrderLimited_MO = i;
       rtsiSetBlockStateForSolverChangedAtMajorStep(&(&FOpid_control_M)
         ->solverInfo, true);
     }
@@ -3996,18 +4023,18 @@ void FOpid_control::step()
     /* End of Update for SecondOrderIntegrator: '<S25>/Integrator, Second-Order Limited' */
 
     /* Update for SecondOrderIntegrator: '<S26>/Integrator, Second-Order Limited' */
-    uMode = FOpid_control_DW.IntegratorSecondOrderLimited__h;
+    i = FOpid_control_DW.IntegratorSecondOrderLimited__h;
     if ((((FOpid_control_DW.IntegratorSecondOrderLimited__h == 1) ||
           (FOpid_control_DW.IntegratorSecondOrderLimited__h == 3)) &&
          (FOpid_control_B.Sum2_f > 0.0)) ||
         (((FOpid_control_DW.IntegratorSecondOrderLimited__h == 2) ||
           (FOpid_control_DW.IntegratorSecondOrderLimited__h == 4)) &&
          (FOpid_control_B.Sum2_f < 0.0))) {
-      uMode = 0;
+      i = 0;
     }
 
-    if (FOpid_control_DW.IntegratorSecondOrderLimited__h != uMode) {
-      FOpid_control_DW.IntegratorSecondOrderLimited__h = uMode;
+    if (FOpid_control_DW.IntegratorSecondOrderLimited__h != i) {
+      FOpid_control_DW.IntegratorSecondOrderLimited__h = i;
       rtsiSetBlockStateForSolverChangedAtMajorStep(&(&FOpid_control_M)
         ->solverInfo, true);
     }
@@ -4015,18 +4042,18 @@ void FOpid_control::step()
     /* End of Update for SecondOrderIntegrator: '<S26>/Integrator, Second-Order Limited' */
 
     /* Update for SecondOrderIntegrator: '<S27>/Integrator, Second-Order Limited' */
-    uMode = FOpid_control_DW.IntegratorSecondOrderLimited__b;
+    i = FOpid_control_DW.IntegratorSecondOrderLimited__b;
     if ((((FOpid_control_DW.IntegratorSecondOrderLimited__b == 1) ||
           (FOpid_control_DW.IntegratorSecondOrderLimited__b == 3)) &&
          (FOpid_control_B.Sum2_b > 0.0)) ||
         (((FOpid_control_DW.IntegratorSecondOrderLimited__b == 2) ||
           (FOpid_control_DW.IntegratorSecondOrderLimited__b == 4)) &&
          (FOpid_control_B.Sum2_b < 0.0))) {
-      uMode = 0;
+      i = 0;
     }
 
-    if (FOpid_control_DW.IntegratorSecondOrderLimited__b != uMode) {
-      FOpid_control_DW.IntegratorSecondOrderLimited__b = uMode;
+    if (FOpid_control_DW.IntegratorSecondOrderLimited__b != i) {
+      FOpid_control_DW.IntegratorSecondOrderLimited__b = i;
       rtsiSetBlockStateForSolverChangedAtMajorStep(&(&FOpid_control_M)
         ->solverInfo, true);
     }
@@ -4034,18 +4061,18 @@ void FOpid_control::step()
     /* End of Update for SecondOrderIntegrator: '<S27>/Integrator, Second-Order Limited' */
 
     /* Update for SecondOrderIntegrator: '<S28>/Integrator, Second-Order Limited' */
-    uMode = FOpid_control_DW.IntegratorSecondOrderLimited__o;
+    i = FOpid_control_DW.IntegratorSecondOrderLimited__o;
     if ((((FOpid_control_DW.IntegratorSecondOrderLimited__o == 1) ||
           (FOpid_control_DW.IntegratorSecondOrderLimited__o == 3)) &&
          (FOpid_control_B.Sum2_jg > 0.0)) ||
         (((FOpid_control_DW.IntegratorSecondOrderLimited__o == 2) ||
           (FOpid_control_DW.IntegratorSecondOrderLimited__o == 4)) &&
          (FOpid_control_B.Sum2_jg < 0.0))) {
-      uMode = 0;
+      i = 0;
     }
 
-    if (FOpid_control_DW.IntegratorSecondOrderLimited__o != uMode) {
-      FOpid_control_DW.IntegratorSecondOrderLimited__o = uMode;
+    if (FOpid_control_DW.IntegratorSecondOrderLimited__o != i) {
+      FOpid_control_DW.IntegratorSecondOrderLimited__o = i;
       rtsiSetBlockStateForSolverChangedAtMajorStep(&(&FOpid_control_M)
         ->solverInfo, true);
     }
@@ -4053,35 +4080,23 @@ void FOpid_control::step()
     /* End of Update for SecondOrderIntegrator: '<S28>/Integrator, Second-Order Limited' */
 
     /* Update for SecondOrderIntegrator: '<S29>/Integrator, Second-Order Limited' */
-    uMode = FOpid_control_DW.IntegratorSecondOrderLimited_h4;
+    i = FOpid_control_DW.IntegratorSecondOrderLimited_h4;
     if ((((FOpid_control_DW.IntegratorSecondOrderLimited_h4 == 1) ||
           (FOpid_control_DW.IntegratorSecondOrderLimited_h4 == 3)) &&
          (FOpid_control_B.Sum2_ba > 0.0)) ||
         (((FOpid_control_DW.IntegratorSecondOrderLimited_h4 == 2) ||
           (FOpid_control_DW.IntegratorSecondOrderLimited_h4 == 4)) &&
          (FOpid_control_B.Sum2_ba < 0.0))) {
-      uMode = 0;
+      i = 0;
     }
 
-    if (FOpid_control_DW.IntegratorSecondOrderLimited_h4 != uMode) {
-      FOpid_control_DW.IntegratorSecondOrderLimited_h4 = uMode;
+    if (FOpid_control_DW.IntegratorSecondOrderLimited_h4 != i) {
+      FOpid_control_DW.IntegratorSecondOrderLimited_h4 = i;
       rtsiSetBlockStateForSolverChangedAtMajorStep(&(&FOpid_control_M)
         ->solverInfo, true);
     }
 
     /* End of Update for SecondOrderIntegrator: '<S29>/Integrator, Second-Order Limited' */
-
-    /* ContTimeOutputInconsistentWithStateAtMajorOutputFlag is set, need to run a minor output */
-    if (rtmIsMajorTimeStep((&FOpid_control_M))) {
-      if (rtsiGetContTimeOutputInconsistentWithStateAtMajorStep
-          (&(&FOpid_control_M)->solverInfo)) {
-        rtsiSetSimTimeStep(&(&FOpid_control_M)->solverInfo,MINOR_TIME_STEP);
-        rtsiSetContTimeOutputInconsistentWithStateAtMajorStep(&(&FOpid_control_M)
-          ->solverInfo, false);
-        FOpid_control::step();
-        rtsiSetSimTimeStep(&(&FOpid_control_M)->solverInfo, MAJOR_TIME_STEP);
-      }
-    }
   }                                    /* end MajorTimeStep */
 
   if (rtmIsMajorTimeStep((&FOpid_control_M))) {
@@ -4499,7 +4514,6 @@ void FOpid_control::initialize()
   rtsiSetSolverName(&(&FOpid_control_M)->solverInfo,"ode4");
   rtmSetTPtr((&FOpid_control_M), &(&FOpid_control_M)->Timing.tArray[0]);
   (&FOpid_control_M)->Timing.stepSize0 = 0.01;
-  rtmSetFirstInitCond((&FOpid_control_M), 1);
 
   {
     rmw_qos_profile_t qos_profile;
@@ -4670,20 +4684,16 @@ void FOpid_control::initialize()
   {
     int32_T i;
 
-    /* InitializeConditions for Integrator: '<S35>/Integrator' */
-    for (i = 0; i < 12; i++) {
-      FOpid_control_X.Integrator_CSTATE[i] = -1.0;
-    }
-
-    if (!rtmIsFirstInitCond((&FOpid_control_M))) {
-      rtsiSetContTimeOutputInconsistentWithStateAtMajorStep(&(&FOpid_control_M
-        )->solverInfo, true);
-    }
-
-    /* End of InitializeConditions for Integrator: '<S35>/Integrator' */
-
     /* InitializeConditions for UnitDelay: '<Root>/Unit Delay3' */
     FOpid_control_DW.UnitDelay3_DSTATE = 0.8;
+    for (i = 0; i < 12; i++) {
+      /* InitializeConditions for Integrator: '<S35>/Integrator' */
+      FOpid_control_X.Integrator_CSTATE[i] = -1.0;
+
+      /* InitializeConditions for Memory: '<S35>/Memory2' */
+      FOpid_control_DW.Memory2_PreviousInput[i] =
+        FOpid_control_ConstP.Memory2_InitialCondition[i];
+    }
 
     /* InitializeConditions for RandomNumber: '<S57>/White Noise' */
     FOpid_control_DW.RandSeed[0] = 1529675776U;
@@ -4847,11 +4857,6 @@ void FOpid_control::initialize()
     FOpid_c_EnabledSubsystem_g_Init(&FOpid_control_B.EnabledSubsystem_p);
 
     /* End of SystemInitialize for SubSystem: '<S44>/Enabled Subsystem' */
-
-    /* set "at time zero" to false */
-    if (rtmIsFirstInitCond((&FOpid_control_M))) {
-      rtmSetFirstInitCond((&FOpid_control_M), 0);
-    }
   }
 }
 

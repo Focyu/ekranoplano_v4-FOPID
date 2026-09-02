@@ -147,6 +147,7 @@
 [FROM] FOpid_control/SUBSYSTEM_MODEL/From2  <-  Tag: WAV
 [FROM] FOpid_control/SUBSYSTEM_MODEL/From20  <-  Tag: STATE_TURBU
 [FROM] FOpid_control/SUBSYSTEM_MODEL/From21  <-  Tag: v_wind
+[FROM] FOpid_control/SUBSYSTEM_MODEL/From22  <-  Tag: Fz_boya
 [FROM] FOpid_control/SUBSYSTEM_MODEL/From3  <-  Tag: theta_interno
 [FROM] FOpid_control/SUBSYSTEM_MODEL/From4  <-  Tag: psi_interno
 [FROM] FOpid_control/SUBSYSTEM_MODEL/From5  <-  Tag: STATE_TURBU1

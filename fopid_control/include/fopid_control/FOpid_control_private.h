@@ -6,9 +6,9 @@
  *
  * Code generation for model "FOpid_control".
  *
- * Model version              : 13.62
+ * Model version              : 13.63
  * Simulink Coder version : 26.1 (R2026a) 20-Nov-2025
- * C++ source code generated on : Tue Sep  1 18:34:30 2026
+ * C++ source code generated on : Wed Sep  2 17:14:11 2026
  *
  * Target selection: ert.tlc
  * Note: GRT includes extra infrastructure and instrumentation for prototyping
@@ -26,14 +26,6 @@
 #include "FOpid_control.h"
 
 /* Private macros used by the generated code to access rtModel */
-#ifndef rtmSetFirstInitCond
-#define rtmSetFirstInitCond(rtm, val)  ((rtm)->Timing.firstInitCondFlag = (val))
-#endif
-
-#ifndef rtmIsFirstInitCond
-#define rtmIsFirstInitCond(rtm)        ((rtm)->Timing.firstInitCondFlag)
-#endif
-
 #ifndef rtmIsMajorTimeStep
 #define rtmIsMajorTimeStep(rtm)        (((rtm)->Timing.simTimeStep) == MAJOR_TIME_STEP)
 #endif
