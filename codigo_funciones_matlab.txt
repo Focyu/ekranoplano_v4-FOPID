@@ -1,11 +1,11 @@
 ==========================================================
 REPORTE DE CÓDIGO INTERNO - MATLAB FUNCTIONS
-Modelo: FOpid_control
-Fecha: 02-Sep-2026 17:14:41
+Modelo: FOpid_control_FIN
+Fecha: 08-Sep-2026 17:02:33
 ==========================================================
 
 ----------------------------------------------------------
-BLOQUE [1]: FOpid_control/MATLAB Function
+BLOQUE [1]: FOpid_control_FIN/MATLAB Function
 ----------------------------------------------------------
 function [stringOut, lengthOut] = stringToROS()
     
@@ -23,111 +23,9 @@ end
 
 
 ----------------------------------------------------------
-BLOQUE [2]: FOpid_control/MATLAB Function - fopid_altura
+BLOQUE [2]: FOpid_control_FIN/MATLAB Function - fopid_pitch
 ----------------------------------------------------------
-function u= fopid_altura_mod(e, y, kp, ki, kd)
-
-%#codegen
-% FOPI^lambda D discreto - ALTURA
-% e : error de altura
-% y : medicion de altura
-% u : referencia de pitch (theta_sp)
-
-mu     = 0.9;
-lambda = 0.7;
-Ts     = 0.01;
-wc     = 1.0;
-u_min  = -0.2;
-u_max  =  0.2;
-
-alpha = wc / tan(wc * Ts / 2);
-
-KP = kp;
-KD = kd * (alpha^mu);
-KI = ki * (alpha^(-lambda));
-
-f0 = 1;
-f1 = -2*mu;
-f2 = 2*mu^2;
-f3 = (-4*mu^3)/3 - (2*mu)/3;
-f4 = (2*mu^4)/3 + (4*mu^2)/3;
-f5 = (-4*mu^5)/15 - (4*mu^3)/3 - (2*mu)/5;
-
-lm = 1 - lambda;
-g0 = 1;
-g1 = -2*lm;
-g2 = 2*lm^2;
-g3 = (-4*lm^3)/3 - (2*lm)/3;
-g4 = (2*lm^4)/3 + (4*lm^2)/3;
-g5 = (-4*lm^5)/15 - (4*lm^3)/3 - (2*lm)/5;
-
-% Actualizacion de historias
-
-
-persistent e1 e2 e3 e4 e5 e6 e7
-persistent y1 y2 y3 y4 y5 y6 y7
-persistent sumI u_prev u_prev2
-% 
-if isempty(e1)
-    e1 = 0; e2 = 0; e3 = 0; e4 = 0; e5 = 0; e6 = 0; e7 = 0;
-    y1 = 0; y2 = 0; y3 = 0; y4 = 0; y5 = 0; y6 = 0; y7 = 0;
-    sumI = 0;
-    u_prev = 0;
-    u_prev2 = 0;
-end
-
-% 
-% 
-% e7 = e6; e6 = e5; e5 = e4; e4 = e3; e3 = e2; e2 = e1; e1 = e;
-% y7 = y6; y6 = y5; y5 = y4; y4 = y3; y3 = y2; y2 = y1; y1 = y;
-
-% Derivada fraccional sobre la medicion
-sumD = KD * ( ...
-    f0*(y  - 2*y1 + y2) ...
-    + f1*(y1 - 2*y2 + y3) ...
-    + f2*(y2 - 2*y3 + y4) ...
-    + f3*(y3 - 2*y4 + y5) ...
-    + f4*(y4 - 2*y5 + y6) ...
-    + f5*(y5 - 2*y6 + y7) );
-
-
-
-% Integral fraccional sobre el error
-sumI = KI * ( ...
-    g0*(e  + 2*e1 + e2) ...
-    + g1*(e1 + 2*e2 + e3) ...
-    + g2*(e2 + 2*e3 + e4) ...
-    + g3*(e3 + 2*e4 + e5) ...
-    + g4*(e4 + 2*e5 + e6) ...
-    + g5*(e5 + 2*e6 + e7) );
-
-
-
-% Salida final
-% u_raw = u_prev2 + KP*(e - e2) + sumD + sumI;
-% u = max(min(u_raw, u_max), u_min);
-% 
-% 
-% u_prev2 = u_prev;
-% u_prev  = u;
-u_raw = u_prev + KP*(e - e1) + sumD + sumI;
-u = max(min(u_raw, u_max), u_min);
-
-u_prev2 = u_prev;
-u_prev  = u;
-
-e7 = e6; e6 = e5; e5 = e4; e4 = e3; e3 = e2; e2 = e1; e1 = e;
-y7 = y6; y6 = y5; y5 = y4; y4 = y3; y3 = y2; y2 = y1; y1 = y;
-
-end
-
-
-
-
-----------------------------------------------------------
-BLOQUE [3]: FOpid_control/MATLAB Function - fopid_pitch
-----------------------------------------------------------
-function u = fopid_pitch_mod(e, y, kp, ki, kd)
+function u = fopid_pitch(e, y, kp, ki, kd)
 %#codegen
 % FOPI^lambda D discreto - PITCH
 % e : error de pitch
@@ -663,100 +561,7 @@ end
 % % % % % end
 
 ----------------------------------------------------------
-BLOQUE [4]: FOpid_control/MATLAB Function - fopid_roll
-----------------------------------------------------------
-function u= fopid_roll_mod(e, y, kp, ki, kd)
-
-%#codegen
-% FOPI^lambda D discreto - ALTURA
-% e : error de altura
-% y : medicion de altura
-% u : referencia de pitch (theta_sp)
-
-mu     = 0.9;
-lambda = 0.7;
-Ts     = 0.01;
-wc     = 1.0;
-u_min  = -0.1;
-u_max  =  0.1;
-
-alpha = wc / tan(wc * Ts / 2);
-
-KP = kp;
-KD = kd * (alpha^mu);
-KI = ki * (alpha^(-lambda));
-
-f0 = 1;
-f1 = -2*mu;
-f2 = 2*mu^2;
-f3 = (-4*mu^3)/3 - (2*mu)/3;
-f4 = (2*mu^4)/3 + (4*mu^2)/3;
-f5 = (-4*mu^5)/15 - (4*mu^3)/3 - (2*mu)/5;
-
-lm = 1 - lambda;
-g0 = 1;
-g1 = -2*lm;
-g2 = 2*lm^2;
-g3 = (-4*lm^3)/3 - (2*lm)/3;
-g4 = (2*lm^4)/3 + (4*lm^2)/3;
-g5 = (-4*lm^5)/15 - (4*lm^3)/3 - (2*lm)/5;
-
-% Actualizacion de historias
-
-
-persistent e1 e2 e3 e4 e5 e6 e7
-persistent y1 y2 y3 y4 y5 y6 y7
-persistent sumI u_prev u_prev2
-% 
-if isempty(e1)
-    e1 = 0; e2 = 0; e3 = 0; e4 = 0; e5 = 0; e6 = 0; e7 = 0;
-    y1 = 0; y2 = 0; y3 = 0; y4 = 0; y5 = 0; y6 = 0; y7 = 0;
-    sumI = 0;
-    u_prev = 0;
-    u_prev2 = 0;
-end
-
-% 
-% 
-% e7 = e6; e6 = e5; e5 = e4; e4 = e3; e3 = e2; e2 = e1; e1 = e;
-% y7 = y6; y6 = y5; y5 = y4; y4 = y3; y3 = y2; y2 = y1; y1 = y;
-
-% Derivada fraccional sobre la medicion
-sumD = KD * ( ...
-    f0*(y  - 2*y1 + y2) ...
-    + f1*(y1 - 2*y2 + y3) ...
-    + f2*(y2 - 2*y3 + y4) ...
-    + f3*(y3 - 2*y4 + y5) ...
-    + f4*(y4 - 2*y5 + y6) ...
-    + f5*(y5 - 2*y6 + y7) );
-
-
-
-% Integral fraccional sobre el error
-sumI = KI * ( ...
-    g0*(e  + 2*e1 + e2) ...
-    + g1*(e1 + 2*e2 + e3) ...
-    + g2*(e2 + 2*e3 + e4) ...
-    + g3*(e3 + 2*e4 + e5) ...
-    + g4*(e4 + 2*e5 + e6) ...
-    + g5*(e5 + 2*e6 + e7) );
-
-% Salida final
-
-u_raw = u_prev + KP*(e - e1) + sumD + sumI;
-u = max(min(u_raw, u_max), u_min);
-
-u_prev2 = u_prev;
-u_prev  = u;
-
-e7 = e6; e6 = e5; e5 = e4; e4 = e3; e3 = e2; e2 = e1; e1 = e;
-y7 = y6; y6 = y5; y5 = y4; y4 = y3; y3 = y2; y2 = y1; y1 = y;
-
-end
-
-
-----------------------------------------------------------
-BLOQUE [5]: FOpid_control/MATLAB Function - fopid_velocidad
+BLOQUE [3]: FOpid_control_FIN/MATLAB Function - fopid_velocidad
 ----------------------------------------------------------
 function u= fopid_vel_mod(e, y, kp, ki, kd)
 
@@ -1033,100 +838,7 @@ end
 % % % end
 
 ----------------------------------------------------------
-BLOQUE [6]: FOpid_control/MATLAB Function - fopid_yaw
-----------------------------------------------------------
-function u= fopid_yaw_mod(e, y, kp, ki, kd)
-
-%#codegen
-% FOPI^lambda D discreto - ALTURA
-% e : error de altura
-% y : medicion de altura
-% u : referencia de pitch (theta_sp)
-
-mu     = 0.5;
-lambda = 0.7;
-Ts     = 0.01;
-wc     = 1.0;
-u_min  = -0.09;
-u_max  =  0.09;
-
-alpha = wc / tan(wc * Ts / 2);
-
-KP = kp;
-KD = kd * (alpha^mu);
-KI = ki * (alpha^(-lambda));
-
-f0 = 1;
-f1 = -2*mu;
-f2 = 2*mu^2;
-f3 = (-4*mu^3)/3 - (2*mu)/3;
-f4 = (2*mu^4)/3 + (4*mu^2)/3;
-f5 = (-4*mu^5)/15 - (4*mu^3)/3 - (2*mu)/5;
-
-lm = 1 - lambda;
-g0 = 1;
-g1 = -2*lm;
-g2 = 2*lm^2;
-g3 = (-4*lm^3)/3 - (2*lm)/3;
-g4 = (2*lm^4)/3 + (4*lm^2)/3;
-g5 = (-4*lm^5)/15 - (4*lm^3)/3 - (2*lm)/5;
-
-% Actualizacion de historias
-
-
-persistent e1 e2 e3 e4 e5 e6 e7
-persistent y1 y2 y3 y4 y5 y6 y7
-persistent sumI u_prev u_prev2
-% 
-if isempty(e1)
-    e1 = 0; e2 = 0; e3 = 0; e4 = 0; e5 = 0; e6 = 0; e7 = 0;
-    y1 = 0; y2 = 0; y3 = 0; y4 = 0; y5 = 0; y6 = 0; y7 = 0;
-    sumI = 0;
-    u_prev = 0;
-    u_prev2 = 0;
-end
-
-% 
-% 
-% e7 = e6; e6 = e5; e5 = e4; e4 = e3; e3 = e2; e2 = e1; e1 = e;
-% y7 = y6; y6 = y5; y5 = y4; y4 = y3; y3 = y2; y2 = y1; y1 = y;
-
-% Derivada fraccional sobre la medicion
-sumD = KD * ( ...
-    f0*(y  - 2*y1 + y2) ...
-    + f1*(y1 - 2*y2 + y3) ...
-    + f2*(y2 - 2*y3 + y4) ...
-    + f3*(y3 - 2*y4 + y5) ...
-    + f4*(y4 - 2*y5 + y6) ...
-    + f5*(y5 - 2*y6 + y7) );
-
-
-
-% Integral fraccional sobre el error
-sumI = KI * ( ...
-    g0*(e  + 2*e1 + e2) ...
-    + g1*(e1 + 2*e2 + e3) ...
-    + g2*(e2 + 2*e3 + e4) ...
-    + g3*(e3 + 2*e4 + e5) ...
-    + g4*(e4 + 2*e5 + e6) ...
-    + g5*(e5 + 2*e6 + e7) );
-
-% Salida final
-
-u_raw = u_prev + KP*(e - e1) + sumD + sumI;
-u = max(min(u_raw, u_max), u_min);
-
-u_prev2 = u_prev;
-u_prev  = u;
-
-e7 = e6; e6 = e5; e5 = e4; e4 = e3; e3 = e2; e2 = e1; e1 = e;
-y7 = y6; y6 = y5; y5 = y4; y4 = y3; y3 = y2; y2 = y1; y1 = y;
-
-end
-
-
-----------------------------------------------------------
-BLOQUE [7]: FOpid_control/MATLAB Function-IMU2
+BLOQUE [4]: FOpid_control_FIN/MATLAB Function-IMU2
 ----------------------------------------------------------
 function [stringOut, lengthOut] = stringToROS()
     
@@ -1144,7 +856,7 @@ end
 
 
 ----------------------------------------------------------
-BLOQUE [8]: FOpid_control/MATLAB Function-MODELO
+BLOQUE [5]: FOpid_control_FIN/MATLAB Function-MODELO
 ----------------------------------------------------------
 function [stringOut, lengthOut] = frameToROS()
 
@@ -1164,7 +876,7 @@ end
 
 
 ----------------------------------------------------------
-BLOQUE [9]: FOpid_control/MATLAB Function-Odometry
+BLOQUE [6]: FOpid_control_FIN/MATLAB Function-Odometry
 ----------------------------------------------------------
 function [str_out, currentLen, receivedLen] = childFrameID()
 
@@ -1178,7 +890,7 @@ function [str_out, currentLen, receivedLen] = childFrameID()
 end
 
 ----------------------------------------------------------
-BLOQUE [10]: FOpid_control/MATLAB Function-Odometry1
+BLOQUE [7]: FOpid_control_FIN/MATLAB Function-Odometry1
 ----------------------------------------------------------
 function [str_out, currentLen, receivedLen] = childFrameID()
     
@@ -1192,7 +904,7 @@ function [str_out, currentLen, receivedLen] = childFrameID()
 end
 
 ----------------------------------------------------------
-BLOQUE [11]: FOpid_control/MATLAB Function-clocl
+BLOQUE [8]: FOpid_control_FIN/MATLAB Function-clocl
 ----------------------------------------------------------
 function [sec, nsec] = getStamp(t)
     sec  = int32(floor(t));
@@ -1200,7 +912,7 @@ function [sec, nsec] = getStamp(t)
 end
 
 ----------------------------------------------------------
-BLOQUE [12]: FOpid_control/MATLAB Function-ned_to_PoseStaamped
+BLOQUE [9]: FOpid_control_FIN/MATLAB Function-ned_to_PoseStaamped
 ----------------------------------------------------------
 function [px_out, py_out, pz_out, x_out, y_out, z_out, w_out] = ...
          ned_to_PoseStaamped(w_in, x_in, y_in, z_in, px_ned, py_ned, pz_ned)
@@ -1224,7 +936,7 @@ z_out = -double(z1);
 end
 
 ----------------------------------------------------------
-BLOQUE [13]: FOpid_control/MATLAB Function-ned_to_PoseStamped
+BLOQUE [10]: FOpid_control_FIN/MATLAB Function-ned_to_PoseStamped
 ----------------------------------------------------------
 function [stringOut, lengthOut] = stringToROS()
     
@@ -1242,7 +954,7 @@ end
 
 
 ----------------------------------------------------------
-BLOQUE [14]: FOpid_control/MATLAB Function-ned_to_TwistStamped
+BLOQUE [11]: FOpid_control_FIN/MATLAB Function-ned_to_TwistStamped
 ----------------------------------------------------------
 function [stringOut, lengthOut] = stringToROS()
     
@@ -1260,7 +972,7 @@ end
 
 
 ----------------------------------------------------------
-BLOQUE [15]: FOpid_control/MATLAB Function-ned_to_gazebo
+BLOQUE [12]: FOpid_control_FIN/MATLAB Function-ned_to_gazebo
 ----------------------------------------------------------
 function [w_out, x_out, y_out, z_out, px_out, py_out, pz_out] = ...
          ned_to_gazebo(w_in, x_in, y_in, z_in, px_ned, py_ned, pz_ned)
@@ -1278,7 +990,7 @@ y_out = cz*y_in + sz*x_in;
 z_out = cz*z_in + sz*w_in;
 
 ----------------------------------------------------------
-BLOQUE [16]: FOpid_control/MATLAB Function-ned_to_imu
+BLOQUE [13]: FOpid_control_FIN/MATLAB Function-ned_to_imu
 ----------------------------------------------------------
 function [x_out, y_out, z_out, w_out] = ...
          ned_to_imu(w_in, x_in, y_in, z_in)
@@ -1297,7 +1009,7 @@ y_out =  x1;
 z_out =  -w1;
 
 ----------------------------------------------------------
-BLOQUE [17]: FOpid_control/MATLAB Function-ned_to_odometry
+BLOQUE [14]: FOpid_control_FIN/MATLAB Function-ned_to_odometry
 ----------------------------------------------------------
 function [px_out, py_out, pz_out, x_out, y_out, z_out, w_out ] = ...
          ned_to_odometry(w_in, x_in, y_in, z_in, px_ned, py_ned, pz_ned)
@@ -1326,7 +1038,7 @@ z2 = wz*z_out + zz*w_out;
 w_out = w2; x_out = x2; y_out = y2; z_out = z2;
 
 ----------------------------------------------------------
-BLOQUE [18]: FOpid_control/MATLAB Function2
+BLOQUE [15]: FOpid_control_FIN/MATLAB Function2
 ----------------------------------------------------------
 function [vx_enu, vy_enu, vz_enu] = twist_stamped(vx_ned, vy_ned, vz_ned)
     vx_enu =  double(vy_ned);   % Out2 del SUBSYSTEM_MODEL → v (lateral)
@@ -1335,9 +1047,9 @@ function [vx_enu, vy_enu, vz_enu] = twist_stamped(vx_ned, vy_ned, vz_ned)
 end
 
 ----------------------------------------------------------
-BLOQUE [19]: FOpid_control/SUBSYSTEM_MODEL/MATLAB Function - MODEL
+BLOQUE [16]: FOpid_control_FIN/SUBSYSTEM_MODEL/MATLAB Function - MODEL
 ----------------------------------------------------------
-function [XDOT, Va_out, CL_total, h_out, mu_Lw_out, mu_Dw_out] = Model(X, U, U_wind, W_wind, Fz_boya)
+function [XDOT, Va_out, CL_total, h_out, mu_Lw_out, mu_Dw_out] = Model(X, U, U_wind, W_wind)
 % Modelo Dinámico del Ekranoplano AirFish 8 (Sincronizado)
 % ESCALA: 1:21.5 | Soporte Coder y Viento
 % CORRECCIONES v2: D_prop 3.5"→5", alpha_0h, iw, CD_0
@@ -1477,8 +1189,7 @@ MEcg_b  = MEcg1_b + MEcg2_b;
 %-----------DINÁMICA---------------------------------------------
 g_b  = [-g*sin(x8); g*cos(x8)*sin(x7); g*cos(x8)*cos(x7)];
 Fg_b = m*g_b;
-% F_b  = Fg_b + FE_b + FA_b;
-F_b  = Fg_b + FE_b + FA_b  + Fz_boya;
+F_b  = Fg_b + FE_b + FA_b;
 x1to3dot = (1/m)*F_b - cross(wbe_b, V_b);
 Mcg_b = MAcg_b + MEcg_b;
 
@@ -1532,64 +1243,330 @@ V_NED = [R(1,:)*V_body; R(2,:)*V_body; R(3,:)*V_body];
 end
 
 ----------------------------------------------------------
-BLOQUE [20]: FOpid_control/SUBSYSTEM_MODEL/MATLAB Function-reset
+BLOQUE [17]: FOpid_control_FIN/SUBSYSTEM_MODEL/MATLAB Function-reset
 ----------------------------------------------------------
-% % BLOQUE 1: FLOTABILIDAD CONTINUA (sustituye a "MATLAB Function-reset")
-% % ============================================================
-% function [Fz_boya, x_reset] = fcn_flotabilidad(x, h_max, k_boya, c_boya)
-% %#codegen
-% % Fuerza de flotabilidad + amortiguamiento, activa solo cerca del agua.
-% %
-% % Entradas:
-% %   x       : vector de 12 estados [u v w p q r phi theta psi x y z_NED]
-% %   h_max   : altura límite superior de la "zona de flotación" (0.5 m)
-% %   k_boya  : rigidez de la fuerza restauradora (N/m) - ajustar en pruebas
-% %   c_boya  : amortiguamiento (N·s/m) - evita oscilaciones tipo resorte
-% %
-% % Salidas:
-% %   Fz_boya : fuerza vertical [N] a SUMAR en Fbz/Fgz dentro del Model()
-% %   x_reset : estado "limpio" opcional (solo para telemetría/anti-windup),
-% %             NO se usa como reset duro del Integrator.
-% %
-% % Física:
-% %   h_actual = -z_NED (convención NED: z negativo = altura positiva)
-% %   Si 0 <= h_actual <= h_max:
-% %       Fz_boya = -k_boya*(h_actual - h_ref) - c_boya*(-w)
-% %       (like Arquimedes: entre más se "hunde" bajo h_ref, más empuja
-% %        hacia arriba; el amortiguador frena el rebote para que no
-% %        oscile indefinidamente)
-% %   Si h_actual < 0 (penetró el agua): fuerza de empuje fuerte (piso duro suave)
-% %   Si h_actual > h_max: sin fuerza de flotación (vuelo libre en efecto suelo)
+% function x_reset = fcn(x, h_suelo)
+function x_reset = fcn(x)
+    x_reset = x;
+    x_reset(3) = 0.0;   % congela w (velocidad vertical)
+    x_reset(12) = 0.0;   % fija z_NED = 0 (superficie del agua)
+end
+% function x_reset = fcn(x, h_suelo)
+% #codegen
+% SUELO VIRTUAL — Simula la superficie del mar
+% Impide que el ekranoplano se hunda por debajo de h_suelo
 % 
-% h_ref    = h_max/2;      % nivel de equilibrio deseado (~0.25 m)
+% Fisica simulada:
+%   - Si h <= h_suelo: clavar z_NED en -h_suelo (no en 0)
+%   - Matar SOLO la componente de bajada de w (choque inelastico)
+%   - Conservar w > 0 (rebote hacia arriba, fisicamente correcto)
+%   - No tocar velocidad horizontal u — el ekranoplano sigue navegando
+% 
+% x_reset = x;
+% 
+% Altura actual en metros (z_NED negativo = altura positiva en NED)
 % h_actual = -x(12);
-% w        = x(3);         % velocidad vertical en ejes cuerpo (+ = bajando)
 % 
-% x_reset = x;             % no se usa para reset; se deja igual
+% if h_actual <= h_suelo
+%     1. Clavar la posicion vertical exactamente en la superficie
+%        z_NED = -h_suelo, NO en 0.0 (evita bucle de reset)
+%     x_reset(12) = -h_suelo;
 % 
-% if h_actual <= h_max
-%     % Zona de flotación: resorte + amortiguador, sin discontinuidad
-%     Fz_boya = -k_boya*(h_actual - h_ref) - c_boya*(-w);
-% 
-%     % Limitador de seguridad: evita que la fuerza se dispare si
-%     % h_actual se vuelve muy negativo por overshoot numérico
-%     Fz_boya = max(min(Fz_boya, 3*k_boya*h_max), -3*k_boya*h_max);
-% else
-%     Fz_boya = 0.0;  % fuera de la zona de flotación, sin fuerza extra
+%     2. Choque inelastico con el mar:
+%        Solo matar w si esta bajando (w > 0 en convencion NED-body)
+%        Si w < 0 (ya rebota hacia arriba), conservar — es fisico
+%     if x(3) > 0.0
+%         x_reset(3) = 0.0;
+%     end
 % end
 % 
 % end
 
-function Fz_boya = fcn_flotabilidad(x, h_max, k_boya, c_boya)
-h_ref    = h_max/2;
-h_actual = -x(12);
-w        = x(3);
+----------------------------------------------------------
+BLOQUE [18]: FOpid_control_FIN/Subsystem1/MATLAB Function - fopid_altura
+----------------------------------------------------------
+function u= fopid_altura(e, y, kp, ki, kd)
 
-if h_actual <= h_max
-    Fz_boya = -k_boya*(h_actual - h_ref) - c_boya*(-w);
-    Fz_boya = max(min(Fz_boya, 3*k_boya*h_max), -3*k_boya*h_max);
-else
-    Fz_boya = 0.0;
+%#codegen
+% FOPI^lambda D discreto - ALTURA
+% e : error de altura
+% y : medicion de altura
+% u : referencia de pitch (theta_sp)
+
+mu     = 0.9;
+lambda = 0.7;
+Ts     = 0.01;
+wc     = 1.0;
+u_min  = -0.2;
+u_max  =  0.2;
+
+alpha = wc / tan(wc * Ts / 2);
+
+KP = kp;
+KD = kd * (alpha^mu);
+KI = ki * (alpha^(-lambda));
+
+f0 = 1;
+f1 = -2*mu;
+f2 = 2*mu^2;
+f3 = (-4*mu^3)/3 - (2*mu)/3;
+f4 = (2*mu^4)/3 + (4*mu^2)/3;
+f5 = (-4*mu^5)/15 - (4*mu^3)/3 - (2*mu)/5;
+
+lm = 1 - lambda;
+g0 = 1;
+g1 = -2*lm;
+g2 = 2*lm^2;
+g3 = (-4*lm^3)/3 - (2*lm)/3;
+g4 = (2*lm^4)/3 + (4*lm^2)/3;
+g5 = (-4*lm^5)/15 - (4*lm^3)/3 - (2*lm)/5;
+
+% Actualizacion de historias
+
+
+persistent e1 e2 e3 e4 e5 e6 e7
+persistent y1 y2 y3 y4 y5 y6 y7
+persistent sumI u_prev u_prev2
+% 
+if isempty(e1)
+    e1 = 0; e2 = 0; e3 = 0; e4 = 0; e5 = 0; e6 = 0; e7 = 0;
+    y1 = 0; y2 = 0; y3 = 0; y4 = 0; y5 = 0; y6 = 0; y7 = 0;
+    sumI = 0;
+    u_prev = 0;
+    u_prev2 = 0;
 end
+
+% 
+% 
+% e7 = e6; e6 = e5; e5 = e4; e4 = e3; e3 = e2; e2 = e1; e1 = e;
+% y7 = y6; y6 = y5; y5 = y4; y4 = y3; y3 = y2; y2 = y1; y1 = y;
+
+% Derivada fraccional sobre la medicion
+sumD = KD * ( ...
+    f0*(y  - 2*y1 + y2) ...
+    + f1*(y1 - 2*y2 + y3) ...
+    + f2*(y2 - 2*y3 + y4) ...
+    + f3*(y3 - 2*y4 + y5) ...
+    + f4*(y4 - 2*y5 + y6) ...
+    + f5*(y5 - 2*y6 + y7) );
+
+
+
+% Integral fraccional sobre el error
+sumI = KI * ( ...
+    g0*(e  + 2*e1 + e2) ...
+    + g1*(e1 + 2*e2 + e3) ...
+    + g2*(e2 + 2*e3 + e4) ...
+    + g3*(e3 + 2*e4 + e5) ...
+    + g4*(e4 + 2*e5 + e6) ...
+    + g5*(e5 + 2*e6 + e7) );
+
+
+
+% Salida final
+% u_raw = u_prev2 + KP*(e - e2) + sumD + sumI;
+% u = max(min(u_raw, u_max), u_min);
+% 
+% 
+% u_prev2 = u_prev;
+% u_prev  = u;
+u_raw = u_prev + KP*(e - e1) + sumD + sumI;
+u = max(min(u_raw, u_max), u_min);
+
+u_prev2 = u_prev;
+u_prev  = u;
+
+e7 = e6; e6 = e5; e5 = e4; e4 = e3; e3 = e2; e2 = e1; e1 = e;
+y7 = y6; y6 = y5; y5 = y4; y4 = y3; y3 = y2; y2 = y1; y1 = y;
+
 end
+
+
+
+
+----------------------------------------------------------
+BLOQUE [19]: FOpid_control_FIN/Subsystem2/MATLAB Function - fopid_roll
+----------------------------------------------------------
+function u= fopid_roll(e, y, kp, ki, kd)
+
+%#codegen
+% FOPI^lambda D discreto - ALTURA
+% e : error de altura
+% y : medicion de altura
+% u : referencia de pitch (theta_sp)
+
+mu     = 0.9;
+lambda = 0.7;
+Ts     = 0.01;
+wc     = 1.0;
+u_min  = -0.1;
+u_max  =  0.1;
+
+alpha = wc / tan(wc * Ts / 2);
+
+KP = kp;
+KD = kd * (alpha^mu);
+KI = ki * (alpha^(-lambda));
+
+f0 = 1;
+f1 = -2*mu;
+f2 = 2*mu^2;
+f3 = (-4*mu^3)/3 - (2*mu)/3;
+f4 = (2*mu^4)/3 + (4*mu^2)/3;
+f5 = (-4*mu^5)/15 - (4*mu^3)/3 - (2*mu)/5;
+
+lm = 1 - lambda;
+g0 = 1;
+g1 = -2*lm;
+g2 = 2*lm^2;
+g3 = (-4*lm^3)/3 - (2*lm)/3;
+g4 = (2*lm^4)/3 + (4*lm^2)/3;
+g5 = (-4*lm^5)/15 - (4*lm^3)/3 - (2*lm)/5;
+
+% Actualizacion de historias
+
+
+persistent e1 e2 e3 e4 e5 e6 e7
+persistent y1 y2 y3 y4 y5 y6 y7
+persistent sumI u_prev u_prev2
+% 
+if isempty(e1)
+    e1 = 0; e2 = 0; e3 = 0; e4 = 0; e5 = 0; e6 = 0; e7 = 0;
+    y1 = 0; y2 = 0; y3 = 0; y4 = 0; y5 = 0; y6 = 0; y7 = 0;
+    sumI = 0;
+    u_prev = 0;
+    u_prev2 = 0;
+end
+
+% 
+% 
+% e7 = e6; e6 = e5; e5 = e4; e4 = e3; e3 = e2; e2 = e1; e1 = e;
+% y7 = y6; y6 = y5; y5 = y4; y4 = y3; y3 = y2; y2 = y1; y1 = y;
+
+% Derivada fraccional sobre la medicion
+sumD = KD * ( ...
+    f0*(y  - 2*y1 + y2) ...
+    + f1*(y1 - 2*y2 + y3) ...
+    + f2*(y2 - 2*y3 + y4) ...
+    + f3*(y3 - 2*y4 + y5) ...
+    + f4*(y4 - 2*y5 + y6) ...
+    + f5*(y5 - 2*y6 + y7) );
+
+
+
+% Integral fraccional sobre el error
+sumI = KI * ( ...
+    g0*(e  + 2*e1 + e2) ...
+    + g1*(e1 + 2*e2 + e3) ...
+    + g2*(e2 + 2*e3 + e4) ...
+    + g3*(e3 + 2*e4 + e5) ...
+    + g4*(e4 + 2*e5 + e6) ...
+    + g5*(e5 + 2*e6 + e7) );
+
+% Salida final
+
+u_raw = u_prev + KP*(e - e1) + sumD + sumI;
+u = max(min(u_raw, u_max), u_min);
+
+u_prev2 = u_prev;
+u_prev  = u;
+
+e7 = e6; e6 = e5; e5 = e4; e4 = e3; e3 = e2; e2 = e1; e1 = e;
+y7 = y6; y6 = y5; y5 = y4; y4 = y3; y3 = y2; y2 = y1; y1 = y;
+
+end
+
+
+----------------------------------------------------------
+BLOQUE [20]: FOpid_control_FIN/Subsystem3/MATLAB Function - fopid_yaw
+----------------------------------------------------------
+function u= fopid_yaw(e, y, kp, ki, kd)
+
+%#codegen
+% FOPI^lambda D discreto - ALTURA
+% e : error de altura
+% y : medicion de altura
+% u : referencia de pitch (theta_sp)
+
+mu     = 0.5;
+lambda = 0.7;
+Ts     = 0.01;
+wc     = 1.0;
+u_min  = -0.09;
+u_max  =  0.09;
+
+alpha = wc / tan(wc * Ts / 2);
+
+KP = kp;
+KD = kd * (alpha^mu);
+KI = ki * (alpha^(-lambda));
+
+f0 = 1;
+f1 = -2*mu;
+f2 = 2*mu^2;
+f3 = (-4*mu^3)/3 - (2*mu)/3;
+f4 = (2*mu^4)/3 + (4*mu^2)/3;
+f5 = (-4*mu^5)/15 - (4*mu^3)/3 - (2*mu)/5;
+
+lm = 1 - lambda;
+g0 = 1;
+g1 = -2*lm;
+g2 = 2*lm^2;
+g3 = (-4*lm^3)/3 - (2*lm)/3;
+g4 = (2*lm^4)/3 + (4*lm^2)/3;
+g5 = (-4*lm^5)/15 - (4*lm^3)/3 - (2*lm)/5;
+
+% Actualizacion de historias
+
+
+persistent e1 e2 e3 e4 e5 e6 e7
+persistent y1 y2 y3 y4 y5 y6 y7
+persistent sumI u_prev u_prev2
+% 
+if isempty(e1)
+    e1 = 0; e2 = 0; e3 = 0; e4 = 0; e5 = 0; e6 = 0; e7 = 0;
+    y1 = 0; y2 = 0; y3 = 0; y4 = 0; y5 = 0; y6 = 0; y7 = 0;
+    sumI = 0;
+    u_prev = 0;
+    u_prev2 = 0;
+end
+
+% 
+% 
+% e7 = e6; e6 = e5; e5 = e4; e4 = e3; e3 = e2; e2 = e1; e1 = e;
+% y7 = y6; y6 = y5; y5 = y4; y4 = y3; y3 = y2; y2 = y1; y1 = y;
+
+% Derivada fraccional sobre la medicion
+sumD = KD * ( ...
+    f0*(y  - 2*y1 + y2) ...
+    + f1*(y1 - 2*y2 + y3) ...
+    + f2*(y2 - 2*y3 + y4) ...
+    + f3*(y3 - 2*y4 + y5) ...
+    + f4*(y4 - 2*y5 + y6) ...
+    + f5*(y5 - 2*y6 + y7) );
+
+
+
+% Integral fraccional sobre el error
+sumI = KI * ( ...
+    g0*(e  + 2*e1 + e2) ...
+    + g1*(e1 + 2*e2 + e3) ...
+    + g2*(e2 + 2*e3 + e4) ...
+    + g3*(e3 + 2*e4 + e5) ...
+    + g4*(e4 + 2*e5 + e6) ...
+    + g5*(e5 + 2*e6 + e7) );
+
+% Salida final
+
+u_raw = u_prev + KP*(e - e1) + sumD + sumI;
+u = max(min(u_raw, u_max), u_min);
+
+u_prev2 = u_prev;
+u_prev  = u;
+
+e7 = e6; e6 = e5; e5 = e4; e4 = e3; e3 = e2; e2 = e1; e1 = e;
+y7 = y6; y6 = y5; y5 = y4; y4 = y3; y3 = y2; y2 = y1; y1 = y;
+
+end
+
 
