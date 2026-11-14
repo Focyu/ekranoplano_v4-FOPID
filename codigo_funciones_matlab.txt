@@ -1,11 +1,11 @@
 ==========================================================
 REPORTE DE CÓDIGO INTERNO - MATLAB FUNCTIONS
-Modelo: FOpid_control_FIN
-Fecha: 08-Sep-2026 17:02:33
+Modelo: FOpid_RL
+Fecha: 15-Nov-2026 00:00:48
 ==========================================================
 
 ----------------------------------------------------------
-BLOQUE [1]: FOpid_control_FIN/MATLAB Function
+BLOQUE [1]: FOpid_RL/MATLAB Function
 ----------------------------------------------------------
 function [stringOut, lengthOut] = stringToROS()
     
@@ -23,7 +23,7 @@ end
 
 
 ----------------------------------------------------------
-BLOQUE [2]: FOpid_control_FIN/MATLAB Function - fopid_pitch
+BLOQUE [2]: FOpid_RL/MATLAB Function - fopid_pitch
 ----------------------------------------------------------
 function u = fopid_pitch(e, y, kp, ki, kd)
 %#codegen
@@ -561,7 +561,7 @@ end
 % % % % % end
 
 ----------------------------------------------------------
-BLOQUE [3]: FOpid_control_FIN/MATLAB Function - fopid_velocidad
+BLOQUE [3]: FOpid_RL/MATLAB Function - fopid_velocidad
 ----------------------------------------------------------
 function u= fopid_vel_mod(e, y, kp, ki, kd)
 
@@ -838,7 +838,7 @@ end
 % % % end
 
 ----------------------------------------------------------
-BLOQUE [4]: FOpid_control_FIN/MATLAB Function-IMU2
+BLOQUE [4]: FOpid_RL/MATLAB Function-IMU2
 ----------------------------------------------------------
 function [stringOut, lengthOut] = stringToROS()
     
@@ -856,7 +856,7 @@ end
 
 
 ----------------------------------------------------------
-BLOQUE [5]: FOpid_control_FIN/MATLAB Function-MODELO
+BLOQUE [5]: FOpid_RL/MATLAB Function-MODELO
 ----------------------------------------------------------
 function [stringOut, lengthOut] = frameToROS()
 
@@ -876,7 +876,7 @@ end
 
 
 ----------------------------------------------------------
-BLOQUE [6]: FOpid_control_FIN/MATLAB Function-Odometry
+BLOQUE [6]: FOpid_RL/MATLAB Function-Odometry
 ----------------------------------------------------------
 function [str_out, currentLen, receivedLen] = childFrameID()
 
@@ -890,7 +890,7 @@ function [str_out, currentLen, receivedLen] = childFrameID()
 end
 
 ----------------------------------------------------------
-BLOQUE [7]: FOpid_control_FIN/MATLAB Function-Odometry1
+BLOQUE [7]: FOpid_RL/MATLAB Function-Odometry1
 ----------------------------------------------------------
 function [str_out, currentLen, receivedLen] = childFrameID()
     
@@ -904,7 +904,7 @@ function [str_out, currentLen, receivedLen] = childFrameID()
 end
 
 ----------------------------------------------------------
-BLOQUE [8]: FOpid_control_FIN/MATLAB Function-clocl
+BLOQUE [8]: FOpid_RL/MATLAB Function-clocl
 ----------------------------------------------------------
 function [sec, nsec] = getStamp(t)
     sec  = int32(floor(t));
@@ -912,7 +912,7 @@ function [sec, nsec] = getStamp(t)
 end
 
 ----------------------------------------------------------
-BLOQUE [9]: FOpid_control_FIN/MATLAB Function-ned_to_PoseStaamped
+BLOQUE [9]: FOpid_RL/MATLAB Function-ned_to_PoseStaamped
 ----------------------------------------------------------
 function [px_out, py_out, pz_out, x_out, y_out, z_out, w_out] = ...
          ned_to_PoseStaamped(w_in, x_in, y_in, z_in, px_ned, py_ned, pz_ned)
@@ -936,7 +936,7 @@ z_out = -double(z1);
 end
 
 ----------------------------------------------------------
-BLOQUE [10]: FOpid_control_FIN/MATLAB Function-ned_to_PoseStamped
+BLOQUE [10]: FOpid_RL/MATLAB Function-ned_to_PoseStamped
 ----------------------------------------------------------
 function [stringOut, lengthOut] = stringToROS()
     
@@ -954,7 +954,7 @@ end
 
 
 ----------------------------------------------------------
-BLOQUE [11]: FOpid_control_FIN/MATLAB Function-ned_to_TwistStamped
+BLOQUE [11]: FOpid_RL/MATLAB Function-ned_to_TwistStamped
 ----------------------------------------------------------
 function [stringOut, lengthOut] = stringToROS()
     
@@ -972,7 +972,7 @@ end
 
 
 ----------------------------------------------------------
-BLOQUE [12]: FOpid_control_FIN/MATLAB Function-ned_to_gazebo
+BLOQUE [12]: FOpid_RL/MATLAB Function-ned_to_gazebo
 ----------------------------------------------------------
 function [w_out, x_out, y_out, z_out, px_out, py_out, pz_out] = ...
          ned_to_gazebo(w_in, x_in, y_in, z_in, px_ned, py_ned, pz_ned)
@@ -990,7 +990,7 @@ y_out = cz*y_in + sz*x_in;
 z_out = cz*z_in + sz*w_in;
 
 ----------------------------------------------------------
-BLOQUE [13]: FOpid_control_FIN/MATLAB Function-ned_to_imu
+BLOQUE [13]: FOpid_RL/MATLAB Function-ned_to_imu
 ----------------------------------------------------------
 function [x_out, y_out, z_out, w_out] = ...
          ned_to_imu(w_in, x_in, y_in, z_in)
@@ -1009,7 +1009,7 @@ y_out =  x1;
 z_out =  -w1;
 
 ----------------------------------------------------------
-BLOQUE [14]: FOpid_control_FIN/MATLAB Function-ned_to_odometry
+BLOQUE [14]: FOpid_RL/MATLAB Function-ned_to_odometry
 ----------------------------------------------------------
 function [px_out, py_out, pz_out, x_out, y_out, z_out, w_out ] = ...
          ned_to_odometry(w_in, x_in, y_in, z_in, px_ned, py_ned, pz_ned)
@@ -1038,7 +1038,7 @@ z2 = wz*z_out + zz*w_out;
 w_out = w2; x_out = x2; y_out = y2; z_out = z2;
 
 ----------------------------------------------------------
-BLOQUE [15]: FOpid_control_FIN/MATLAB Function2
+BLOQUE [15]: FOpid_RL/MATLAB Function2
 ----------------------------------------------------------
 function [vx_enu, vy_enu, vz_enu] = twist_stamped(vx_ned, vy_ned, vz_ned)
     vx_enu =  double(vy_ned);   % Out2 del SUBSYSTEM_MODEL → v (lateral)
@@ -1047,7 +1047,7 @@ function [vx_enu, vy_enu, vz_enu] = twist_stamped(vx_ned, vy_ned, vz_ned)
 end
 
 ----------------------------------------------------------
-BLOQUE [16]: FOpid_control_FIN/SUBSYSTEM_MODEL/MATLAB Function - MODEL
+BLOQUE [16]: FOpid_RL/SUBSYSTEM_MODEL/MATLAB Function - MODEL
 ----------------------------------------------------------
 function [XDOT, Va_out, CL_total, h_out, mu_Lw_out, mu_Dw_out] = Model(X, U, U_wind, W_wind)
 % Modelo Dinámico del Ekranoplano AirFish 8 (Sincronizado)
@@ -1243,7 +1243,7 @@ V_NED = [R(1,:)*V_body; R(2,:)*V_body; R(3,:)*V_body];
 end
 
 ----------------------------------------------------------
-BLOQUE [17]: FOpid_control_FIN/SUBSYSTEM_MODEL/MATLAB Function-reset
+BLOQUE [17]: FOpid_RL/SUBSYSTEM_MODEL/MATLAB Function-reset
 ----------------------------------------------------------
 % function x_reset = fcn(x, h_suelo)
 function x_reset = fcn(x)
@@ -1283,7 +1283,7 @@ end
 % end
 
 ----------------------------------------------------------
-BLOQUE [18]: FOpid_control_FIN/Subsystem1/MATLAB Function - fopid_altura
+BLOQUE [18]: FOpid_RL/Subsystem1/MATLAB Function - fopid_altura
 ----------------------------------------------------------
 function u= fopid_altura(e, y, kp, ki, kd)
 
@@ -1385,7 +1385,7 @@ end
 
 
 ----------------------------------------------------------
-BLOQUE [19]: FOpid_control_FIN/Subsystem2/MATLAB Function - fopid_roll
+BLOQUE [19]: FOpid_RL/Subsystem2/MATLAB Function - fopid_roll
 ----------------------------------------------------------
 function u= fopid_roll(e, y, kp, ki, kd)
 
@@ -1478,7 +1478,7 @@ end
 
 
 ----------------------------------------------------------
-BLOQUE [20]: FOpid_control_FIN/Subsystem3/MATLAB Function - fopid_yaw
+BLOQUE [20]: FOpid_RL/Subsystem3/MATLAB Function - fopid_yaw
 ----------------------------------------------------------
 function u= fopid_yaw(e, y, kp, ki, kd)
 
