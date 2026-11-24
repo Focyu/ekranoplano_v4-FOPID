@@ -6,9 +6,9 @@
  *
  * Code generation for model "FOpid_RL".
  *
- * Model version              : 13.76
+ * Model version              : 14.3
  * Simulink Coder version : 26.2 (R2026b) 22-May-2026
- * C++ source code generated on : Sat Nov 14 23:51:06 2026
+ * C++ source code generated on : Tue Nov 24 12:04:19 2026
  *
  * Target selection: ert.tlc
  * Note: GRT includes extra infrastructure and instrumentation for prototyping
@@ -197,60 +197,67 @@ struct B_FOpid_RL_T {
                                       /* '<Root>/Bus Assignment-PoseStaamped' */
   SL_Bus_geometry_msgs_TwistStamped BusAssignmentTwistStamped;
                                       /* '<Root>/Bus Assignment-TwistStamped' */
+  real_T rtb_UnitDelay_m[15];
   real_T IC[12];                       /* '<S33>/IC' */
   real_T x[12];                        /* '<S33>/Integrator' */
-  uint8_T str_out[128];                /* '<Root>/MATLAB Function-Odometry1' */
-  uint8_T str_out_e[128];              /* '<Root>/MATLAB Function-Odometry' */
-  uint8_T stringOut[128];              /* '<Root>/MATLAB Function-MODELO' */
-  uint8_T stringOut_n[128];            /* '<Root>/MATLAB Function-IMU2' */
-  uint8_T stringOut_d[128];            /* '<Root>/MATLAB Function' */
   real_T R[9];
   real_T RotationAnglestoDirectionCo[9];
                         /* '<S33>/Rotation Angles to Direction Cosine Matrix' */
   real_T dv[9];
+  real_T phi[7];
+  real_T phi_c[7];
+  real_T TmpSignalConversionAtSFunct[5];/* '<S33>/MATLAB Function - MODEL' */
+  real_T raw_net[5];
+  real_T sens[5];
+  real_T raw_net_k[5];
+  real_T sens_c[5];
   char_T b_zeroDelimTopic[26];
-  char_T b_zeroDelimTopic_m[25];
-  char_T b_zeroDelimTopic_c[25];
+  char_T b_zeroDelimTopic_b[25];
+  char_T b_zeroDelimTopic_p[25];
+  real_T Memory1[3];                   /* '<S33>/Memory1' */
   real_T wbe_b[3];
   real_T FE1_b[3];
   real_T F_b[3];
   real_T Reshape1_b[3];                /* '<S72>/Reshape1' */
   real_T Dtot[3];
-  char_T b_zeroDelimTopic_k[22];
-  char_T b_zeroDelimTopic_cx[22];
-  char_T b_zeroDelimTopic_b[18];
-  char_T b_zeroDelimTopic_p[17];
-  char_T b_zeroDelimTopic_cv[17];
-  char_T b_zeroDelimTopic_f[17];
+  char_T b_zeroDelimTopic_c[22];
+  char_T b_zeroDelimTopic_f[22];
+  char_T b_zeroDelimTopic_g[18];
+  char_T b_zeroDelimTopic_g1[17];
+  char_T b_zeroDelimTopic_m[17];
+  char_T b_zeroDelimTopic_n[17];
   sJ4ih70VmKcvCeguWN0mNVF deadline;
-  sJ4ih70VmKcvCeguWN0mNVF deadline_g;
-  sJ4ih70VmKcvCeguWN0mNVF deadline_g1;
-  sJ4ih70VmKcvCeguWN0mNVF deadline_m;
-  sJ4ih70VmKcvCeguWN0mNVF deadline_n;
   sJ4ih70VmKcvCeguWN0mNVF deadline_p;
   sJ4ih70VmKcvCeguWN0mNVF deadline_l;
   sJ4ih70VmKcvCeguWN0mNVF deadline_j;
   sJ4ih70VmKcvCeguWN0mNVF deadline_d;
-  sJ4ih70VmKcvCeguWN0mNVF lifespan;
-  sJ4ih70VmKcvCeguWN0mNVF deadline_gu;
-  sJ4ih70VmKcvCeguWN0mNVF lifespan_l;
+  sJ4ih70VmKcvCeguWN0mNVF deadline_g;
+  sJ4ih70VmKcvCeguWN0mNVF deadline_ld;
   sJ4ih70VmKcvCeguWN0mNVF deadline_dh;
+  sJ4ih70VmKcvCeguWN0mNVF deadline_dy;
+  sJ4ih70VmKcvCeguWN0mNVF lifespan;
+  sJ4ih70VmKcvCeguWN0mNVF deadline_lx;
+  sJ4ih70VmKcvCeguWN0mNVF lifespan_o;
+  sJ4ih70VmKcvCeguWN0mNVF deadline_b;
   real_T Product1_l[2];                /* '<S73>/Product1' */
   real_T dv1[2];
+  real_T dv2[2];
+  real_T dv3[2];
+  real_T dv4[2];
+  real_T dv5[2];
+  real_T dv6[2];
+  real_T dv7[2];
   real_T GainZ;                        /* '<Root>/Gain-Z' */
   real_T Switch3;                      /* '<Root>/Switch3' */
-  real_T Sum2;                         /* '<Root>/Sum2' */
   real_T RateLimiter2;                 /* '<Root>/Rate Limiter2' */
   real_T Sum5;                         /* '<Root>/Sum5' */
   real_T Saturation_roll_sp;           /* '<Root>/Saturation_roll_sp' */
   real_T Sum4;                         /* '<Root>/Sum4' */
-  real_T RateLimitertheta_sp;          /* '<Root>/Rate Limiter-theta_sp' */
-  real_T Sum1;                         /* '<Root>/Sum1' */
   real_T Saturation1;                  /* '<Root>/Saturation1' */
   real_T Sum3;                         /* '<Root>/Sum3' */
+  real_T RateLimitertheta_sp;          /* '<Root>/Rate Limiter-theta_sp' */
   real_T Product[4];                   /* '<S59>/Product' */
   real_T Memory[3];                    /* '<S33>/Memory' */
-  real_T Memory1[3];                   /* '<S33>/Memory1' */
   real_T Output;                       /* '<S39>/Output' */
   real_T SumOLA1[3];                   /* '<S33>/SumOLA1' */
   real_T SumOLA[3];                    /* '<S33>/SumOLA' */
@@ -259,6 +266,8 @@ struct B_FOpid_RL_T {
   real_T EnergykWh;                    /* '<S33>/Gain1' */
   real_T powerdemand;                  /* '<S33>/Divide' */
   real_T loadtorque;                   /* '<S33>/Divide1' */
+  real_T Sum1;                         /* '<Root>/Sum1' */
+  real_T Sum2;                         /* '<Root>/Sum2' */
   real_T Sum2_j;                       /* '<S22>/Sum2' */
   real_T Sum2_f;                       /* '<S23>/Sum2' */
   real_T Sum2_b;                       /* '<S24>/Sum2' */
@@ -267,7 +276,8 @@ struct B_FOpid_RL_T {
   real_T startTime;                    /* '<S31>/startTime' */
   real_T u;                            /* '<S38>/MATLAB Function - fopid_yaw' */
   real_T u_b;                         /* '<S37>/MATLAB Function - fopid_roll' */
-  real_T u_k;                       /* '<S36>/MATLAB Function - fopid_altura' */
+  real_T u_h;                          /* '<S36>/MATLAB Function' */
+  real_T u_p;                          /* '<S36>/MATLAB Function' */
   real_T XDOT[40];                     /* '<S33>/MATLAB Function - MODEL' */
   real_T w[2];                         /* '<S65>/w' */
   real_T w_a[2];                       /* '<S65>/w ' */
@@ -283,12 +293,10 @@ struct B_FOpid_RL_T {
   real_T w_o[2];                       /* '<S60>/w' */
   real_T sigma_w[2];                   /* '<S60>/sigma_w' */
   real_T u_j;                   /* '<Root>/MATLAB Function - fopid_velocidad' */
-  real_T u_c;                       /* '<Root>/MATLAB Function - fopid_pitch' */
   real_T u1;
   real_T u2;
   real_T q_aero;
   real_T Q;
-  real_T CL_w_IGE;
   real_T CL_h_IGE;
   real_T CD_iw_IGE;
   real_T CD_ih_IGE;
@@ -310,10 +318,11 @@ struct B_FOpid_RL_T {
   real_T cosa;
   real_T cosb;
   real_T cosc;
+  real_T Saturation2;                  /* '<Root>/Saturation2' */
   real_T FE_b;
-  real_T rtb_CoordinateTransformationC_d;
+  real_T rtb_CoordinateTransformationC_n;
+  real_T rtb_CoordinateTransformationC_b;
   real_T rtb_CoordinateTransformationC_l;
-  real_T rtb_CoordinateTransformationC_o;
   real_T FE2_b_idx_0;
   real_T FE2_b_idx_2;
   real_T Fg_b_idx_2;
@@ -323,10 +332,38 @@ struct B_FOpid_RL_T {
   real_T FA_b_idx_1;
   real_T FA_b_idx_2;
   real_T R_tmp;
-  real_T R_tmp_b;
+  real_T R_tmp_h;
   real_T Switch2;                      /* '<Root>/Switch2' */
+  real_T y_hat;
+  real_T Kp;
+  real_T lam;
+  real_T mu;
+  real_T c_mu;
+  real_T I_gl;
+  real_T c_lam;
+  real_T e_buf;
+  real_T x_in_idx_0;
+  real_T x_in_idx_2;
+  real_T x_in_idx_1;
+  real_T d;
+  real_T d1;
+  real_T y_hat_b;
+  real_T Kp_d;
+  real_T lam_e;
+  real_T mu_b;
+  real_T c_mu_j;
+  real_T I_gl_f;
+  real_T c_lam_a;
+  real_T e_buf_j;
+  real_T x_in_idx_0_j;
+  real_T x_in_idx_2_o;
   SL_Bus_std_msgs_Float64 SourceBlock_o2_d;/* '<S34>/SourceBlock' */
+  SL_Bus_std_msgs_Float64 SourceBlock_o2;/* '<S35>/SourceBlock' */
+  SL_Bus_std_msgs_Float64 SourceBlock_o2_k;/* '<S46>/SourceBlock' */
+  SL_Bus_std_msgs_Float64 SourceBlock_o2_p;/* '<S45>/SourceBlock' */
   uint32_T bpIndex[2];
+  int32_T i;
+  int32_T j;
   uint32_T currentLen;                 /* '<Root>/MATLAB Function-Odometry1' */
   uint32_T receivedLen;                /* '<Root>/MATLAB Function-Odometry1' */
   uint32_T currentLen_b;               /* '<Root>/MATLAB Function-Odometry' */
@@ -334,6 +371,12 @@ struct B_FOpid_RL_T {
   uint32_T lengthOut;                  /* '<Root>/MATLAB Function-MODELO' */
   uint32_T lengthOut_i;                /* '<Root>/MATLAB Function-IMU2' */
   uint32_T lengthOut_g;                /* '<Root>/MATLAB Function' */
+  uint8_T str_out[128];                /* '<Root>/MATLAB Function-Odometry1' */
+  uint8_T str_out_e[128];              /* '<Root>/MATLAB Function-Odometry' */
+  uint8_T stringOut[128];              /* '<Root>/MATLAB Function-MODELO' */
+  uint8_T stringOut_n[128];            /* '<Root>/MATLAB Function-IMU2' */
+  uint8_T stringOut_d[128];            /* '<Root>/MATLAB Function' */
+  uint32_T rtb_nsec_n;
   boolean_T Compare;                   /* '<S40>/Compare' */
   boolean_T SourceBlock_o1;            /* '<S35>/SourceBlock' */
   boolean_T SourceBlock_o1_o;          /* '<S34>/SourceBlock' */
@@ -367,7 +410,12 @@ struct DW_FOpid_RL_T {
   ros_slros2_internal_block_Sub_T obj_hy;/* '<S45>/SourceBlock' */
   ros_slros2_internal_block_Sub_T obj_h4;/* '<S44>/SourceBlock' */
   real_T UnitDelay3_DSTATE;            /* '<Root>/Unit Delay3' */
+  real_T UnitDelay7_DSTATE;            /* '<Root>/Unit Delay7' */
   real_T UnitDelay2_DSTATE;            /* '<Root>/Unit Delay2' */
+  real_T UnitDelay_DSTATE;             /* '<Root>/Unit Delay' */
+  real_T UnitDelay4_DSTATE;            /* '<Root>/Unit Delay4' */
+  real_T UnitDelay5_DSTATE;            /* '<Root>/Unit Delay5' */
+  real_T UnitDelay6_DSTATE;            /* '<Root>/Unit Delay6' */
   real_T Memory2_PreviousInput[12];    /* '<S33>/Memory2' */
   real_T PrevY;                        /* '<Root>/Rate Limiter2' */
   real_T PrevY_e;                      /* '<Root>/Rate Limiter3' */
@@ -406,21 +454,26 @@ struct DW_FOpid_RL_T {
   real_T y6_k;                        /* '<S37>/MATLAB Function - fopid_roll' */
   real_T y7_p;                        /* '<S37>/MATLAB Function - fopid_roll' */
   real_T u_prev_e;                    /* '<S37>/MATLAB Function - fopid_roll' */
-  real_T e1_f;                      /* '<S36>/MATLAB Function - fopid_altura' */
-  real_T e2_m;                      /* '<S36>/MATLAB Function - fopid_altura' */
-  real_T e3_n;                      /* '<S36>/MATLAB Function - fopid_altura' */
-  real_T e4_j;                      /* '<S36>/MATLAB Function - fopid_altura' */
-  real_T e5_c;                      /* '<S36>/MATLAB Function - fopid_altura' */
-  real_T e6_m;                      /* '<S36>/MATLAB Function - fopid_altura' */
-  real_T e7_i;                      /* '<S36>/MATLAB Function - fopid_altura' */
-  real_T y1_p;                      /* '<S36>/MATLAB Function - fopid_altura' */
-  real_T y2_c;                      /* '<S36>/MATLAB Function - fopid_altura' */
-  real_T y3_b;                      /* '<S36>/MATLAB Function - fopid_altura' */
-  real_T y4_b;                      /* '<S36>/MATLAB Function - fopid_altura' */
-  real_T y5_c;                      /* '<S36>/MATLAB Function - fopid_altura' */
-  real_T y6_d;                      /* '<S36>/MATLAB Function - fopid_altura' */
-  real_T y7_o;                      /* '<S36>/MATLAB Function - fopid_altura' */
-  real_T u_prev_f;                  /* '<S36>/MATLAB Function - fopid_altura' */
+  real_T eh_buf[15];                   /* '<S36>/MATLAB Function' */
+  real_T ep_buf[15];                   /* '<S36>/MATLAB Function' */
+  real_T int_eh;                       /* '<S36>/MATLAB Function' */
+  real_T int_ep;                       /* '<S36>/MATLAB Function' */
+  real_T Wc_h[35];                     /* '<S36>/MATLAB Function' */
+  real_T Wc_p[35];                     /* '<S36>/MATLAB Function' */
+  real_T Wi_h[7];                      /* '<S36>/MATLAB Function' */
+  real_T Wi_p[7];                      /* '<S36>/MATLAB Function' */
+  real_T uh_prev;                      /* '<S36>/MATLAB Function' */
+  real_T up_prev;                      /* '<S36>/MATLAB Function' */
+  real_T eh_buf_k[15];                 /* '<Root>/MATLAB Function1' */
+  real_T ep_buf_m[15];                 /* '<Root>/MATLAB Function1' */
+  real_T int_eh_i;                     /* '<Root>/MATLAB Function1' */
+  real_T int_ep_e;                     /* '<Root>/MATLAB Function1' */
+  real_T Wc_h_j[35];                   /* '<Root>/MATLAB Function1' */
+  real_T Wc_p_g[35];                   /* '<Root>/MATLAB Function1' */
+  real_T Wi_h_l[7];                    /* '<Root>/MATLAB Function1' */
+  real_T Wi_p_a[7];                    /* '<Root>/MATLAB Function1' */
+  real_T uh_prev_k;                    /* '<Root>/MATLAB Function1' */
+  real_T up_prev_k;                    /* '<Root>/MATLAB Function1' */
   real_T e1_c;                  /* '<Root>/MATLAB Function - fopid_velocidad' */
   real_T e2_j;                  /* '<Root>/MATLAB Function - fopid_velocidad' */
   real_T e3_o;                  /* '<Root>/MATLAB Function - fopid_velocidad' */
@@ -436,21 +489,6 @@ struct DW_FOpid_RL_T {
   real_T y6_a;                  /* '<Root>/MATLAB Function - fopid_velocidad' */
   real_T y7_e;                  /* '<Root>/MATLAB Function - fopid_velocidad' */
   real_T u_prev_a;              /* '<Root>/MATLAB Function - fopid_velocidad' */
-  real_T e1_o;                      /* '<Root>/MATLAB Function - fopid_pitch' */
-  real_T e2_h;                      /* '<Root>/MATLAB Function - fopid_pitch' */
-  real_T e3_g;                      /* '<Root>/MATLAB Function - fopid_pitch' */
-  real_T e4_m;                      /* '<Root>/MATLAB Function - fopid_pitch' */
-  real_T e5_b;                      /* '<Root>/MATLAB Function - fopid_pitch' */
-  real_T e6_h;                      /* '<Root>/MATLAB Function - fopid_pitch' */
-  real_T e7_f;                      /* '<Root>/MATLAB Function - fopid_pitch' */
-  real_T y1_a;                      /* '<Root>/MATLAB Function - fopid_pitch' */
-  real_T y2_du;                     /* '<Root>/MATLAB Function - fopid_pitch' */
-  real_T y3_h;                      /* '<Root>/MATLAB Function - fopid_pitch' */
-  real_T y4_p;                      /* '<Root>/MATLAB Function - fopid_pitch' */
-  real_T y5_ca;                     /* '<Root>/MATLAB Function - fopid_pitch' */
-  real_T y6_f;                      /* '<Root>/MATLAB Function - fopid_pitch' */
-  real_T y7_l;                      /* '<Root>/MATLAB Function - fopid_pitch' */
-  real_T u_prev_fo;                 /* '<Root>/MATLAB Function - fopid_pitch' */
   uint32_T PreLookUpIndexSearchprobofexcee;
                          /* '<S66>/PreLook-Up Index Search  (prob of exceed)' */
   uint32_T PreLookUpIndexSearchaltitude_DW;
@@ -486,6 +524,7 @@ struct DW_FOpid_RL_T {
                                   /* '<S25>/Integrator, Second-Order Limited' */
   boolean_T IntegratorSecondOrderLimited__l;
                                   /* '<S26>/Integrator, Second-Order Limited' */
+  boolean_T init_done_not_empty;       /* '<S36>/MATLAB Function' */
   boolean_T objisempty;                /* '<S35>/SourceBlock' */
   boolean_T objisempty_g;              /* '<S34>/SourceBlock' */
   boolean_T objisempty_a;              /* '<S47>/SourceBlock' */
@@ -496,6 +535,7 @@ struct DW_FOpid_RL_T {
   boolean_T objisempty_ld;             /* '<S29>/SinkBlock' */
   boolean_T objisempty_ev;             /* '<S28>/SinkBlock' */
   boolean_T objisempty_m;              /* '<S27>/SinkBlock' */
+  boolean_T init_done_not_empty_e;     /* '<Root>/MATLAB Function1' */
   boolean_T objisempty_d;    /* '<Root>/Coordinate Transformation Conversion' */
   boolean_T regObj_not_empty;/* '<Root>/Coordinate Transformation Conversion' */
   boolean_T objisempty_f;              /* '<S6>/ServiceCaller' */
@@ -641,7 +681,7 @@ struct ConstP_FOpid_RL_T {
    *   '<S33>/IC'
    *   '<S33>/Memory2'
    */
-  real_T pooled14[12];
+  real_T pooled13[12];
 
   /* Expression: rep_seq_y
    * Referenced by: '<S32>/Look-Up Table1'
@@ -806,6 +846,10 @@ class FOpid_RL
     *obj);
   void FOpid_RL_Subscriber_setupImpl_b(const ros_slros2_internal_block_Sub_T
     *obj);
+  real_T FOpid_RL_rt_powd_snf(real_T u0, real_T u1);
+  void FOpid_RL_step_loop_rbf(real_T e, real_T y, real_T u_prev, const real_T
+    e_buf[15], real_T *int_e, real_T Wc[35], real_T Wi[7], const real_T base_p[5],
+    const real_T lim_p[5], real_T sgn, real_T u_max, real_T *u, real_T params[5]);
 
   /* Global mass matrix */
 
@@ -880,19 +924,19 @@ extern volatile boolean_T runModel;
  * '<S5>'   : 'FOpid_RL/Blank Message4'
  * '<S6>'   : 'FOpid_RL/Call Service'
  * '<S7>'   : 'FOpid_RL/MATLAB Function'
- * '<S8>'   : 'FOpid_RL/MATLAB Function - fopid_pitch'
- * '<S9>'   : 'FOpid_RL/MATLAB Function - fopid_velocidad'
- * '<S10>'  : 'FOpid_RL/MATLAB Function-IMU2'
- * '<S11>'  : 'FOpid_RL/MATLAB Function-MODELO'
- * '<S12>'  : 'FOpid_RL/MATLAB Function-Odometry'
- * '<S13>'  : 'FOpid_RL/MATLAB Function-Odometry1'
- * '<S14>'  : 'FOpid_RL/MATLAB Function-clocl'
- * '<S15>'  : 'FOpid_RL/MATLAB Function-ned_to_PoseStaamped'
- * '<S16>'  : 'FOpid_RL/MATLAB Function-ned_to_PoseStamped'
- * '<S17>'  : 'FOpid_RL/MATLAB Function-ned_to_TwistStamped'
- * '<S18>'  : 'FOpid_RL/MATLAB Function-ned_to_gazebo'
- * '<S19>'  : 'FOpid_RL/MATLAB Function-ned_to_imu'
- * '<S20>'  : 'FOpid_RL/MATLAB Function-ned_to_odometry'
+ * '<S8>'   : 'FOpid_RL/MATLAB Function - fopid_velocidad'
+ * '<S9>'   : 'FOpid_RL/MATLAB Function-IMU2'
+ * '<S10>'  : 'FOpid_RL/MATLAB Function-MODELO'
+ * '<S11>'  : 'FOpid_RL/MATLAB Function-Odometry'
+ * '<S12>'  : 'FOpid_RL/MATLAB Function-Odometry1'
+ * '<S13>'  : 'FOpid_RL/MATLAB Function-clocl'
+ * '<S14>'  : 'FOpid_RL/MATLAB Function-ned_to_PoseStaamped'
+ * '<S15>'  : 'FOpid_RL/MATLAB Function-ned_to_PoseStamped'
+ * '<S16>'  : 'FOpid_RL/MATLAB Function-ned_to_TwistStamped'
+ * '<S17>'  : 'FOpid_RL/MATLAB Function-ned_to_gazebo'
+ * '<S18>'  : 'FOpid_RL/MATLAB Function-ned_to_imu'
+ * '<S19>'  : 'FOpid_RL/MATLAB Function-ned_to_odometry'
+ * '<S20>'  : 'FOpid_RL/MATLAB Function1'
  * '<S21>'  : 'FOpid_RL/MATLAB Function2'
  * '<S22>'  : 'FOpid_RL/Nonlinear Second-Order Actuator'
  * '<S23>'  : 'FOpid_RL/Nonlinear Second-Order Actuator1'
@@ -908,7 +952,7 @@ extern volatile boolean_T runModel;
  * '<S33>'  : 'FOpid_RL/SUBSYSTEM_MODEL'
  * '<S34>'  : 'FOpid_RL/Subscribe-ALTURA'
  * '<S35>'  : 'FOpid_RL/Subscribe-YAW'
- * '<S36>'  : 'FOpid_RL/Subsystem1'
+ * '<S36>'  : 'FOpid_RL/Subsystem-AlturaFOPID_RL'
  * '<S37>'  : 'FOpid_RL/Subsystem2'
  * '<S38>'  : 'FOpid_RL/Subsystem3'
  * '<S39>'  : 'FOpid_RL/SUBSYSTEM_MODEL/Band-Limited White Noise'
@@ -965,7 +1009,7 @@ extern volatile boolean_T runModel;
  * '<S90>'  : 'FOpid_RL/SUBSYSTEM_MODEL/Subscribe_TURBULENCIA/Enabled Subsystem'
  * '<S91>'  : 'FOpid_RL/Subscribe-ALTURA/Enabled Subsystem'
  * '<S92>'  : 'FOpid_RL/Subscribe-YAW/Enabled Subsystem'
- * '<S93>'  : 'FOpid_RL/Subsystem1/MATLAB Function - fopid_altura'
+ * '<S93>'  : 'FOpid_RL/Subsystem-AlturaFOPID_RL/MATLAB Function'
  * '<S94>'  : 'FOpid_RL/Subsystem2/MATLAB Function - fopid_roll'
  * '<S95>'  : 'FOpid_RL/Subsystem3/MATLAB Function - fopid_yaw'
  */
